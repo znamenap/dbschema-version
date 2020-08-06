@@ -71,6 +71,8 @@
     <Folder Include="Feature\Step\Structure" />
     <Folder Include="Feature\Step\Code" />
     <Folder Include="Feature\Step\Type" />
+    <Folder Include="Feature\Shared" />
+    <Folder Include="Feature\Shared\Code" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Feature\Version\Structure\version.sql" />
@@ -84,6 +86,8 @@
     <Build Include="Feature\Step\Code\register_upgrade_step.sql" />
     <Build Include="Feature\Step\Type\t_step.sql" />
     <Build Include="Feature\Step\Code\register_downgrade_step.sql" />
+    <Build Include="Feature\Version\Code\parse_version.sql" />
+    <Build Include="Feature\Shared\Code\split_string.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />
