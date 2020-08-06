@@ -83,6 +83,7 @@
     <Build Include="Feature\Version\Type\t_version.sql" />
     <Build Include="Feature\Step\Code\register_upgrade_step.sql" />
     <Build Include="Feature\Step\Type\t_step.sql" />
+    <Build Include="Feature\Step\Code\register_downgrade_step.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />

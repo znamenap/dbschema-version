@@ -73,6 +73,7 @@
   <ItemGroup>
     <Build Include="Sql\schema.sql" />
     <None Include="Feature\Step\test_register_upgrade_step.sql" />
+    <None Include="Feature\Step\test_register_downgrade_step.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="RunTests.InPostDeployment.sql" />

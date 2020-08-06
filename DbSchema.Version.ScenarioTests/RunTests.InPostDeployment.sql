@@ -11,3 +11,5 @@ Post-Deployment Script Template
 */
 
 :r .\Feature\Step\test_register_upgrade_step.sql
+
+:r .\Feature\Step\test_register_downgrade_step.sql

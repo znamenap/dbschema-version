@@ -1,5 +1,5 @@
 ﻿
-print 'Testing [schema_version].[register_upgrade_step]'
+print 'Testing [schema_version].[register_downgrade_step]'
 set nocount on;
 declare @error as varchar(2048);
 declare @mystep as [schema_version].[t_step];
@@ -14,7 +14,7 @@ insert into @mystep (
 
 print '    ... @schema_name is null'
 begin try
-    exec [schema_version].[register_upgrade_step] 
+    exec [schema_version].[register_downgrade_step] 
         @schema_name = null,
         @application_name = 'tests', 
         @step = @mystep;
@@ -30,7 +30,7 @@ end catch
 
 print '    ... @application_name is null'
 begin try
-    exec [schema_version].[register_upgrade_step] 
+    exec [schema_version].[register_downgrade_step] 
         @schema_name = 'myschema',
         @application_name = null, 
         @step = @mystep;
@@ -48,7 +48,7 @@ end catch
 print '    ... @step is null'
 declare @empty_step as [schema_version].[t_step];
 begin try
-    exec [schema_version].[register_upgrade_step] 
+    exec [schema_version].[register_downgrade_step] 
         @schema_name = 'myschema',
         @application_name = 'myapp', 
         @step = @empty_step;
@@ -62,17 +62,17 @@ begin catch
     end
 end catch
 
-print '    ... myapp, myschema and version was registered for upgrade step.'
+print '    ... myapp, myschema and version was registered for downgrade step.'
 delete [schema_version].[step]
-    where [application_name] = 'myapp' and [schema_name] = 'myschema' and [version] = 1 and [upgrade] = 1;
+    where [application_name] = 'myapp' and [schema_name] = 'myschema' and [version] = 1 and [upgrade] = 0;
 
-exec [schema_version].[register_upgrade_step] 
+exec [schema_version].[register_downgrade_step] 
     @schema_name = 'myschema',
     @application_name = 'myapp', 
     @step = @mystep;
 
 if not exists(select [sequence] from [schema_version].[step] 
-    where [application_name] = 'myapp' and [schema_name] = 'myschema' and [version] = 1 and [upgrade] = 1)
+    where [application_name] = 'myapp' and [schema_name] = 'myschema' and [version] = 1 and [upgrade] = 0)
     throw 50000, 'The registered app was not found',1;
 
 go
