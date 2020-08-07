@@ -61,6 +61,7 @@
     <Folder Include="Sql" />
     <Folder Include="Feature" />
     <Folder Include="Feature\Step" />
+    <Folder Include="Feature\Version" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
@@ -77,5 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="RunTests.InPostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Feature\Version\test_parse_version.sql" />
   </ItemGroup>
 </Project>
