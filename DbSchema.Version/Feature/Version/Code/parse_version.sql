@@ -7,7 +7,7 @@ begin
     set nocount on;
     begin try
         if @version_text is null
-            throw 50000, 'null argument in @version_text is not expected', 1;
+            throw 50000, 'null argument value at @version_text is not expected', 1;
 
         select @version_number = sum(i.[weight])
             from (

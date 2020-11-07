@@ -4,6 +4,8 @@
   , @version [schema_version].[t_version] 
 as
 begin
+    if @version is null throw 50000, 'null argument value at @version is not expected', 1;
+
     if exists (
         select [version] from [schema_version].[version] 
             where @application_name = [application_name] and [schema_name] = @schema_name

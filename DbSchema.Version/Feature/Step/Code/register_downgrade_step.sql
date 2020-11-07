@@ -6,9 +6,9 @@ as
 begin
     set nocount on;
     begin try
-        if @schema_name is null throw 50000, 'null argument in @schema_name is not expected', 1;
-        if @application_name is null throw 50000, 'null argument in @application_name is not expected', 1;
-        if not exists(select top(1) [version] from @step) throw 50000, 'null argument in @step is not expected', 1;
+        if @schema_name is null throw 50000, 'null argument value at @schema_name is not expected', 1;
+        if @application_name is null throw 50000, 'null argument value at @application_name is not expected', 1;
+        if not exists(select top(1) [version] from @step) throw 50000, 'null argument value at @step is not expected', 1;
         begin transaction;
             insert into [schema_version].[step]
             (

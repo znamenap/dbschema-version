@@ -21,7 +21,7 @@ begin try
     throw 50000, 'Test failed, expected exception did not happen.', 1;
 end try
 begin catch
-    if error_message() not like '%null argument%'
+    if error_message() not like '%null argument value%'
     begin
         set @error = concat('Expecting %%null argument%% exception, but received:', error_message());
         throw 50000, @error, 1;
@@ -37,13 +37,12 @@ begin try
     throw 50000, 'Test failed, expected exception did not happen.', 1;
 end try
 begin catch
-    if error_message() not like '%null argument%'
+    if error_message() not like '%null argument value%'
     begin
         set @error = concat('Expecting %%null argument%% exception, but received:', error_message());
         throw 50000, @error, 1;
     end
 end catch
-
 
 print '    ... @step is null'
 declare @empty_step as [schema_version].[t_step];
@@ -55,7 +54,7 @@ begin try
     throw 50000, 'Test failed, expected exception did not happen.', 1;
 end try
 begin catch
-    if error_message() not like '%null argument%'
+    if error_message() not like '%null argument value%'
     begin
         set @error = concat('Expecting %%null argument%% exception, but received:', error_message());
         throw 50000, @error, 1;
