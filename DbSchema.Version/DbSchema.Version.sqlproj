@@ -92,4 +92,7 @@
   <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="notes.md" />
+  </ItemGroup>
 </Project>
