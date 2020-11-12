@@ -16,4 +16,4 @@ Post-Deployment Script Template
 
 :r .\Feature\Version\test_parse_version.sql
 
-:r .\Feature\Version\test_invoke_version_change.sql
+-- :r .\Feature\Version\test_invoke_version_change.sql

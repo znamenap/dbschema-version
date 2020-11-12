@@ -88,11 +88,22 @@
     <Build Include="Feature\Step\Code\register_downgrade_step.sql" />
     <Build Include="Feature\Version\Code\parse_version.sql" />
     <Build Include="Feature\Shared\Code\split_string.sql" />
+    <Build Include="Feature\Version\Code\invoke_version_change.sql" />
+    <Build Include="Feature\Step\Code\invoke_step_procedure.sql" />
+    <Build Include="Feature\Step\Code\get_step.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notes.md" />
+    <None Include="DbSchema.Version.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
   </ItemGroup>
 </Project>
