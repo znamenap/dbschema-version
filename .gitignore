@@ -139,6 +139,7 @@ DocProject/Help/html
 publish/
 
 # Publish Web Output
+!*schema*.[Pp]ublish.xml
 *.[Pp]ublish.xml
 *.azurePubxml
 
