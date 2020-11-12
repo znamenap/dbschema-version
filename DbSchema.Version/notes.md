@@ -17,8 +17,7 @@
 ## Implementation Points
 PENDING:
 - Consider transactionality in procedures or wheather to assume external transaction or none.
-- Step invocation for upgrade into `[schema_version].[invoke_version_change]`
-- Step invocation for downgrade into `[schema_version].[invoke_version_change]`
+- Refactor step invocation into dedicated stored procedure.
 
 COMPLETED:
 - Version parsing
