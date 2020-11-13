@@ -135,3 +135,13 @@ exec [schema_version].[invoke_version_change] @schema_name = [dbo]      -- t_sch
                                             , @application_name = 'test_app'-- t_application_name
                                             , @version = @version_number          -- t_version
 ;
+
+print 'Testing upgrade suequence from version 1.3 to 1.0';
+exec [schema_version].[parse_version] @version_text = N'1.0'                      -- nvarchar(128)
+                                    , @version_number = @version_number output -- t_version
+;
+
+exec [schema_version].[invoke_version_change] @schema_name = [dbo]      -- t_schema_name
+                                            , @application_name = 'test_app'-- t_application_name
+                                            , @version = @version_number          -- t_version
+;

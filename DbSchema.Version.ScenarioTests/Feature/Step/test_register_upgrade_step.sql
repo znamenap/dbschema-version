@@ -11,6 +11,7 @@ insert into @mystep (
     , [procedure] -- [sys].[sysname] not null
     ) values 
     ( 1, 1, 'description', 'procedure_name' );
+exec [schema_version_tests].[recreate_dummy_steps] @schema = '[dbo]', @steps = @mystep;
 
 print '    ... @schema_name is null'
 begin try
@@ -31,7 +32,7 @@ end catch
 print '    ... @application_name is null'
 begin try
     exec [schema_version].[register_upgrade_step] 
-        @schema_name = 'myschema',
+        @schema_name = '[dbo]',
         @application_name = null, 
         @step = @mystep;
     throw 50000, 'Test failed, expected exception did not happen.', 1;
@@ -48,7 +49,7 @@ print '    ... @step is null'
 declare @empty_step as [schema_version].[t_step];
 begin try
     exec [schema_version].[register_upgrade_step] 
-        @schema_name = 'myschema',
+        @schema_name = '[dbo]',
         @application_name = 'myapp', 
         @step = @empty_step;
     throw 50000, 'Test failed, expected exception did not happen.', 1;
@@ -61,17 +62,18 @@ begin catch
     end
 end catch
 
-print '    ... myapp, myschema and version was registered for upgrade step.'
+print '    ... myapp, [dbo] and version was registered for upgrade step.'
 delete [schema_version].[step]
-    where [application_name] = 'myapp' and [schema_name] = 'myschema' and [version] = 1 and [upgrade] = 1;
+    where [application_name] = 'myapp' and [schema_name] = '[dbo]' and [version] = 1 and [upgrade] = 1;
 
 exec [schema_version].[register_upgrade_step] 
-    @schema_name = 'myschema',
+    @schema_name = '[dbo]',
     @application_name = 'myapp', 
     @step = @mystep;
 
 if not exists(select [sequence] from [schema_version].[step] 
-    where [application_name] = 'myapp' and [schema_name] = 'myschema' and [version] = 1 and [upgrade] = 1)
+    where [application_name] = 'myapp' and [schema_name] = '[dbo]' and [version] = 1 and [upgrade] = 1)
     throw 50000, 'The registered app was not found',1;
 
+execute [sys].[sp_executesql] @statement = N'drop procedure [dbo].[procedure_name]';
 go

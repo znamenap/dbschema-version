@@ -13,6 +13,8 @@ begin
     begin
         set @procedure_name = @schema+'.['+@procedure_name+']';
         execute [schema_version_tests].[recreate_dummy_stored_procedure] @name = @procedure_name;
+        declare @grant_perm nvarchar(1024) = 'grant execute on ' + @procedure_name + ' to [test_user_writer], [test_user_owner]';
+        execute [sys].[sp_executesql] @statement = @grant_perm;
         fetch next from [step_cursor] into @procedure_name;
     end;
     close [step_cursor];

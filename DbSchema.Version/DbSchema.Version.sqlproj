@@ -77,7 +77,6 @@
   <ItemGroup>
     <Build Include="Feature\Version\Structure\version.sql" />
     <Build Include="Feature\Version\Code\set_version.sql" />
-    <Build Include="Sql\schema.sql" />
     <Build Include="Feature\Version\Code\get_version.sql" />
     <Build Include="Feature\Version\Type\t_application_name.sql" />
     <Build Include="Feature\Step\Structure\step.sql" />
@@ -91,6 +90,12 @@
     <Build Include="Feature\Version\Code\invoke_version_change.sql" />
     <Build Include="Feature\Step\Code\invoke_step_procedure.sql" />
     <Build Include="Feature\Step\Code\get_step.sql" />
+    <Build Include="Feature\Step\step_permissions.sql" />
+    <Build Include="Feature\Version\version_permissions.sql" />
+    <Build Include="Sql\role.schema_version_owner.sql" />
+    <Build Include="Sql\role.schema_version_reader.sql" />
+    <Build Include="Sql\role.schema_version_writer.sql" />
+    <Build Include="Sql\schema.schema_version.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />

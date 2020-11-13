@@ -62,6 +62,8 @@
     <Folder Include="Feature" />
     <Folder Include="Feature\Step" />
     <Folder Include="Feature\Version" />
+    <Folder Include="Feature\Permission" />
+    <Folder Include="Feature\Shared" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
@@ -76,11 +78,24 @@
     <None Include="Feature\Step\test_register_upgrade_step.sql" />
     <None Include="Feature\Step\test_register_downgrade_step.sql" />
     <None Include="Feature\Version\test_invoke_version_change.sql" />
+    <Build Include="Feature\Permission\test_user_reader.sql" />
+    <Build Include="Feature\Permission\test_user_writer.sql" />
+    <Build Include="Feature\Permission\test_user_owner.sql" />
+    <Build Include="Feature\Shared\recreate_dummy_stored_procedure.sql" />
+    <Build Include="Feature\Step\recreate_dummy_steps.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="RunTests.InPostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Feature\Version\test_parse_version.sql" />
+    <None Include="Feature\Version\test_permissions.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
   </ItemGroup>
 </Project>

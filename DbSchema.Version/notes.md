@@ -6,6 +6,7 @@
 
 **Expected scenario:**
 - A developer maintains list of records representing the steps to be registered into `[schema_version].[step]` per order of <database schema name, application name and version>.
+- Application developer must grant execute permission to the upgrade or downgrade step procedure to user [schema_version_writer].
 - When the upgrade have to happen, the developer ought
   to insert the records into the steps table to represent desired upgrade 
   or downgrade scenario(s).
@@ -18,6 +19,7 @@
 ## Implementation Points
 PENDING:
 - Consider transactionality in procedures or wheather to assume external transaction or none.
+- Make auditing to who, when and what has been version changed.
 
 COMPLETED:
 - Version parsing
