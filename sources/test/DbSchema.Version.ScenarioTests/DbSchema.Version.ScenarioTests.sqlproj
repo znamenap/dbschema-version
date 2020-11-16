@@ -24,9 +24,11 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <GenerateCreateScript>True</GenerateCreateScript>
     <DefaultSchema>schema_version_tests</DefaultSchema>
+    <OutputPath>..\..\..\output\bin\$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\obj\</BaseIntermediateOutputPath>
+    <DocumentationFile>..\..\..\output\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
@@ -37,7 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DebugSymbols>true</DebugSymbols>
@@ -66,7 +67,7 @@
     <Folder Include="Feature\Shared" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
+    <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.sqlproj">
       <Name>DbSchema.Version</Name>
       <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
       <Private>True</Private>

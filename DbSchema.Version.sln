@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbSchema.Version", "DbSchema.Version\DbSchema.Version.sqlproj", "{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbSchema.Version", "sources\main\DbSchema.Version\DbSchema.Version.sqlproj", "{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbSchema.Version.ScenarioTests", "DbSchema.Version.ScenarioTests\DbSchema.Version.ScenarioTests.sqlproj", "{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbSchema.Version.ScenarioTests", "sources\test\DbSchema.Version.ScenarioTests\DbSchema.Version.ScenarioTests.sqlproj", "{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{4B6B10EF-2006-40DE-B30E-1742BA4D404F}"
 EndProject
