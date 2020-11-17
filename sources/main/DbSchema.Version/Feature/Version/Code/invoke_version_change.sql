@@ -21,7 +21,7 @@ begin
 
     exec [schema_version].[add_audit_event] @proc_id = @@procid, @message =
         N'=====================================================================================================================';
-    set @msg = 'BEGIN: Change from ' + cast(@actual_version as nvarchar(38)) + ' to ' + cast(@version as nvarchar(38))
+    set @msg = 'BEGIN: Change version from ' + cast(@actual_version as nvarchar(38)) + ' to ' + cast(@version as nvarchar(38))
         + ' via ' + cast(@step_count as nvarchar(15)) + ' steps.';
     exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
 
@@ -50,7 +50,7 @@ begin
 
         -- determine the steps to proceed with the version change
         if @actual_version <= @version -- upgrade
-            declare [actual_change_steps] cursor local forward_only read_only for
+            declare [actual_change_steps] cursor local forward_only dynamic for
             select [s].[step_id]
                  , [s].[step_version]
                  , [s].[step_sequence]
@@ -61,7 +61,7 @@ begin
             from [schema_version].[get_step](@schema_name, @application_name, @actual_version, @version) as [s]
             order by [s].[step_version], [s].[step_sequence];
         else
-            declare [actual_change_steps] cursor local forward_only read_only for
+            declare [actual_change_steps] cursor local forward_only dynamic for
             select [s].[step_id]
                  , [s].[step_version]
                  , [s].[step_sequence]
@@ -147,6 +147,10 @@ begin
                                       , @application_name = @application_name
                                       , @version = @version;
 
-    set @msg = 'CEASE: Change from ' + cast(@actual_version as nvarchar(38)) + ' to ' + cast(@version as nvarchar(38))
+    set @msg = 'CEASE: Change version from ' + cast(@actual_version as nvarchar(38)) + ' to ' + cast(@version as nvarchar(38))
     exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message =
+        N'=====================================================================================================================';
+
+    return 0;
 end;

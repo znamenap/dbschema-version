@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>DbSchema.Version</Name>
+    <Name>Application.Schema.Template</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</ProjectGuid>
+    <ProjectGuid>{49265350-0275-4074-8b02-717b91132c30}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>DbSchema.Version</RootNamespace>
-    <AssemblyName>DbSchema.Version</AssemblyName>
+    <RootNamespace>Application.Schema.Template</RootNamespace>
+    <AssemblyName>Application.Schema.Template</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -22,9 +22,7 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
-    <DefaultSchema>schema_version</DefaultSchema>
-    <GenerateCreateScript>True</GenerateCreateScript>
+    <DefaultSchema>template</DefaultSchema>
     <OutputPath>..\..\..\output\bin\$(Configuration)\</OutputPath>
     <BaseIntermediateOutputPath>..\..\..\output\obj\</BaseIntermediateOutputPath>
     <DocumentationFile>..\..\..\output\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
@@ -38,7 +36,6 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -50,7 +47,6 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -63,52 +59,50 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Feature" />
-    <Folder Include="Feature\Version" />
-    <Folder Include="Feature\Version\Structure" />
-    <Folder Include="Feature\Version\Code" />
+    <Folder Include="Feature\User" />
+    <Folder Include="Feature\User\Structure" />
     <Folder Include="Sql" />
-    <Folder Include="Feature\Version\Type" />
-    <Folder Include="Feature\Step" />
-    <Folder Include="Feature\Step\Structure" />
-    <Folder Include="Feature\Step\Code" />
-    <Folder Include="Feature\Step\Type" />
-    <Folder Include="Feature\Shared" />
-    <Folder Include="Feature\Shared\Code" />
-    <Folder Include="Feature\Audit" />
-    <Folder Include="Feature\Audit\Code" />
-    <Folder Include="Feature\Audit\Structure" />
+    <Folder Include="Feature\Group" />
+    <Folder Include="Feature\Group\Structure" />
+    <Folder Include="Feature\Membership" />
+    <Folder Include="Feature\Membership\Structure" />
+    <Folder Include="Feature\User\Data" />
+    <Folder Include="Feature\Group\Data" />
+    <Folder Include="Feature\_Template" />
+    <Folder Include="Feature\_Template\Data" />
+    <Folder Include="Feature\_Template\Structure" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Feature\Version\Structure\version.sql" />
-    <Build Include="Feature\Version\Code\set_version.sql" />
-    <Build Include="Feature\Version\Code\get_version.sql" />
-    <Build Include="Feature\Version\Type\t_application_name.sql" />
-    <Build Include="Feature\Step\Structure\step.sql" />
-    <Build Include="Feature\Version\Type\t_schema_name.sql" />
-    <Build Include="Feature\Version\Type\t_version.sql" />
-    <Build Include="Feature\Step\Code\register_upgrade_step.sql" />
-    <Build Include="Feature\Step\Type\t_step.sql" />
-    <Build Include="Feature\Step\Code\register_downgrade_step.sql" />
-    <Build Include="Feature\Version\Code\parse_version.sql" />
-    <Build Include="Feature\Shared\Code\split_string.sql" />
-    <Build Include="Feature\Version\Code\invoke_version_change.sql" />
-    <Build Include="Feature\Step\Code\invoke_step_procedure.sql" />
-    <Build Include="Feature\Step\Code\get_step.sql" />
-    <Build Include="Feature\Step\step_permissions.sql" />
-    <Build Include="Feature\Version\version_permissions.sql" />
-    <Build Include="Sql\role.schema_version_owner.sql" />
-    <Build Include="Sql\role.schema_version_reader.sql" />
-    <Build Include="Sql\role.schema_version_writer.sql" />
-    <Build Include="Sql\schema.schema_version.sql" />
-    <Build Include="Feature\Audit\Code\add_audit_event.sql" />
-    <Build Include="Feature\Audit\Structure\audit_event.sql" />
+    <None Include="Invoke-DacPacDeploy.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Feature\Group\Data\system_groups.data.sql" />
+    <None Include="Feature\_Template\Data\template.data.sql" />
+    <None Include="Application.Schema.Template.publish.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="DbSchema.Version.refactorlog" />
+    <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="notes.md" />
-    <None Include="DbSchema.Version.publish.xml" />
+    <PreDeploy Include="Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Feature\User\Structure\user.sql" />
+    <Build Include="Sql\template.schema.sql" />
+    <Build Include="Feature\Group\Structure\group.sql" />
+    <Build Include="Feature\Membership\Structure\membership.sql" />
+    <None Include="Feature\User\Data\system_users.data.sql" />
+    <Build Include="Feature\_Template\Structure\template.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.sqlproj">
+      <Name>DbSchema.Version</Name>
+      <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
+      <Private>True</Private>
+      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac">
@@ -116,5 +110,17 @@
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="AppName">
+      <DefaultValue>
+      </DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="AppVersion">
+      <DefaultValue>
+      </DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
+    </SqlCmdVariable>
   </ItemGroup>
 </Project>
