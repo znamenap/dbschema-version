@@ -24,7 +24,6 @@ PENDING:
 - Add participants to join building the change script.
 - Make single build script for whole to get up to the nuget nupkg in output.
 - Consider transactionality in procedures or wheather to assume external transaction or none.
-- Make auditing to who, when and what has been version changed.
 
 COMPLETED:
 - Version parsing
@@ -37,3 +36,4 @@ COMPLETED:
 - Added permissions per each db object.
 - Added existence check for procedure of the step while registering it.
 - Restructure the repo to use higher level folder for configuration stuff.
+- Make auditing to who, when and what has been version changed.

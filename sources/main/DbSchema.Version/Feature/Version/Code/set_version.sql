@@ -32,7 +32,10 @@ begin
         (@schema_name, @application_name, @version);
     end;
 
-    print 'Setting schema "' + @schema_name + '" version to "' + cast(@version as varchar(40))
-          + '" registered by application "' + @application_name+'".';
+    declare @msg as nvarchar(2048);
+    set @msg = N'INFO: Setting "' + @schema_name + N'" schema''s version to "' + cast(@version as nvarchar(40))
+          + N'" registered by application "' + @application_name+N'".';
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
+
     return 1;
 end;

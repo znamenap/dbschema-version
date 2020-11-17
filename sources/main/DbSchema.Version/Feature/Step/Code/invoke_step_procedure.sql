@@ -12,18 +12,20 @@
 as
 begin
     set nocount on;
-    declare @report_message_base nvarchar(2048)
-        = '(' + cast(@step_version as varchar(38)) + ', step ' + cast(@step_sequence as varchar(38))
-            + ') via procedure ' + @step_procedure + '()';
-    print 'Executing: ' + @report_message_base + ', "' + @step_description + '"';
-
+    declare @base_msg nvarchar(2048) =
+        'step_id=' + cast(@step_id as varchar(38)) + ', '
+        + @application_name
+        + N'('+cast(@step_version as nvarchar(38))+N')+' + cast(@step_sequence as nvarchar(38))
+        + N' via ' + @schema_name + N'.' + @step_procedure + '()';
+    declare @msg nvarchar(2048) = 'EXEC: ' + @base_msg;
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
     begin try
         exec [sys].[sp_executesql] @sql = @step_procedure;
     end try
     begin catch
-        declare @error_message varchar(2048)
-            = 'Error while executing step: "' + @report_message_base + '". Error (severity='
-                + cast(error_severity() as varchar(256)) + '): ' + error_message();
+        declare @error_message nvarchar(2048);
+        set @error_message = 'ERROR: ' + error_message() + '(Severity=' + cast(error_severity() as varchar(256)) + ') from ' + @base_msg;
+        exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @error_message;
         throw 50000, @error_message, 1;
     end catch;
 
@@ -55,6 +57,9 @@ begin
     update [schema_version].[step]
     set [completed] = 1
     where [id] = @step_id;
+
+    set @msg =  N'SUCCESS: step_id=' + cast(@step_id as varchar(38)) + N' completed = 1.';
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
 
     return 0;
 end

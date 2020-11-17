@@ -5,6 +5,7 @@
 as
 begin
     set nocount on;
+    declare @msg nvarchar(2048);
 
     -- which is the actual version
     declare @actual_version as [schema_version].[t_version];
@@ -18,11 +19,21 @@ begin
     select @step_count = count([s].[step_id])
     from [schema_version].[get_step](@schema_name, @application_name, @actual_version, @version) as [s];
 
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message =
+        N'=====================================================================================================================';
+    set @msg = 'BEGIN: Change from ' + cast(@actual_version as nvarchar(38)) + ' to ' + cast(@version as nvarchar(38))
+        + ' via ' + cast(@step_count as nvarchar(15)) + ' steps.';
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
+
     -- Notify about empty sequence.
     if @step_count = 0 or @step_count is null
     begin
-        print 'There are no change(s) detected between ' + cast(@actual_version as varchar(38)) + ' and '
-              + cast(@version as varchar(38));
+        set @msg = N'WARN: There are no change(s) detected between ' + cast(@actual_version as nvarchar(38))
+            + N' and ' + cast(@version as nvarchar(38));
+        exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
+
+        -- There are two options here, the behaviour should be configurable.
+        -- throw 50000, @msg, 1;
     end;
 
     -- Proceed with the step execution
@@ -73,14 +84,25 @@ begin
            ;
         if @@fetch_status = -1
         begin
-            print 'There are no change steps registered between ' + cast(@actual_version as varchar(38)) + ' and '
-                  + cast(@version as varchar(38));
+            set @msg = N'WARN: There are no change steps registered between ' + cast(@actual_version as nvarchar(38))
+                + N' and ' + cast(@version as nvarchar(38));
+            exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
+
+            -- There are two options here, the behaviour should be configurable.
+            -- throw 50000, @msg, 1;
         end;
         else
         begin
             while @@fetch_status = 0
             begin
                 begin try
+                    set @msg = N'START: (Upgrade='+ cast(@is_upgrade_direction as nvarchar(15))
+                        + N'/Downgrade='+ cast(@is_downgrade_direction as nvarchar(15)) + ') step for ' + @application_name
+                        + N'('+cast(@actual_step_version as nvarchar(38))+N')+'
+                        + cast(@actual_step_sequence as nvarchar(38)) + N' via "'
+                        + @actual_step_description + N'".';
+                    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
+
                     -- must throw error if it failed on processing.
                     execute [schema_version].[invoke_step_procedure]
                           @schema_name = @schema_name
@@ -94,6 +116,10 @@ begin
                         , @is_upgrade_direction = @is_upgrade_direction
                         , @is_downgrade_direction = @is_downgrade_direction
                     ;
+                    set @msg = N'FINISH: step procedure for ' + @application_name
+                        + N'('+cast(@actual_step_version as nvarchar(38))+N')+'
+                        + cast(@actual_step_sequence as nvarchar(38));
+                    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
                 end try
                 begin catch
                     close [actual_change_steps];
@@ -120,4 +146,7 @@ begin
     exec [schema_version].[set_version] @schema_name = @schema_name
                                       , @application_name = @application_name
                                       , @version = @version;
+
+    set @msg = 'CEASE: Change from ' + cast(@actual_version as nvarchar(38)) + ' to ' + cast(@version as nvarchar(38))
+    exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
 end;

@@ -42,6 +42,7 @@ begin
             , [s].[procedure] -- procedure - sysname
             , 0 as [completed] -- completed - bit
         from @step as s;
+
     end try
     begin catch
         -- Return the error information.
@@ -49,6 +50,7 @@ begin
             'Error while registering downgrade step in ', error_procedure(), ' for "', 
             @application_name, '" application within [', @schema_name, '] schema. Error (severity=', 
             error_severity(), '): ' , error_message());
+        exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @error_message;
         throw 50000, @error_message, 1;
     end catch;
 end;

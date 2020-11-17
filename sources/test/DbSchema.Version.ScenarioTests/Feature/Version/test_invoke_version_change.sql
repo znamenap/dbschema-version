@@ -1,5 +1,7 @@
 ﻿set nocount on;
 
+declare @error varchar(2048);
+
 delete [schema_version].[step];
 
 delete [schema_version].[version];
@@ -119,14 +121,22 @@ print 'Testing upgrade suequence from version 1.2 to 1.2';
 exec [schema_version].[parse_version] @version_text = N'1.2'                      -- nvarchar(128)
                                     , @version_number = @version_number output -- t_version
 ;
-
-exec [schema_version].[invoke_version_change] @schema_name = [dbo]      -- t_schema_name
+--begin try
+    exec [schema_version].[invoke_version_change] @schema_name = [dbo]      -- t_schema_name
                                             , @application_name = 'test_app'-- t_application_name
                                             , @version = @version_number          -- t_version
-;
+    ;
+--    throw 50000, 'Test failed, expected exception did not happen.', 1;
+--end try
+--begin catch 
+--    if error_message() not like '%There are no change(s) detected between%'
+--    begin
+--        set @error = concat('Expecting %%There are no change(s) detected between%% exception, but received:', error_message());
+--        throw 50000, @error, 1;
+--    end
+--end catch
 
-
-print 'Testing upgrade suequence from version 1.1 to 1.3';
+print 'Testing upgrade suequence from version 1.2 to 1.3';
 exec [schema_version].[parse_version] @version_text = N'1.3'                      -- nvarchar(128)
                                     , @version_number = @version_number output -- t_version
 ;

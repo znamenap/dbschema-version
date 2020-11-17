@@ -49,6 +49,7 @@ begin
             'Error while registering upgrade step in ', error_procedure(), ' for "', 
             @application_name, '" application within [', @schema_name, '] schema. Error (severity=', 
             error_severity(), '): ' , error_message());
+        exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @error_message;
         throw 50000, @error_message, 1;
     end catch;
 end;
