@@ -25,9 +25,9 @@
     <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
     <DefaultSchema>schema_version</DefaultSchema>
     <GenerateCreateScript>True</GenerateCreateScript>
-    <OutputPath>..\..\..\output\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\obj\</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <OutputPath>..\..\..\output\database\bin\$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\database\output\obj\</BaseIntermediateOutputPath>
+    <DocumentationFile>..\..\..\output\database\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>

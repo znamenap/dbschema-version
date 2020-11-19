@@ -23,9 +23,9 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultSchema>template</DefaultSchema>
-    <OutputPath>..\..\..\output\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\obj\</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <OutputPath>..\..\..\output\template\bin\$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\template\obj\</BaseIntermediateOutputPath>
+    <DocumentationFile>..\..\..\output\template\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -56,6 +56,7 @@
   </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Project="..\..\..\output\main\bin\$(Configuration)\DBSchema.Version\DBSchema.Version.Contributors.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Feature" />
