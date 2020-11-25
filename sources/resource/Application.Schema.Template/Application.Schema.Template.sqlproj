@@ -24,7 +24,7 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultSchema>template</DefaultSchema>
     <OutputPath>..\..\..\output\template\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\template\obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\template\obj\$(Configuration)\</BaseIntermediateOutputPath>
     <DocumentationFile>..\..\..\output\template\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

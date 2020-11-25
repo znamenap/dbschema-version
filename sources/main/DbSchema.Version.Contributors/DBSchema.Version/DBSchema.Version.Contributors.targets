@@ -2,7 +2,8 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
     <PropertyGroup>
       <BuildContributors Condition="'$(Configuration)' == 'Debug'">$(BuildContributors);DbSchema.Version.Contributors.ModelStatistics</BuildContributors>
-      <ContributorArguments Condition="'$(Configuration)' == 'Debug'">$(ContributorArguments);DbSchema.Version.Contributors.ModelStatistics.GenerateModelStatistics=true;DbSchema.Version.Contributors.ModelStatistics.SortModelStatisticsBy=name;DbSchema.Version.Contributors.ModelStatistics.OutDir=$(OutputPath)</ContributorArguments>
+      <DeploymentContributors Condition="'$(Configuration)' == 'Debug'">$(DeploymentContributors);DbSchema.Version.Contributors.UpdateReport</DeploymentContributors>
+      <ContributorArguments Condition="'$(Configuration)' == 'Debug'">$(ContributorArguments);DbSchema.Version.Contributors.ModelStatistics.GenerateModelStatistics=true;DbSchema.Version.Contributors.ModelStatistics.SortModelStatisticsBy=name;DbSchema.Version.Contributors.ModelStatistics.OutDir=$(OutputPath);DbSchema.Version.Contributors.UpdateReport.Generate=true;DbSchema.Version.Contributors.UpdateReport.OutDir=$(OutputPath)</ContributorArguments>
     </PropertyGroup>
 
   <Target Name="CustomAfterBuild" AfterTargets="SqlBuild">

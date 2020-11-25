@@ -1,18 +1,18 @@
 ﻿/*
-Post-Deployment Script Template                            
+Post-Deployment Script Template
 --------------------------------------------------------------------------------------
- This file contains SQL statements that will be appended to the build script.        
- Use SQLCMD syntax to include a file in the post-deployment script.            
- Example:      :r .\myfile.sql                                
- Use SQLCMD syntax to reference a variable in the post-deployment script.        
- Example:      :setvar TableName MyTable                            
-               SELECT * FROM [$(TableName)]                    
+ This file contains SQL statements that will be appended to the build script.
+ Use SQLCMD syntax to include a file in the post-deployment script.
+ Example:      :r .\myfile.sql
+ Use SQLCMD syntax to reference a variable in the post-deployment script.
+ Example:      :setvar TableName MyTable
+               SELECT * FROM [$(TableName)]
 --------------------------------------------------------------------------------------
 */
 
 print N'Starting update'; --<< do not change me
 
-
+/*
 -- ======================================
 -- == BEGIN: Static data repopulation. ==
 -- ======================================
@@ -48,7 +48,7 @@ print 'Transaction count: ' + cast(@@trancount as varchar(10))
 begin try
     if ($(AppVersion) is not null)
     begin
-        set nocount on; 
+        set nocount on;
         declare @result as int = -1;
         exec @result = [schema_version].[invoke_version_change]
               @schema_name = 'template'
@@ -83,7 +83,7 @@ if exists (select * from #tmperrors) begin
 end;
 GO
 
-if @@trancount > 0 
+if @@trancount > 0
 begin
     begin try
         drop table #tmperrors;
@@ -98,3 +98,4 @@ begin
     end catch
 end
 GO
+*/

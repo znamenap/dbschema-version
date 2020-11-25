@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
     <OutputPath>..\..\..\output\main\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\main\output\obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\main\obj\$(Configuration)</BaseIntermediateOutputPath>
     <DocumentationFile>..\..\..\output\main\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UpdateReportContributor.cs" />
     <Compile Include="ModelStatisticsContributor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
