@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RestartableScriptContributor.cs" />
     <Compile Include="UpdateReportContributor.cs" />
     <Compile Include="ModelStatisticsContributor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
