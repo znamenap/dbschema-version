@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace DbSchema.Version.Contributors
@@ -20,22 +19,22 @@ namespace DbSchema.Version.Contributors
     /// Statistics can be sorted by "none, "name" or "value", with "none" being the default sort behavior.
     ///
     /// To set contributor arguments in a project file, add the following:
-    ///
+    ///<code><![CDATA[
     /// <PropertyGroup>
     ///     <ContributorArguments Condition="'$(Configuration)' == 'Debug'">
     /// $(ContributorArguments);ModelStatistics.GenerateModelStatistics=true;ModelStatistics.SortModelStatisticsBy="name";
     ///     </ContributorArguments>
     /// <PropertyGroup>
-    ///
+    /// ]]></code>
     /// This will generate model statistics when building in Debug mode only - remove the condition to generate in all build modes.
     /// </summary>
     [ExportBuildContributor("DbSchema.Version.Contributors.ModelStatistics", "1.0")]
     public class ModelStatisticsContributor : BuildContributor
     {
-        public const string GenerateModelStatistics = "DbSchema.Version.Contributors.ModelStatistics.GenerateModelStatistics";
-        public const string SortModelStatisticsBy = "DbSchema.Version.Contributors.ModelStatistics.SortModelStatisticsBy";
-        public const string OutDir = "DbSchema.Version.Contributors.ModelStatistics.OutDir";
-        public const string ModelStatisticsFilename = "DbSchema.Version.Contributors.ModelStatistics.xml";
+        private const string GenerateModelStatistics = "DbSchema.Version.Contributors.ModelStatistics.GenerateModelStatistics";
+        private const string SortModelStatisticsBy = "DbSchema.Version.Contributors.ModelStatistics.SortModelStatisticsBy";
+        private const string OutDir = "DbSchema.Version.Contributors.ModelStatistics.OutDir";
+        private const string ModelStatisticsFilename = "DbSchema.Version.Contributors.ModelStatistics.xml";
         private enum SortBy { None, Name, Value };
         private static Dictionary<string, SortBy> SortByMap = new Dictionary<string, SortBy>(StringComparer.OrdinalIgnoreCase)
         {

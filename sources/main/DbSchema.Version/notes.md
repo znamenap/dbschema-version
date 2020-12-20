@@ -1,6 +1,10 @@
-﻿## Development Notes
+﻿# Development Notes
 
-# Design Notes
+## Other Resource Materials
+- [Compare Redgate SQL Source Control and Microsoft SQL Server Data Tools](http://dlmconsultants.com/wp-content/uploads/2018/12/Redgate-vs-SSDT-3.pdf)
+
+
+## Design Notes
 - Upgrade or Downgrade step is differenitated by column value Upgrade.
   If it is Upgrade = 0 it means downgrade step.
 
@@ -16,7 +20,6 @@
   the stored procedures invocation in the sequence of the steps ordered by `sequence`
   column up on to the the last step with the version matching the requested version.
   Depending on the actual version and the target version determines if it performs upgrade or downgrade.
-
 
 ## Implementation Points
 PENDING:

@@ -77,8 +77,8 @@
     <None Include="Invoke-DacPacDeploy.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Feature\Group\Data\system_groups.data.sql" />
-    <None Include="Feature\_Template\Data\template.data.sql" />
+    <BuildExtensionConfiguration Include="Feature\Group\Data\system_groups.data.sql" />
+    <BuildExtensionConfiguration Include="Feature\_Template\Data\template.data.sql" />
     <None Include="Application.Schema.Template.publish.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -94,7 +94,7 @@
     <Build Include="Sql\template.schema.sql" />
     <Build Include="Feature\Group\Structure\group.sql" />
     <Build Include="Feature\Membership\Structure\membership.sql" />
-    <None Include="Feature\User\Data\system_users.data.sql" />
+    <BuildExtensionConfiguration Include="Feature\User\Data\system_users.data.sql" />
     <Build Include="Feature\_Template\Structure\template.sql" />
   </ItemGroup>
   <ItemGroup>

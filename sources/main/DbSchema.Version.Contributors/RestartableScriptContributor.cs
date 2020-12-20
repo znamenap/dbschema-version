@@ -44,6 +44,7 @@ begin
     use [$(DatabaseName)]
 end
 ";
+
         /// <summary>
         /// You override the OnExecute method to do the real work of the contributor.
         /// </summary>

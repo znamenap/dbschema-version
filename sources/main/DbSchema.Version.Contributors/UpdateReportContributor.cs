@@ -17,17 +17,19 @@ namespace DbSchema.Version.Contributors
     /// if a "GenerateUpdateReport=true" contributor argument is set in the project file, in a targets file or
     /// passed as an additional argument to the DacServices API. To set in a project file, add the following:
     ///
+    ///<code><![CDATA[
     /// <PropertyGroup>
     ///     <ContributorArguments Condition="'$(Configuration)' == 'Debug'">
     /// $(ContributorArguments);DbSchema.Version.Contributors.UpdateReport.Generate=true;
     ///     </ContributorArguments>
     /// </PropertyGroup>
+    /// ]]></code>
     /// </summary>
     [ExportDeploymentPlanExecutor("DbSchema.Version.Contributors.UpdateReport", "1.0")]
     public class UpdateReportContributor : DeploymentPlanExecutor
     {
-        public const string OutDir = "DbSchema.Version.Contributors.UpdateReport.OutDir";
-        public const string GenerateUpdateReport = "DbSchema.Version.Contributors.UpdateReport.Generate";
+        private const string OutDir = "DbSchema.Version.Contributors.UpdateReport.OutDir";
+        private const string GenerateUpdateReport = "DbSchema.Version.Contributors.UpdateReport.Generate";
 
         /// <summary>
         /// Override the OnExecute method to perform actions when you execute the deployment plan for

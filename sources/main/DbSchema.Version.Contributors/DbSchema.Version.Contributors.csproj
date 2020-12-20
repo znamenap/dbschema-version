@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IncludeStaticDataContributor.cs" />
     <Compile Include="RestartableScriptContributor.cs" />
     <Compile Include="UpdateReportContributor.cs" />
     <Compile Include="ModelStatisticsContributor.cs" />
