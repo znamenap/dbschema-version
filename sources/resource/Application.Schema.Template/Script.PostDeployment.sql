@@ -13,34 +13,6 @@ Post-Deployment Script Template
 print N'Starting update'; --<< do not change me
 
 /*
--- ======================================
--- == BEGIN: Static data repopulation. ==
--- ======================================
-print 'Repopulating static data according to database schema source dafinition.'
-
-:r .\Feature\_Template\Data\template.data.sql
-go
-if @@error <> 0 and @@trancount > 0 begin rollback; end
-if @@trancount = 0 begin insert into #tmperrors(error) values (1); begin transaction; end
-go
-
-:r .\Feature\User\Data\system_users.data.sql
-go
-if @@error <> 0 and @@trancount > 0 begin rollback; end
-if @@trancount = 0 begin insert into #tmperrors(error) values (1); begin transaction; end
-go
-
-:r .\Feature\Group\Data\system_groups.data.sql
-go
-if @@error <> 0 and @@trancount > 0 begin rollback; end
-if @@trancount = 0 begin insert into #tmperrors(error) values (1); begin transaction; end
-go
-
-print 'Repopulating static data according to database schema source dafinition .... completed.'
--- ======================================
--- == END: Static data repopulation. ==
--- ======================================
-
 -- =========================================
 -- == BEGIN: Post schema migration steps. ==
 -- =========================================

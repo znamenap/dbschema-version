@@ -49,7 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IncludeStaticDataContributor.cs" />
+    <Compile Include="DeployStaticDataContributor.cs" />
+    <Compile Include="Model\DeploymentStepEnumerator.cs" />
+    <Compile Include="Model\DeploymentStepExtensions.cs" />
+    <Compile Include="Model\StaticDataModel.cs" />
     <Compile Include="RestartableScriptContributor.cs" />
     <Compile Include="UpdateReportContributor.cs" />
     <Compile Include="ModelStatisticsContributor.cs" />
