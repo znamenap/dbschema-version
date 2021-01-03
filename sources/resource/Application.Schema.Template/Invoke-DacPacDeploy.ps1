@@ -47,7 +47,10 @@ param(
 
     [Parameter()]
     [ValidateSet("Script", "Deploy")]
-    [string] $Action = "Script"
+    [string] $Action = "Script",
+
+    [Parameter()]
+    [switch] $JoinTransaction
 )
 begin {
     $ErrorActionPreference = 'Stop'
@@ -107,7 +110,7 @@ begin {
             if (-not $Path -or (-not (Test-Path -Path $Path))) {
                 throw "Cannot determine $Path on the path."
             }
-        
+
             $Item = Get-Item -Path $Path
             Write-Verbose ("{0}({1}): {2}" -f $Item.Name, $Item.VersionInfo.FileVersion, $Path)
             Write-Output $Item
@@ -191,7 +194,9 @@ process {
             "-o", "`"$OutputPath`""     # Where is the output written to
         )
         Write-Verbose "Final SqlCmd parameters: $SqlCmdParams"
-        Join-Transactions -Path $ScriptPath
+        if ($JoinTransaction.IsPresent) {
+            Join-Transactions -Path $ScriptPath
+        }
         Write-Verbose "Prepending the run command to the SQL script."
         "-- `"$SqlCmdExePath`" $SqlCmdParams", (Get-Content -Path $ScriptPath) |
             Set-Content -Path $ScriptPath -Encoding utf8

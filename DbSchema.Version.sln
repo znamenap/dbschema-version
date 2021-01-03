@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0097694F-CE00-4479-996C-8B44B0DCBEEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resource", "resource", "{C472C3D5-7A2E-4263-B993-45D5B0415284}"
+	ProjectSection(SolutionItems) = preProject
+		sources\resource\Invoke-TestTemplateBuild.ps1 = sources\resource\Invoke-TestTemplateBuild.ps1
+	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Application.Schema.Template", "sources\resource\Application.Schema.Template\Application.Schema.Template.sqlproj", "{49265350-0275-4074-8B02-717B91132C30}"
 EndProject

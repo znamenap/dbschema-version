@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DbSchema.Version.Contributors.Model;
+using DbSchema.Version.Contributors.Steps;
 using Microsoft.SqlServer.Dac.Deployment;
 using Microsoft.SqlServer.Dac.Extensibility;
 
@@ -80,7 +79,7 @@ namespace DbSchema.Version.Contributors
                 if (endOfTransaction == null)
                 {
                     PublishMessage(new ExtensibilityError(
-                        "Deployment profile has enabled IncludeTransactionalScripts but missing SqlEndTransactionStep.",
+                        "Deployment profile has enabled IncludeTransactionalScripts and is missing SqlEndTransactionStep.",
                         Severity.Error));
                     return;
                 }
@@ -102,61 +101,8 @@ namespace DbSchema.Version.Contributors
                 }
             }
 
-            var batch = new StringBuilder();
-            foreach (var staticDataModelItem in model.GetItems())
-            {
-                batch.Length = 0;
-                batch.AppendLine();
-                batch.AppendLine();
-                batch.AppendLine($"-- Input File Name: {staticDataModelItem.Item1}");
-                batch.AppendLine(staticDataModelItem.Item2.TrimEnd());
-                if (context.Options.IncludeTransactionalScripts)
-                {
-                    batch.AppendLine("go");
-                    batch.AppendLine("if @@error <> 0 and @@trancount > 0 begin rollback; end");
-                    batch.AppendLine(
-                        "if @@trancount = 0 begin insert into #tmperrors(error) values (1); begin transaction; end");
-                }
-
-                var sqlBatch = new DeploymentScriptStep(batch.ToString());
-                AddAfter(context.PlanHandle, insertionStep, sqlBatch);
-                insertionStep = sqlBatch;
-            }
-        }
-    }
-
-    /// <inheritdoc />
-    public class DeployStaticDataModelStep : DeploymentStep
-    {
-        private readonly StaticDataModel model;
-        private readonly bool isTransactional;
-
-        /// <inheritdoc />
-        public DeployStaticDataModelStep(StaticDataModel model, bool isTransactional)
-        {
-            this.model = model;
-            this.isTransactional = isTransactional;
-        }
-
-        /// <inheritdoc />
-        public override IList<string> GenerateTSQL()
-        {
-            var batch = new List<string>();
-            foreach (var staticDataModelItem in model.GetItems())
-            {
-                batch.Add(Environment.NewLine);
-                batch.Add(Environment.NewLine);
-                batch.Add($"-- Input File Name: {staticDataModelItem.Item1}{Environment.NewLine}");
-                batch.Add(staticDataModelItem.Item2.TrimEnd()+Environment.NewLine);
-                if (isTransactional)
-                {
-                    batch.Add($"go{Environment.NewLine}");
-                    batch.Add($"if @@error <> 0 and @@trancount > 0 begin rollback; end{Environment.NewLine}");
-                    batch.Add($"if @@trancount = 0 begin insert into #tmperrors(error) values (1); begin transaction; end{Environment.NewLine}");
-                }
-            }
-
-            return batch;
+            var deploymentStep = new DeployStaticDataModelStep(model, context.Options.IncludeTransactionalScripts);
+            AddAfter(context.PlanHandle, insertionStep, deploymentStep);
         }
     }
 }

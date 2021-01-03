@@ -54,6 +54,7 @@
     <Compile Include="Model\DeploymentStepExtensions.cs" />
     <Compile Include="Model\StaticDataModel.cs" />
     <Compile Include="RestartableScriptContributor.cs" />
+    <Compile Include="Steps\DeployStaticDataModelStep.cs" />
     <Compile Include="UpdateReportContributor.cs" />
     <Compile Include="ModelStatisticsContributor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
