@@ -54,34 +54,8 @@ param(
 )
 begin {
     $ErrorActionPreference = 'Stop'
-    function Join-Transactions {
-        [CmdletBinding()]
-        param(
-            [Parameter(Mandatory = $true)]
-            [ValidateNotNullOrEmpty()]
-            [string] $Path
-        )
-        process {
-            # The SqlPackage.exe generates at least one transaction
-            # and we want to join it with our pre and post updates, so in the end
-            # there is just one transaction at all.
-            Write-Verbose "Joining transactions in SQL script."
-            $ControlStart = $false
-            $ControlEnd = $false
-            (Get-Content -Path $Path) | ForEach-Object {
-                if (-not $ControlStart -and -not $ControlEnd -and ($_.Equals("IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION"))) {
-                    $ControlStart = $true
-                    $ControlEnd = $false
-                }
-                if ($ControlStart -and -not $ControlEnd -and ($_.Equals("print N'Starting update'; --<< do not change me"))) {
-                    $ControlStart = $false
-                    $ControlEnd = $true
-                }
-                Write-Output $_
-            } | Where-Object { -not $ControlStart } | Set-Content -Path $Path -Encoding utf8
-        }
-    }
-    function Get-LatesExeVersionPath {
+
+    function Get-LatestVersionExePath {
         [CmdletBinding()]
         param(
             [Parameter(Mandatory = $true)]
@@ -98,14 +72,15 @@ begin {
         process {
             $Path = if ($Path) {
                 $PSCmdlet.GetUnresolvedProviderPathFromPSPath($Path)
-            }
-            else {
+            } else {
                 $Location | ForEach-Object { Write-Debug "Observing: $_\$ExeName"; Write-Output "$_\$ExeName" } |
-                Where-Object { Test-Path -Path $_ } |
-                Get-Item -ErrorAction SilentlyContinue |
-                Sort-Object -Property VersionInfo -Descending |
-                ForEach-Object { Write-Debug ("Observed: {0}({1}): {2}" -f $_.Name, $_.VersionInfo.FileVersion, $_.FullName); $_ } |
-                Select-Object -First 1 -ExpandProperty FullName
+                    Where-Object { Test-Path -Path $_ } |
+                    Get-Item -ErrorAction SilentlyContinue |
+                    Sort-Object -Property VersionInfo -Descending |
+                    ForEach-Object {
+                        Write-Debug ("Observed: {0}({1}): {2}" -f $_.Name, $_.VersionInfo.FileVersion, $_.FullName); $_
+                    } |
+                    Select-Object -First 1 -ExpandProperty FullName
             }
             if (-not $Path -or (-not (Test-Path -Path $Path))) {
                 throw "Cannot determine $Path on the path."
@@ -117,7 +92,9 @@ begin {
         }
     }
 
-    $SqlPackageExePath = Get-LatesExeVersionPath -ExeName "SqlPackage.exe" -Path $SqlPackageExePath -Location @( "$PSScriptRoot", "$PSScriptRoot\bin",
+    $SqlPackageExePath = Get-LatestVersionExePath -ExeName "SqlPackage.exe" -Path $SqlPackageExePath -Location @(
+        "$PSScriptRoot",
+        "$PSScriptRoot\bin",
         "${env:ProgramFiles(x86)}\Microsoft Visual Studio*\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC",
         "${env:ProgramFiles}\Microsoft Visual Studio*\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC",
         "${env:ProgramFiles}\Microsoft SQL Server\*\DAC\bin",
@@ -125,7 +102,9 @@ begin {
     )
 
     if ($Deploy.IsPresent) {
-        $SqlCmdExePath = Get-LatesExeVersionPath -ExeName "SqlCmd.exe" -Path $SqlCmdExePath -Location @( "$PSScriptRoot", "$PSScriptRoot\bin",
+        $SqlCmdExePath = Get-LatestVersionExePath -ExeName "SqlCmd.exe" -Path $SqlCmdExePath -Location @(
+            "$PSScriptRoot",
+            "$PSScriptRoot\bin",
             "${env:ProgramFiles}\Microsoft SQL Server\*\Tools\Binn",
             "${env:ProgramFiles}\Microsoft SQL Server\Client SDK\ODBC\*\Tools\Binn",
             "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn",
@@ -165,12 +144,12 @@ process {
     }
     if ($Property) {
         $Property.GetEnumerator() | ForEach-Object {
-            $SqlPackageParams.Add(("/p:{0}={1}" -f $_.Key, $_.Value)) | Out-Null
+            $SqlPackageParams.Add(("`"/p:{0}={1}`"" -f $_.Key, $_.Value)) | Out-Null
         }
     }
     if ($Variable) {
         $Variable.GetEnumerator() | ForEach-Object {
-            $SqlPackageParams.Add(("/Variable:{0}={1}" -f $_.Key, $_.Value)) | Out-Null
+            $SqlPackageParams.Add(("`"/Variables:{0}={1}`"" -f $_.Key, $_.Value)) | Out-Null
         }
     }
     if ($ArgumentList) {
@@ -194,9 +173,7 @@ process {
             "-o", "`"$OutputPath`""     # Where is the output written to
         )
         Write-Verbose "Final SqlCmd parameters: $SqlCmdParams"
-        if ($JoinTransaction.IsPresent) {
-            Join-Transactions -Path $ScriptPath
-        }
+
         Write-Verbose "Prepending the run command to the SQL script."
         "-- `"$SqlCmdExePath`" $SqlCmdParams", (Get-Content -Path $ScriptPath) |
             Set-Content -Path $ScriptPath -Encoding utf8
@@ -211,9 +188,11 @@ process {
 
             & "$SqlCmdExePath" $SqlCmdParams
             if ($LASTEXITCODE -ne 0) {
-                if (Test-Path -path $OutputPath) {
-                    Write-Verbose "Last 10 lines of the ouptut file:"
-                    Get-Content -Path $OutputPath -Tail 10
+                if (Test-Path -Path $OutputPath) {
+                    Write-Verbose "Last 10 lines of the ouptut file: $OutputPath"
+                    Get-Content -Path $OutputPath -Tail 10 | ForEach-Object {
+                        Write-Warning -Message ("OUTPUT: {0}" -f $_)
+                    }
                 }
                 Write-Error "Deployment of $ScriptPath failed."
             } else {

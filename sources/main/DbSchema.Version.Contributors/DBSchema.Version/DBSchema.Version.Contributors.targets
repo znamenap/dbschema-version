@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
     <PropertyGroup>
       <BuildContributors Condition="'$(Configuration)' == 'Debug'">$(BuildContributors)</BuildContributors>
-      <DeploymentContributors Condition="'$(Configuration)' == 'Debug'">$(DeploymentContributors);DbSchema.Version.Contributors.DeployStaticData</DeploymentContributors>
+      <DeploymentContributors Condition="'$(Configuration)' == 'Debug'">$(DeploymentContributors);DbSchema.Version.Contributors.DeployStaticData;DbSchema.Version.Contributors.DeploySchemaVersion</DeploymentContributors>
       <ContributorArguments Condition="'$(Configuration)' == 'Debug'">$(ContributorArguments);</ContributorArguments>
     </PropertyGroup>
 

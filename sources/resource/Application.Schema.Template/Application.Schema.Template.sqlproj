@@ -23,9 +23,9 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultSchema>template</DefaultSchema>
-    <OutputPath>..\..\..\output\template\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\template\obj\</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\template\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <OutputPath>..\..\..\output\resource\bin\$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\resource\obj\</BaseIntermediateOutputPath>
+    <DocumentationFile>..\..\..\output\resource\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -113,15 +113,21 @@
     </ArtifactReference>
   </ItemGroup>
   <ItemGroup>
-    <SqlCmdVariable Include="AppName">
-      <DefaultValue>
-      </DefaultValue>
+    <SqlCmdVariable Include="ApplicationName">
+      <DefaultValue>$(Name)</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
     </SqlCmdVariable>
-    <SqlCmdVariable Include="AppVersion">
-      <DefaultValue>
-      </DefaultValue>
+    <SqlCmdVariable Include="ApplicationSchemaName">
+      <DefaultValue>$(DefaultSchema)</DefaultValue>
       <Value>$(SqlCmdVar__2)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ApplicationUpgradeVersion">
+      <DefaultValue>NULL</DefaultValue>
+      <Value>$(SqlCmdVar__3)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ApplicationDowngradeVersion">
+      <DefaultValue>NULL</DefaultValue>
+      <Value>$(SqlCmdVar__4)</Value>
     </SqlCmdVariable>
   </ItemGroup>
 </Project>

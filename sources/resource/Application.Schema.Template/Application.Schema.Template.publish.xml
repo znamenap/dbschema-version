@@ -14,11 +14,17 @@
     <ScriptNewConstraintValidation>False</ScriptNewConstraintValidation>
   </PropertyGroup>
   <ItemGroup>
-    <SqlCmdVariable Include="AppName">
+    <SqlCmdVariable Include="ApplicationName">
       <Value>template</Value>
     </SqlCmdVariable>
-    <SqlCmdVariable Include="AppVersion">
-      <Value>1.0</Value>
+    <SqlCmdVariable Include="ApplicationSchemaName">
+      <Value>template</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ApplicationDowngradeVersion">
+      <Value>NULL</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ApplicationUpgradeVersion">
+      <Value>2.1.0</Value>
     </SqlCmdVariable>
   </ItemGroup>
 </Project>
