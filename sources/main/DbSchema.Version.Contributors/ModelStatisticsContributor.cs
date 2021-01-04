@@ -34,6 +34,7 @@ namespace DbSchema.Version.Contributors
         private const string GenerateModelStatistics = "DbSchema.Version.Contributors.ModelStatistics.GenerateModelStatistics";
         private const string SortModelStatisticsBy = "DbSchema.Version.Contributors.ModelStatistics.SortModelStatisticsBy";
         private const string OutDir = "DbSchema.Version.Contributors.ModelStatistics.OutDir";
+        private const string FileName = "DbSchema.Version.Contributors.ModelStatistics.FileName";
         private const string ModelStatisticsFilename = "DbSchema.Version.Contributors.ModelStatistics.xml";
         private enum SortBy { None, Name, Value };
         private static Dictionary<string, SortBy> SortByMap = new Dictionary<string, SortBy>(StringComparer.OrdinalIgnoreCase)
@@ -112,11 +113,17 @@ namespace DbSchema.Version.Contributors
                 {
                     outDir = ".";
                 }
-                string filePath = Path.Combine(outDir, ModelStatisticsFilename);
+
+                string fileName;
+                if (!context.Arguments.TryGetValue(FileName, out fileName))
+                {
+                    fileName = ModelStatisticsFilename;
+                }
+                string filePath = Path.Combine(outDir, fileName);
                 // Save the XML file and tell the user
                 // where it was saved.
                 xRoot.Save(filePath);
-                ExtensibilityError resultArg = new ExtensibilityError("Statistsics of the model was saved to " + filePath, Severity.Message);
+                ExtensibilityError resultArg = new ExtensibilityError("Statistics of the model was saved to " + filePath, Severity.Message);
                 errors.Add(resultArg);
             }
         }

@@ -26,6 +26,8 @@
     <OutputPath>..\..\..\output\resource\bin\$(Configuration)\</OutputPath>
     <BaseIntermediateOutputPath>..\..\..\output\resource\obj\</BaseIntermediateOutputPath>
     <DocumentationFile>..\..\..\output\resource\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <DeployStaticDataEnabled>True</DeployStaticDataEnabled>
+    <DeploySchemaVersionEnabled>True</DeploySchemaVersionEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -47,6 +49,8 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ModelStatisticsEnabled>True</ModelStatisticsEnabled>
+    <UpdateReportEnabled>True</UpdateReportEnabled>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -56,7 +60,7 @@
   </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Project="..\..\..\output\main\bin\$(Configuration)\DBSchema.Version\DBSchema.Version.Contributors.targets" />
+  <Import Project="..\..\..\output\main\bin\$(Configuration)\DbSchema.Version\DbSchema.Version.Contributors.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Feature" />
@@ -114,11 +118,11 @@
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="ApplicationName">
-      <DefaultValue>$(Name)</DefaultValue>
+      <DefaultValue>Application.Schema.Template</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
     </SqlCmdVariable>
     <SqlCmdVariable Include="ApplicationSchemaName">
-      <DefaultValue>$(DefaultSchema)</DefaultValue>
+      <DefaultValue>template</DefaultValue>
       <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
     <SqlCmdVariable Include="ApplicationUpgradeVersion">

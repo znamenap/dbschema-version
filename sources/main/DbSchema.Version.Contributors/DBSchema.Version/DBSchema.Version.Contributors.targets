@@ -1,13 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-    <PropertyGroup>
-      <BuildContributors Condition="'$(Configuration)' == 'Debug'">$(BuildContributors)</BuildContributors>
-      <DeploymentContributors Condition="'$(Configuration)' == 'Debug'">$(DeploymentContributors);DbSchema.Version.Contributors.DeployStaticData;DbSchema.Version.Contributors.DeploySchemaVersion</DeploymentContributors>
-      <ContributorArguments Condition="'$(Configuration)' == 'Debug'">$(ContributorArguments);</ContributorArguments>
-    </PropertyGroup>
+<Project DefaultTargets="TestBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+
+  <!--
+    IMPORTANT NOTE: The order of the contributors is important. Keep the list order as it is outlined below.
+  -->
+
+  <ItemGroup Condition=" '$(DeployStaticDataEnabled)' != '' And $(DeployStaticDataEnabled) == true">
+    <!--
+      Deployment Contributor: DEPLOY STATIC DATA
+      This deployment contributor modifies the deployment plan by adding steps to invoke SQL scripts having set the build
+      action to Deployment Extension Configuration and having the file name ending with ".data.sql". This is mainly
+      used to deploy the static data via MERGE statements with every SQL deployment to perform data alignment.
+      It supports the transacted portions of the script and it is the main reason to use it with that feature.
+    -->
+    <DeploymentContributorItem Include="DbSchema.Version.Contributors.DeployStaticData" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(DeploySchemaVersionEnabled)' != '' And $(DeploySchemaVersionEnabled) == True And ('$(RestartableScriptEnabled)' == '' Or $(RestartableScriptEnabled) == False) ">
+    <!--
+      Deployment Contributor: DEPLOY SCHEMA VERSION
+      This deployment contributor modifies the deployment plan by adding steps to invoke [schema_version].[invoke_version_change]
+      1) at the begining after the PreDeployment script for potential downgrades specified
+        via SqlCmd variable ApplicationDowngradeVersion set to the version and not "NULL" string value.
+      2) at the end before the PostDeployment script for potential upgrades specified
+        via SqlCmd variable ApplicationUpgradeVersion set to the version and not "NULL" string value.
+      It supports the transacted portions of the script and it is the main reason to use it with that feature.
+      THIS IS INCOMPATIBLE CONTRIBUTOR USAGE WITH "RESTARTABLE SCRIPT" CONTRIBUTOR.
+    -->
+    <DeploymentContributorItem Include="DbSchema.Version.Contributors.DeploySchemaVersion" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(RestartableScriptEnabled)' != '' And $(RestartableScriptEnabled) == True And ('$(DeploySchemaVersionEnabled)' == '' Or $(DeploySchemaVersionEnabled) == False) ">
+    <!--
+      Deployment Contributor: RESTARTABLE SCRIPT
+      This deployment contributor modifies a deployment plan by adding if statements
+      to the existing batches in order to make a deployment script able to be rerun to completion
+      if an error is encountered during execution
+      THIS IS INCOMPATIBLE CONTRIBUTOR USAGE WITH "DEPLOY SCHEMA VERSION VERSION" CONTRIBUTOR.
+      This is the contributor built from the SSDT examples from documentation site:
+      https://docs.microsoft.com/en-us/sql/ssdt/walkthrough-extend-database-project-deployment-to-modify-the-deployment-plan
+    -->
+    <DeploymentContributorItem Include="DbSchema.Version.Contributors.RestartableScript" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(UpdateReportEnabled)' != '' And $(UpdateReportEnabled) == True ">
+    <!--
+      Deployment Contributor: GENERATE UPDATE REPORT
+      The contributor that generates a report detailing the steps in the deployment plan. Will only run
+      if a "GenerateUpdateReport=true" contributor argument is set in the project file, in a targets file or
+      passed as an additional argument to the DacServices API.
+      This is the contributor built from the SSDT examples from documentation site:
+      https://docs.microsoft.com/en-us/sql/ssdt/walkthrough-extend-database-project-deployment-to-analyze-the-deployment-plan
+    -->
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.UpdateReport.OutDir" Condition=" '$(OutputPath)' != '' ">
+      <Value>$(OutputPath)</Value>
+    </ContributorArgumentItem>
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.UpdateReport.FileName" Condition=" '$(Name)' != '' ">
+      <Value>$(Name)</Value>
+    </ContributorArgumentItem>
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.UpdateReport.Generate">
+      <Value>true</Value>
+    </ContributorArgumentItem>
+    <DeploymentContributorItem Include="DbSchema.Version.Contributors.UpdateReport" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(ModelStatisticsEnabled)' != '' And $(ModelStatisticsEnabled) == True ">
+    <!--
+      Build Contributor: GENERATE MODEL STATISTICS
+      Allows to produce the XML file with the database model statistics.
+      This is the contributor built from the SSDT examples from documentation site:
+      https://docs.microsoft.com/en-us/sql/ssdt/walkthrough-extend-database-project-build-to-generate-model-statistics
+    -->
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.ModelStatistics.GenerateModelStatistics">
+      <Value>true</Value>
+    </ContributorArgumentItem>
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.ModelStatistics.OutDir" Condition=" '$(OutputPath)' != '' ">
+      <Value>$(OutputPath)</Value>
+    </ContributorArgumentItem>
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.ModelStatistics.FileName" Condition=" '$(Name)' != '' ">
+      <Value>$(Name).ModelStatistics.xml</Value>
+    </ContributorArgumentItem>
+    <ContributorArgumentItem Include="DbSchema.Version.Contributors.ModelStatistics.SortModelStatisticsBy">
+      <!--Possible values:  none|name|value -->
+      <Value>none</Value>
+    </ContributorArgumentItem>
+    <BuildContributorItem Include="DbSchema.Version.Contributors.ModelStatistics" />
+  </ItemGroup>
+
+  <!-- SSDT Contributors Plumbing -->
+  <PropertyGroup>
+    <BuildContributors>$(BuildContributors);@(BuildContributorItem)</BuildContributors>
+    <DeploymentContributors>$(DeploymentContributors);@(DeploymentContributorItem)</DeploymentContributors>
+    <ContributorArguments>$(ContributorArguments);@(ContributorArgumentItem->'%(Identity)=%(Value)',';')</ContributorArguments>
+  </PropertyGroup>
 
   <Target Name="CustomAfterBuild" AfterTargets="SqlBuild">
     <Message Importance="normal" Text="DacPacRootPath: $(DacPacRootPath)" />
+  </Target>
+
+  <Target Name="TestBuild">
+    <Message Text="ContributorArguments: $(ContributorArguments)" />
+    <Message Text="BuildContributors: $(BuildContributors)" />
+    <Message Text="DeploymentContributors: $(DeploymentContributors)" />
   </Target>
 
 </Project>

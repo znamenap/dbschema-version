@@ -29,6 +29,7 @@ namespace DbSchema.Version.Contributors
     public class UpdateReportContributor : DeploymentPlanExecutor
     {
         private const string OutDir = "DbSchema.Version.Contributors.UpdateReport.OutDir";
+        private const string FileName = "DbSchema.Version.Contributors.UpdateReport.FileName";
         private const string GenerateUpdateReport = "DbSchema.Version.Contributors.UpdateReport.Generate";
 
         /// <summary>
@@ -65,7 +66,14 @@ namespace DbSchema.Version.Contributors
 
             // We will output to the same directory where the deployment script
             // is output or to the current directory
-            string reportPrefix = context.Options.TargetDatabaseName;
+            string reportPrefix;
+            if (context.Arguments.TryGetValue(FileName, out reportPrefix))
+            {
+                reportPrefix = context.Options.TargetDatabaseName;
+            }
+            var summaryFileName = Path.ChangeExtension(reportPrefix,".summary.xml");
+            var detailsFileName = Path.ChangeExtension(reportPrefix, ".details.xml");
+
             string reportPath;
             if (!context.Arguments.TryGetValue(OutDir, out reportPath))
             {
@@ -78,8 +86,9 @@ namespace DbSchema.Version.Contributors
                     reportPath = Environment.CurrentDirectory;
                 }
             }
-            FileInfo summaryReportFile = new FileInfo(Path.Combine(reportPath, reportPrefix + ".summary.xml"));
-            FileInfo detailsReportFile = new FileInfo(Path.Combine(reportPath, reportPrefix + ".details.xml"));
+
+            FileInfo summaryReportFile = new FileInfo(Path.Combine(reportPath, summaryFileName));
+            FileInfo detailsReportFile = new FileInfo(Path.Combine(reportPath, detailsFileName));
 
             // Generate the reports by using the helper class DeploymentReportWriter
             DeploymentReportWriter writer = new DeploymentReportWriter(context);
