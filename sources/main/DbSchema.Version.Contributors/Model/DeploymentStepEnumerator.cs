@@ -1,32 +1,40 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.SqlServer.Dac.Deployment;
 
 namespace DbSchema.Version.Contributors.Model
 {
-    public class DeploymentStepEnumerable : IEnumerable<DeploymentStep>
+    /// <summary>
+    /// Represents the enumerable concept of linked list of Deployment Steps.
+    /// </summary>
+    public sealed class DeploymentStepEnumerable : IEnumerable<DeploymentStep>
     {
         private readonly DeploymentStep firstStep;
 
+        /// <summary>
+        /// Returns the Enumerable concept of the next linked list items starting from the provided first step.
+        /// </summary>
+        /// <param name="firstStep">The first step where to start enumerating the linked list of deployment steps.</param>
+        /// <returns>Returns the Enumerable concept of deployment steps.</returns>
         public static IEnumerable<DeploymentStep> AsEnumerable(DeploymentStep firstStep)
         {
             return new DeploymentStepEnumerable(firstStep);
         }
 
-        public DeploymentStepEnumerable(DeploymentStep firstStep)
+        private DeploymentStepEnumerable(DeploymentStep firstStep)
         {
             this.firstStep = firstStep ?? throw new ArgumentNullException(nameof(firstStep));
         }
 
+        /// <inheritdoc />
         public IEnumerator<DeploymentStep> GetEnumerator()
         {
             return new DeploymentStepEnumerator(firstStep);
         }
 
+        /// <summary>Returns an enumerator that iterates through a collection.</summary>
+        /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
