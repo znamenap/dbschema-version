@@ -47,10 +47,7 @@ param(
 
     [Parameter()]
     [ValidateSet("Script", "Deploy")]
-    [string] $Action = "Script",
-
-    [Parameter()]
-    [switch] $JoinTransaction
+    [string] $Action = "Script"
 )
 begin {
     $ErrorActionPreference = 'Stop'
