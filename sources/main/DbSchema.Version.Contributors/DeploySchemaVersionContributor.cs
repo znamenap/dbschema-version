@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using DbSchema.Version.Contributors.Model;
 using DbSchema.Version.Contributors.Steps;
 using Microsoft.SqlServer.Dac.Deployment;
@@ -30,7 +28,7 @@ namespace DbSchema.Version.Contributors
                     schemaNameSqlCmdVarName: "ApplicationSchemaName",
                     applicationNameSqlCmdVarName: "ApplicationName",
                     applicationVersionSqlCmdVarName: "ApplicationDowngradeVersion");
-                AddAfter(context.PlanHandle, downgradeInsertionStep, downgradeStep);
+                AddBefore(context.PlanHandle, downgradeInsertionStep, downgradeStep);
             }
 
             var upgradeInsertionStep = GetUpgradeInsertionStep(context);
@@ -40,7 +38,7 @@ namespace DbSchema.Version.Contributors
                     schemaNameSqlCmdVarName: "ApplicationSchemaName",
                     applicationNameSqlCmdVarName: "ApplicationName",
                     applicationVersionSqlCmdVarName: "ApplicationUpgradeVersion");
-                AddBefore(context.PlanHandle, upgradeInsertionStep, upgradeStep);
+                AddAfter(context.PlanHandle, upgradeInsertionStep, upgradeStep);
             }
         }
 
@@ -58,7 +56,7 @@ namespace DbSchema.Version.Contributors
                     return desiredStep;
                 }
 
-                desiredStep = endOfTransaction;
+                desiredStep = endOfTransaction.Previous;
             }
             else
             {
@@ -70,7 +68,7 @@ namespace DbSchema.Version.Contributors
                 }
                 else
                 {
-                    desiredStep = beginPostDeploymentStep;
+                    desiredStep = beginPostDeploymentStep.Previous;
                 }
             }
 

@@ -22,9 +22,10 @@
     </SqlCmdVariable>
     <SqlCmdVariable Include="ApplicationDowngradeVersion">
       <Value>NULL</Value>
+      <!-- <Value>0.0.0</Value> -->
     </SqlCmdVariable>
     <SqlCmdVariable Include="ApplicationUpgradeVersion">
-      <Value>2.1.0</Value>
+      <Value>1.0.0</Value>
     </SqlCmdVariable>
   </ItemGroup>
 </Project>

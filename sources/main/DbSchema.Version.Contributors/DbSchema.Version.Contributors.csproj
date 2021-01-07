@@ -78,9 +78,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rem $TargetPath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Dac\150\Extensions\"; ls .\output\main\bin\Debug\ -Filter DbSchema.Version.Contributors.* | cp -Verbose -Recurse -Force -Destination (New-Item -ItemType Directory -Path $TargetPath -Force); ls $TargetPath; touch  .\sources\resource\Application.Schema.Template\Application.Schema.Template.sqlproj;  msbuild .\sources\resource\Application.Schema.Template\Application.Schema.Template.sqlproj /p:Configuration=Debug</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
