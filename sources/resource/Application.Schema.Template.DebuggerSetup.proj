@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+
+  <!--
+  ! WARNING !
+  This is only debugging purpose project file. The logic is set up so, it copies contributor files into ContributorDestinationPath
+  as same as it is required via Visual Studio. This actually requires administrative privileges so, you must run it as elevated with
+  admin. Then it starts building the SQL project at ContributorConsumerPath. Then it schedules the PowerShell command to wait until
+  the MSBuild completes building of this project and then it removes the binaries copied over previously. It does not care if you
+  had the files there before!
+
+  This is aimed for Visual Studio 2019 Community version only.
+  Debugger settings:
+    Start external program: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
+    Command line arguments: -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 <path-to-repo>\sources\resource\Application.Schema.Template.DebuggerSetup.proj
+    Working directory: <path-to-repo>\output\main\bin\Debug\
+  -->
+
+  <PropertyGroup>
+    <DSPVersion Condition="'$(DSPVersion)' == ''">150</DSPVersion>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Debug</Platform>
+    <FileMask>DbSchema.Version.Contributors</FileMask>
+    <PublishEnabled Condition="'$(PublishEnabled)' == ''">true</PublishEnabled>
+    <SqlPublishProfilePath Condition="'$(SqlPublishProfilePath)' == ''">Application.Schema.Template.publish.xml</SqlPublishProfilePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ContributorConsumerTarget Include="Rebuild" />
+    <ContributorConsumerTarget Include="Publish" Condition=" '$(PublishEnabled)' != '' And $(PublishEnabled) == True" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)\Application.Schema.Template\Application.Schema.Template.sqlproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContributorSourcePath Include="$(MSBuildProjectDirectory)\..\..\output\main\bin\$(Configuration)\DbSchema.Version.Contributors*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContributorDestinationPath Include="$(ProgramW6432)\Microsoft SQL Server\$(DSPVersion)\DAC\bin" />
+    <ContributorDestinationPath Include="$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\$(DSPVersion)\Extensions\" />
+  </ItemGroup>
+
+  <UsingTask TaskName="Pause" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    <ParameterGroup />
+    <Task>
+      <Using Namespace="System"/>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          System.Console.WriteLine("Press ENTER to continue ...");
+          System.Console.ReadLine();
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="GetProcessId" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ProcessId ParameterType="System.Int32" Required="false" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          ProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="ExecAsync" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <!--The file path is the full path to the executable file to run-->
+      <FilePath ParameterType="System.String" Required="true" />
+      <!--The arguments should contain all the command line arguments that need to be sent to the application-->
+      <Arguments ParameterType="System.String" Required="true" />
+      <ChildProcessId ParameterType="System.Int32" Required="false" Output="true" />
+      <ParentProcessId ParameterType="System.Int32" Required="false" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          string name = System.IO.Path.GetFileNameWithoutExtension(FilePath);
+          Log.LogMessage("Starting {0} {1}", FilePath, Arguments);
+          System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo(FilePath, Arguments);
+          processStartInfo.UseShellExecute = false;
+          processStartInfo.CreateNoWindow = true;
+          var childProcess = System.Diagnostics.Process.Start(processStartInfo);
+          ChildProcessId = childProcess.Id;
+          var parentProcess = System.Diagnostics.Process.GetCurrentProcess();
+          ParentProcessId = parentProcess.Id;
+          Log.LogMessage("Started process {0} with process id {1} from parent process id {2}.", name, ChildProcessId, ParentProcessId);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="ExpandContributorDestinationFullPath">
+    <FindUnderPath Files="@(ContributorSourcePath)" Path="%(ContributorSourcePath.RelativeDir)">
+      <Output TaskParameter="InPath" ItemName="FilesFoundInPath" />
+    </FindUnderPath>
+    <Message Text="FilesFoundInPath: %(FilesFoundInPath.FullPath)" />
+    <ItemGroup>
+      <ContributorDestinationPathItemSource Include="@(FilesFoundInPath->'%(Filename)%(Extension)')">
+        <NewPath>%(ContributorDestinationPath.FullPath)</NewPath>
+      </ContributorDestinationPathItemSource>
+    </ItemGroup>
+    <ItemGroup>
+      <ContributorDestinationPathItem Include="@(ContributorDestinationPathItemSource->'%(NewPath)\%(Filename)%(Extension)')" />
+    </ItemGroup>
+    <Message Text="ContributorDestinationPathItem: %(ContributorDestinationPathItem.FullPath)" />
+    <Pause />
+  </Target>
+
+  <Target Name="CopyContributors" DependsOnTargets="ExpandContributorDestinationFullPath">
+    <Copy SourceFiles="@(ContributorSourcePath)" DestinationFolder="%(ContributorDestinationPath.Identity)"
+          ContinueOnError="true"
+          Condition="Exists('%(ContributorDestinationPath.Identity)')">
+      <Output TaskParameter="CopiedFiles" ItemName="FilesToRemove" />
+    </Copy>
+    <Pause />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="CopyContributors">
+    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" />
+    <MSBuild Projects="%(ContributorConsumerPath.Identity)" Targets="@(ContributorConsumerTarget)"
+             Properties="SqlPublishProfilePath=$(SqlPublishProfilePath)" />
+    <Pause />
+    <GetProcessId>
+      <Output TaskParameter="ProcessId" PropertyName="ProcessId" />
+    </GetProcessId>
+    <ExecAsync FilePath="powershell.exe" Arguments='-noprofile -command "[System.Diagnostics.Process]::GetProcessById($(ProcessId)).WaitForExit(); $items= %27@(ContributorDestinationPathItem)%27 -split %27;%27; foreach($f in $items) { $f; Remove-Item -Verbose $f }"' />
+    <Pause />
+  </Target>
+
+</Project>
