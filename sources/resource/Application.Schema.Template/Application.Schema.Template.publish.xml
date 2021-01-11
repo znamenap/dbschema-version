@@ -7,7 +7,7 @@
     <TargetConnectionString>Data Source=(localdb)\ProjectsV13;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
-    <ScriptDatabaseOptions>False</ScriptDatabaseOptions>
+    <ScriptDatabaseOptions>True</ScriptDatabaseOptions>
     <GenerateSmartDefaults>True</GenerateSmartDefaults>
     <IncludeTransactionalScripts>True</IncludeTransactionalScripts>
     <ScriptDatabaseCompatibility>True</ScriptDatabaseCompatibility>
@@ -21,8 +21,8 @@
       <Value>template</Value>
     </SqlCmdVariable>
     <SqlCmdVariable Include="ApplicationDowngradeVersion">
-      <Value>NULL</Value>
-      <!-- <Value>0.0.0</Value> -->
+      <!--<Value>NULL</Value>-->
+       <Value>0.0.0</Value>
     </SqlCmdVariable>
     <SqlCmdVariable Include="ApplicationUpgradeVersion">
       <Value>1.0.0</Value>

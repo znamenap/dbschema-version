@@ -1,1 +1,1 @@
-﻿create schema [template];
+create schema [template] authorization [dbo];

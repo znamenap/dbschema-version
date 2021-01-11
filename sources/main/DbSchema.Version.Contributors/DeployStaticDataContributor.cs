@@ -72,37 +72,39 @@ namespace DbSchema.Version.Contributors
 
             PublishMessage(new ExtensibilityError("Applying static data model items into deployment plan.",
                 Severity.Message));
-            DeploymentStep insertionStep;
-            if (context.Options.IncludeTransactionalScripts)
-            {
-                var endOfTransaction = context.PlanHandle.Head.NextOfType<SqlEndTransactionStep>().LastOrDefault();
-                if (endOfTransaction == null)
-                {
-                    PublishMessage(new ExtensibilityError(
-                        "Deployment profile has enabled IncludeTransactionalScripts and is missing SqlEndTransactionStep.",
-                        Severity.Error));
-                    return;
-                }
 
-                insertionStep = endOfTransaction.Previous;
-            }
-            else
-            {
-                var beginPostDeploymentStep =
-                    context.PlanHandle.Head.NextOfType<BeginPostDeploymentScriptStep>().FirstOrDefault();
+            // If there is no change provided then there is no transaction to bound to.
+            // Hence we change the aspect of our model to become non transactional.
+            // We're not able to insert the SqlBeginTransactionStep as this is too late to make it.
+            var isTransactional = context.Options.IncludeTransactionalScripts &&
+                                  context.PlanHandle.Head.NextOfType<SqlBeginTransactionStep>().Any();
 
-                if (beginPostDeploymentStep == null)
-                {
-                    insertionStep = context.PlanHandle.Tail;
-                }
-                else
-                {
-                    insertionStep = beginPostDeploymentStep.Previous;
-                }
-            }
+            var insertionStep = GetStaticDataInsertionStep(context, isTransactional);
 
-            var deploymentStep = new DeployStaticDataModelStep(model, context.Options.IncludeTransactionalScripts);
-            AddAfter(context.PlanHandle, insertionStep, deploymentStep);
+            var deploymentStep = new DeployStaticDataModelStep(model, isTransactional);
+            AddBefore(context.PlanHandle, insertionStep, deploymentStep);
         }
+
+        private DeploymentStep GetStaticDataInsertionStep(DeploymentPlanContributorContext context, bool isTransactional)
+        {
+            var desiredStep = context.PlanHandle.Head;
+            if (isTransactional)
+            {
+                var endOfTransaction = desiredStep.NextOfType<SqlEndTransactionStep>().LastOrDefault();
+                if (endOfTransaction != null)
+                {
+                    return endOfTransaction;
+                }
+            }
+
+            var beginPostDeploymentStep = desiredStep.NextOfType<BeginPostDeploymentScriptStep>().FirstOrDefault();
+            if (beginPostDeploymentStep != null)
+            {
+                return beginPostDeploymentStep;
+            }
+
+            return desiredStep;
+        }
+
     }
 }

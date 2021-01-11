@@ -3,6 +3,7 @@ using DbSchema.Version.Contributors.Model;
 using DbSchema.Version.Contributors.Steps;
 using Microsoft.SqlServer.Dac.Deployment;
 using Microsoft.SqlServer.Dac.Extensibility;
+using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 namespace DbSchema.Version.Contributors
 {
@@ -21,88 +22,70 @@ namespace DbSchema.Version.Contributors
         {
             PublishMessage(new ExtensibilityError("Applying schema version change into deployment plan.", Severity.Message));
 
-            var downgradeInsertionStep = GetDowngradeInsertionStep(context);
+            // If there is no change provided then there is no transaction to bound to.
+            // Hence we change the aspect of our model to become non transactional.
+            // We're not able to insert the SqlBeginTransactionStep as this is too late to make it.
+            var isTransactional = context.Options.IncludeTransactionalScripts &&
+                                  context.PlanHandle.Head.NextOfType<SqlBeginTransactionStep>().Any();
+
+            var downgradeInsertionStep = GetDowngradeInsertionStep(context, isTransactional);
             if (downgradeInsertionStep != null)
             {
-                var downgradeStep = new DeploySchemaVersionStep(context.Options.IncludeTransactionalScripts,
+                var downgradeStep = new DeploySchemaVersionStep(isTransactional,
                     schemaNameSqlCmdVarName: "ApplicationSchemaName",
                     applicationNameSqlCmdVarName: "ApplicationName",
                     applicationVersionSqlCmdVarName: "ApplicationDowngradeVersion");
-                AddBefore(context.PlanHandle, downgradeInsertionStep, downgradeStep);
+                AddAfter(context.PlanHandle, downgradeInsertionStep, downgradeStep);
             }
 
-            var upgradeInsertionStep = GetUpgradeInsertionStep(context);
+            var upgradeInsertionStep = GetUpgradeInsertionStep(context, isTransactional);
             if (upgradeInsertionStep != null)
             {
-                var upgradeStep = new DeploySchemaVersionStep(context.Options.IncludeTransactionalScripts,
+                var upgradeStep = new DeploySchemaVersionStep(isTransactional,
                     schemaNameSqlCmdVarName: "ApplicationSchemaName",
                     applicationNameSqlCmdVarName: "ApplicationName",
                     applicationVersionSqlCmdVarName: "ApplicationUpgradeVersion");
-                AddAfter(context.PlanHandle, upgradeInsertionStep, upgradeStep);
+                AddBefore(context.PlanHandle, upgradeInsertionStep, upgradeStep);
             }
         }
 
-        private DeploymentStep GetUpgradeInsertionStep(DeploymentPlanContributorContext context)
+        private DeploymentStep GetUpgradeInsertionStep(DeploymentPlanContributorContext context, bool isTransactional)
         {
-            DeploymentStep desiredStep = context.PlanHandle.Head;
-            if (context.Options.IncludeTransactionalScripts)
+            var desiredStep = context.PlanHandle.Head;
+            if (isTransactional)
             {
                 var endOfTransaction = desiredStep.NextOfType<SqlEndTransactionStep>().LastOrDefault();
-                if (endOfTransaction == null)
+                if (endOfTransaction != null)
                 {
-                    PublishMessage(new ExtensibilityError(
-                        "Deployment profile has enabled IncludeTransactionalScripts but missing SqlEndTransactionStep.",
-                        Severity.Error));
-                    return desiredStep;
+                    return endOfTransaction;
                 }
-
-                desiredStep = endOfTransaction.Previous;
             }
-            else
-            {
-                var beginPostDeploymentStep = desiredStep.NextOfType<BeginPostDeploymentScriptStep>().FirstOrDefault();
 
-                if (beginPostDeploymentStep == null)
-                {
-                    desiredStep = context.PlanHandle.Tail;
-                }
-                else
-                {
-                    desiredStep = beginPostDeploymentStep.Previous;
-                }
+            var beginPostDeploymentStep = desiredStep.NextOfType<BeginPostDeploymentScriptStep>().FirstOrDefault();
+            if (beginPostDeploymentStep != null)
+            {
+                return beginPostDeploymentStep;
             }
 
             return desiredStep;
         }
 
-        private DeploymentStep GetDowngradeInsertionStep(DeploymentPlanContributorContext context)
+        private DeploymentStep GetDowngradeInsertionStep(DeploymentPlanContributorContext context, bool isTransactional)
         {
-            DeploymentStep desiredStep = context.PlanHandle.Head;
-            if (context.Options.IncludeTransactionalScripts)
+            var desiredStep = context.PlanHandle.Head;
+            if (isTransactional)
             {
                 var beginTransactionStep = desiredStep.NextOfType<SqlBeginTransactionStep>().LastOrDefault();
-                if (beginTransactionStep == null)
+                if (beginTransactionStep != null)
                 {
-                    PublishMessage(new ExtensibilityError(
-                        "Deployment profile has enabled IncludeTransactionalScripts but missing SqlBeginTransactionStep.",
-                        Severity.Error));
-                    return desiredStep;
+                    return beginTransactionStep;
                 }
-
-                desiredStep = beginTransactionStep.Next;
             }
-            else
-            {
-                var endPreDeploymentStep = desiredStep.NextOfType<EndPreDeploymentScriptStep>().FirstOrDefault();
 
-                if (endPreDeploymentStep == null)
-                {
-                    desiredStep = context.PlanHandle.Head;
-                }
-                else
-                {
-                    desiredStep = endPreDeploymentStep.Next;
-                }
+            var endPreDeploymentStep = desiredStep.NextOfType<EndPreDeploymentScriptStep>().FirstOrDefault();
+            if (endPreDeploymentStep != null)
+            {
+                desiredStep = endPreDeploymentStep;
             }
 
             return desiredStep;
