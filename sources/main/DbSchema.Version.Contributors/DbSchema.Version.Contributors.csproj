@@ -49,12 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TransactionalDeploymentPlanModifier.cs" />
     <Compile Include="DeployStaticDataContributor.cs" />
     <Compile Include="DeploySchemaVersionContributor.cs" />
     <Compile Include="Model\DeploymentStepEnumerator.cs" />
     <Compile Include="Model\DeploymentStepExtensions.cs" />
     <Compile Include="Model\StaticDataModel.cs" />
     <Compile Include="RestartableScriptContributor.cs" />
+    <Compile Include="Steps\CustomSqlBeginTransactionStep.cs" />
+    <Compile Include="Steps\CustomSqlEndTransactionStep.cs" />
     <Compile Include="Steps\DeploySchemaVersionStep.cs" />
     <Compile Include="Steps\DeployStaticDataModelStep.cs" />
     <Compile Include="UpdateReportContributor.cs" />
@@ -78,6 +81,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
