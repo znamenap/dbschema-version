@@ -1,4 +1,4 @@
-﻿create function [schema_version].[get_step]
+create function [schema_version].[get_step]
 (
     @schema_name [schema_version].[t_schema_name]
   , @application_name [schema_version].[t_application_name]
@@ -7,13 +7,13 @@
 )
 returns @returntable table
 (
-      [step_id] int
-    , [step_version] [schema_version].[t_version]
-    , [step_sequence] smallint
+      [step_id] int not null
+    , [step_version] [schema_version].[t_version] not null
+    , [step_sequence] smallint not null
     , [step_description] nvarchar(128)
-    , [step_procedure] [sys].[sysname]
-    , [is_upgrade_direction] bit
-    , [is_downgrade_direction] bit
+    , [step_procedure] [sys].[sysname] not null
+    , [is_upgrade_direction] bit not null
+    , [is_downgrade_direction] bit not null
 )
 as
 begin
@@ -79,3 +79,4 @@ begin
 
     return;
 end;
+go

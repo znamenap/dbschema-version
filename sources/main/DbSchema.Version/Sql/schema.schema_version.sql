@@ -1,1 +1,1 @@
-﻿create schema [schema_version] authorization [db_owner];
+create schema [schema_version] authorization [dbo];

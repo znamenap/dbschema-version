@@ -139,8 +139,8 @@ DocProject/Help/html
 publish/
 
 # Publish Web Output
-!.*[Ss]chema.*\.[Pp]ublish.xml
-*.[Pp]ublish.xml
+#!.*[Ss]chema.*\.[Pp]ublish.xml
+#*.[Pp]ublish.xml
 *.azurePubxml
 
 # TODO: Un-comment the next line if you do not want to checkin

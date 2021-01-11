@@ -1,7 +1,7 @@
-﻿create user [test_user_writer] without login with default_schema = [schema_version_tests];
+create user [test_user_writer] without login with default_schema = [schema_version_tests];
 go
 
-grant connect to [test_user_writer];
+grant connect to [test_user_writer] as [dbo];
 go
 
 alter role [schema_version_reader] add member [test_user_writer];

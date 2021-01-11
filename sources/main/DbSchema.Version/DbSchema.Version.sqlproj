@@ -94,14 +94,15 @@
     <Build Include="Feature\Version\Code\invoke_version_change.sql" />
     <Build Include="Feature\Step\Code\invoke_step_procedure.sql" />
     <Build Include="Feature\Step\Code\get_step.sql" />
-    <Build Include="Feature\Step\step_permissions.sql" />
-    <Build Include="Feature\Version\version_permissions.sql" />
     <Build Include="Sql\role.schema_version_owner.sql" />
     <Build Include="Sql\role.schema_version_reader.sql" />
     <Build Include="Sql\role.schema_version_writer.sql" />
     <Build Include="Sql\schema.schema_version.sql" />
     <Build Include="Feature\Audit\Code\add_audit_event.sql" />
     <Build Include="Feature\Audit\Structure\audit_event.sql" />
+    <Build Include="Feature\Step\step_permissions.sql" />
+    <Build Include="Feature\Version\version_permissions.sql" />
+    <Build Include="Feature\Audit\audit_permissions.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />
@@ -109,6 +110,10 @@
   <ItemGroup>
     <None Include="notes.md" />
     <None Include="DbSchema.Version.publish.xml" />
+    <None Include="DbSchema.Version-LocalDB_DEV_120.publish.xml" />
+    <None Include="DbSchema.Version-LocalDB_DEV_130.publish.xml" />
+    <None Include="DbSchema.Version-LocalDB_DEV_140.publish.xml" />
+    <None Include="DbSchema.Version-LocalDB_DEV_150.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\120\SqlSchemas\master.dacpac">
