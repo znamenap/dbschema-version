@@ -1,0 +1,8 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <OutputPath>..\..\..\output\main\bin\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\main\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+</Project>

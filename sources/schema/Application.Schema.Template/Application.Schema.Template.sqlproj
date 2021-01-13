@@ -23,9 +23,7 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultSchema>template</DefaultSchema>
-    <OutputPath>..\..\..\output\resource\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\resource\obj\</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\resource\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
     <DeployStaticDataEnabled>True</DeployStaticDataEnabled>
     <DeploySchemaVersionEnabled>True</DeploySchemaVersionEnabled>
   </PropertyGroup>
@@ -102,7 +100,7 @@
     <Build Include="Feature\_Template\Structure\template.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.sqlproj">
+    <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
       <Name>DbSchema.Version</Name>
       <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
       <Private>True</Private>

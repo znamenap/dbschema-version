@@ -46,7 +46,7 @@ begin
              , [s].[procedure]
              , @is_upgrade_direction as [is_upgrade_direction]
              , @is_downgrade_direction as [is_downgrade_direction]
-        from [schema_version].[step] as [s]
+        from [schema_version].[step] as [s] with (nolock)
         where [s].[application_name] = @application_name
               and [s].[schema_name] = @schema_name
               and [s].[application_name] = @application_name
@@ -66,7 +66,7 @@ begin
              , [s].[procedure]
              , @is_upgrade_direction as [is_upgrade_direction]
              , @is_downgrade_direction as [is_downgrade_direction]
-        from [schema_version].[step] as [s]
+        from [schema_version].[step] as [s] with (nolock)
         where [s].[application_name] = @application_name
               and [s].[schema_name] = @schema_name
               and [s].[application_name] = @application_name

@@ -1,6 +1,8 @@
 ﻿<#
 .SYNOPSIS
     Generates SQL statements to restore databases within the connected LocalDB instances.
+.EXAMPLE
+    PS> .\sources\utility\New-DatabaseAttachScript.ps1 -Verbose -Path .\output\database\reattach-all-dbs.sql
 #>
 [CmdletBinding()]
 param(

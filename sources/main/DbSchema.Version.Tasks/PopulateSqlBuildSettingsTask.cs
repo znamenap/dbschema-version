@@ -28,6 +28,7 @@ namespace DbSchema.Version.Tasks
             {
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
                 var ambientSettingType = assemblies
+                    .Where(asm => asm.FullName.StartsWith("Microsoft"))
                     .SelectMany(asm => asm.GetTypes())
                     .FirstOrDefault(t => t.Name == "AmbientSettings");
 
@@ -59,8 +60,7 @@ namespace DbSchema.Version.Tasks
                 }
                 else
                 {
-                    Log.LogWarning("There is no AmbientSettings type available from {0} assemblies.",
-                            assemblies.Count);
+                    Log.LogWarning("There is no AmbientSettings type available from {0} assemblies.", assemblies.Count);
                     foreach (var assembly in assemblies)
                     {
                         Log.LogMessage("  assembly: {0}", assembly.FullName);

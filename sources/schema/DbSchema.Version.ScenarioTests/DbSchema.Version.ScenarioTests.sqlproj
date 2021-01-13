@@ -24,9 +24,7 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <GenerateCreateScript>True</GenerateCreateScript>
     <DefaultSchema>schema_version_tests</DefaultSchema>
-    <OutputPath>..\..\..\output\test\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\test\obj\</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\test\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -67,7 +65,7 @@
     <Folder Include="Feature\Shared" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.sqlproj">
+    <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
       <Name>DbSchema.Version</Name>
       <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
       <Private>True</Private>
@@ -84,6 +82,11 @@
     <Build Include="Feature\Permission\test_user_owner.sql" />
     <Build Include="Feature\Shared\recreate_dummy_stored_procedure.sql" />
     <Build Include="Feature\Step\recreate_dummy_steps.sql" />
+  </ItemGroup>
+  <ItemGroup>
+      <None Include="DbSchema.Version.ScenarioTests.publish.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="RunTests.InPostDeployment.sql" />

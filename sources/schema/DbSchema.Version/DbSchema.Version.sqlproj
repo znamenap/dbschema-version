@@ -25,9 +25,7 @@
     <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
     <DefaultSchema>schema_version</DefaultSchema>
     <GenerateCreateScript>True</GenerateCreateScript>
-    <OutputPath>..\..\..\output\database\bin\$(Configuration)\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\database\output\obj\</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\database\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -109,7 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="notes.md" />
-    <None Include="DbSchema.Version.publish.xml" />
+    <None Include="DbSchema.Version.publish.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DbSchema.Version-LocalDB_DEV_120.publish.xml" />
     <None Include="DbSchema.Version-LocalDB_DEV_130.publish.xml" />
     <None Include="DbSchema.Version-LocalDB_DEV_140.publish.xml" />

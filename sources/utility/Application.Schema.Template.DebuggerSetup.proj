@@ -12,8 +12,8 @@
   This is aimed for Visual Studio 2019 Community version only.
   Debugger settings:
     Start external program: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
-    Command line arguments: -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 <path-to-repo>\sources\resource\Application.Schema.Template.DebuggerSetup.proj
-    Working directory: <path-to-repo>\output\main\bin\Debug\
+    Command line arguments: -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 <path-to-repo>\sources\utility\Application.Schema.Template.DebuggerSetup.proj
+    Working directory: <path-to-repo>\output\main\bin\Debug\net4.6.2
   -->
 
   <PropertyGroup>
@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)\Application.Schema.Template\Application.Schema.Template.sqlproj" />
+    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)..\schema\Application.Schema.Template\Application.Schema.Template.sqlproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContributorDestinationPath Include="$(TEMP)\contributors" />
     <!--
+    <ContributorDestinationPath Include="$(TEMP)\contributors" />
     <ContributorDestinationPath Include="$(ProgramW6432)\Microsoft SQL Server\$(DSPVersion)\DAC\bin" />
     <ContributorDestinationPath Include="$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\$(DSPVersion)\Extensions\" />
     -->

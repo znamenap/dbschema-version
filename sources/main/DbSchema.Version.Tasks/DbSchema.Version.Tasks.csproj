@@ -3,7 +3,6 @@
   <PropertyGroup>
     <!--<TargetFrameworks>netcoreapp2.0;net4.6.1</TargetFrameworks>-->
     <TargetFramework>net4.6.2</TargetFramework>
-    <OutputPath>..\..\..\output\main\bin\$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
