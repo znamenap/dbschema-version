@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSchema.Version.Contributo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{6E02377A-F39D-4AF5-BD4A-78874779CB24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSchema.Version.Tasks", "sources\main\DbSchema.Version.Tasks\DbSchema.Version.Tasks.csproj", "{10E00258-3083-4D67-9931-C4D86CA81581}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10E00258-3083-4D67-9931-C4D86CA81581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E00258-3083-4D67-9931-C4D86CA81581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E00258-3083-4D67-9931-C4D86CA81581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E00258-3083-4D67-9931-C4D86CA81581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C} = {6E02377A-F39D-4AF5-BD4A-78874779CB24}
 		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13} = {0097694F-CE00-4479-996C-8B44B0DCBEEA}
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9} = {4B6B10EF-2006-40DE-B30E-1742BA4D404F}
+		{10E00258-3083-4D67-9931-C4D86CA81581} = {4B6B10EF-2006-40DE-B30E-1742BA4D404F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {659F9C1D-8D78-4837-864A-EA6176074DE5}

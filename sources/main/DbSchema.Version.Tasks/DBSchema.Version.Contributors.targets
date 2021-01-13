@@ -1,9 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="TestBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
 
   <!--
     IMPORTANT NOTE: The order of the contributors is important. Keep the list order as it is outlined below.
   -->
+
+  <PropertyGroup>
+    <DbSchemaVersionTasksDirectory Condition="'$(DbSchemaVersionTasksDirectory)' == ''">$(MSBuildThisFileDirectory)</DbSchemaVersionTasksDirectory>
+    <DbSchemaVersionTasksAssemblyFile Condition="'$(DbSchemaVersionTasksAssemblyFile)' == ''">$(DbSchemaVersionTasksDirectory)DbSchema.Version.Tasks.dll</DbSchemaVersionTasksAssemblyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DeploymentContributorPaths Include="$(DbSchemaVersionTasksDirectory)DBSchema.Version.Contributors.dll" />
+    <DeploymentContributorPaths Include="$(SqlServerRedistPath)" Condition="Exists('$(SqlServerRedistPath)')" />
+    <DeploymentContributorPaths Include="$(SqlServerRedistPath)\Extensions" Condition="Exists('$(SqlServerRedistPath)\Extensions')" />
+  </ItemGroup>
 
   <ItemGroup Condition=" '$(DeployStaticDataEnabled)' != '' And $(DeployStaticDataEnabled) == true">
     <!--
@@ -94,11 +105,26 @@
     <ContributorArguments>$(ContributorArguments);@(ContributorArgumentItem->'%(Identity)=%(Value)',';')</ContributorArguments>
   </PropertyGroup>
 
-  <Target Name="CustomAfterBuild" AfterTargets="SqlBuild">
+  <!-- Populate Data Task Settings -->
+  <UsingTask TaskName="PopulateSqlBuildSettingsTask"
+             AssemblyFile="$(DbSchemaVersionTasksAssemblyFile)" />
+
+  <Target Name="_DBSchemaVesrionBeforeSqlBuild" BeforeTargets="SqlBuild;SqlPublish;SqlDeploy">
+    <Message Text="Using task: $(DbSchemaVersionTasksAssemblyFile)" />
+    <Message Text="DeploymentContributorPaths: @(DeploymentContributorPaths)" />
+    <SqlModelResolutionTask>
+      <!-- This task is here in order to bring the assembly dependencies into the process. -->
+    </SqlModelResolutionTask>
+    <PopulateSqlBuildSettingsTask DeploymentContributorPaths="@(DeploymentContributorPaths)" />
+    <Message Importance="normal" Text="DBSchema.Version is set up. Please, be patient, the deployment or publish lasts longer than build." />
+  </Target>
+
+  <Target Name="_DBSchemaVesrionAfterSqlBuild" AfterTargets="SqlBuild;SqlPublish;SqlDeploy">
     <Message Importance="normal" Text="DacPacRootPath: $(DacPacRootPath)" />
   </Target>
 
-  <Target Name="TestBuild">
+  <!-- Debugging purpose target -->
+  <Target Name="DumpVariables">
     <Message Text="ContributorArguments: $(ContributorArguments)" />
     <Message Text="BuildContributors: $(BuildContributors)" />
     <Message Text="DeploymentContributors: $(DeploymentContributors)" />

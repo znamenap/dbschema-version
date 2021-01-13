@@ -21,12 +21,14 @@
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">Debug</Platform>
     <FileMask>DbSchema.Version.Contributors</FileMask>
+    <RebuildEnabled Condition="'$(RebuildEnabled)' == ''">true</RebuildEnabled>
     <PublishEnabled Condition="'$(PublishEnabled)' == ''">true</PublishEnabled>
     <SqlPublishProfilePath Condition="'$(SqlPublishProfilePath)' == ''">Application.Schema.Template.publish.xml</SqlPublishProfilePath>
+    <ContributorSourceDir Condition="'$(ContributorSourceDir)' == ''">$(MSBuildProjectDirectory)\..\..\output\main\bin\$(Configuration)\net4.6.2</ContributorSourceDir>
   </PropertyGroup>
 
   <ItemGroup>
-    <ContributorConsumerTarget Include="Rebuild" />
+    <ContributorConsumerTarget Include="Rebuild" Condition=" '$(RebuildEnabled)' != '' And $(RebuildEnabled) == True" />
     <ContributorConsumerTarget Include="Publish" Condition=" '$(PublishEnabled)' != '' And $(PublishEnabled) == True" />
   </ItemGroup>
 
@@ -35,12 +37,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContributorSourcePath Include="$(MSBuildProjectDirectory)\..\..\output\main\bin\$(Configuration)\DbSchema.Version.Contributors*.*" />
+    <ContributorSourcePath Include="$(ContributorSourceDir)\DbSchema.Version.Contributors*.*" />
   </ItemGroup>
 
   <ItemGroup>
+    <ContributorDestinationPath Include="$(TEMP)\contributors" />
+    <!--
     <ContributorDestinationPath Include="$(ProgramW6432)\Microsoft SQL Server\$(DSPVersion)\DAC\bin" />
     <ContributorDestinationPath Include="$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\$(DSPVersion)\Extensions\" />
+    -->
   </ItemGroup>
 
   <UsingTask TaskName="Pause" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
@@ -114,6 +119,7 @@
   </Target>
 
   <Target Name="CopyContributors" DependsOnTargets="ExpandContributorDestinationFullPath">
+    <MakeDir Directories="@(ContributorDestinationPath)" />
     <Copy SourceFiles="@(ContributorSourcePath)" DestinationFolder="%(ContributorDestinationPath.Identity)"
           ContinueOnError="true"
           Condition="Exists('%(ContributorDestinationPath.Identity)')">

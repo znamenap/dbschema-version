@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFrameworks>netcoreapp2.0;net4.6.1</TargetFrameworks>-->
+    <TargetFramework>net4.6.2</TargetFramework>
+    <OutputPath>..\..\..\output\main\bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4897.1" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.Build" Version="15.9.20" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="15.9.20" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.Build.Utilities" Version="15.9.20" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.9.20" ExcludeAssets="Runtime" />
+    -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+    <ProjectReference Include="..\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <!--
+    <Reference Include="Microsoft.Data.Tools.Components">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.Data.Tools.Components.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Contracts">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.Data.Tools.Contracts.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\150\DAC\bin\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Tasks.Sql">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.Data.Tools.Schema.Tasks.Sql.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Utilities.Sql">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.Data.Tools.Schema.Utilities.Sql.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Utilities">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\150\DAC\bin\Microsoft.Data.Tools.Utilities.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Dac">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\150\DAC\bin\Microsoft.SqlServer.Dac.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Dac.Extensions">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\150\DAC\bin\Microsoft.SqlServer.Dac.Extensions.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlClrProvider">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.SqlServer.SqlClrProvider.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.TransactSql.ScriptDom">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\Microsoft.SqlServer.TransactSql.ScriptDom.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="SqlPackage">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\sqlpackage.exe</HintPath>
+      <Private>true</Private>
+    </Reference>
+    -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DBSchema.Version.Contributors.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

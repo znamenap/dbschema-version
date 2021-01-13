@@ -13,9 +13,9 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <OutputPath>..\..\..\output\main\bin\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\..\output\main\bin\$(Configuration)\net4.6.2</OutputPath>
     <BaseIntermediateOutputPath>..\..\..\output\main\obj\$(Configuration)</BaseIntermediateOutputPath>
-    <DocumentationFile>..\..\..\output\main\bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile>..\..\..\output\main\bin\$(Configuration)\net4.6.2\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,10 +65,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework">
-      <Version>16.8.0</Version>
+    <PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="Runtime">
+      <Version>15.9.20</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.SqlServer.DacFx">
+    <PackageReference Include="Microsoft.SqlServer.DacFx" ExcludeAssets="Runtime">
       <Version>150.4897.1</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Composition">
@@ -77,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DbSchema.Version.snk" />
-    <None Include="DBSchema.Version\DBSchema.Version.Contributors.targets">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
