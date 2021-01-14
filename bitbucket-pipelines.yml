@@ -14,9 +14,9 @@ pipelines:
               - dotnetcore
             script:
               - REPORTS_PATH=./output/test-reports/build_${BITBUCKET_BUILD_NUMBER}
-              - msbuild .\build.proj /t:DbSchemaRebuild
-              # - dotnet restore
-              # - dotnet build --no-restore --configuration Release
+              # - msbuild .\build.proj /t:DbSchemaRebuild
+              - dotnet restore
+              - dotnet build --no-restore --configuration Release .\build.proj
               # - dotnet test --no-build --configuration Release --test-adapter-path:. --logger:"junit;LogFilePath=$REPORTS_PATH/junit.xml"
         - step:
             name: Lint the code
