@@ -23,7 +23,6 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultSchema>template</DefaultSchema>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
     <DeployStaticDataEnabled>True</DeployStaticDataEnabled>
     <DeploySchemaVersionEnabled>True</DeploySchemaVersionEnabled>
   </PropertyGroup>

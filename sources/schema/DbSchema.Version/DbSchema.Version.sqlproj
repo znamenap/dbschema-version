@@ -25,7 +25,6 @@
     <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
     <DefaultSchema>schema_version</DefaultSchema>
     <GenerateCreateScript>True</GenerateCreateScript>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
