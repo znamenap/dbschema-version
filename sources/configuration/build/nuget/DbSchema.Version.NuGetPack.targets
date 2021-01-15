@@ -1,0 +1,54 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+  <PropertyGroup>
+    <OutputDir>$(RootDirectory)\output</OutputDir>
+    <OutputNugetDir>$(OutputDir)\nuget</OutputNugetDir>
+    <OutputNugetSchemaDir>$(OutputNugetDir)\schema</OutputNugetSchemaDir>
+    <OutputNugetBuildDir>$(OutputNugetDir)\build</OutputNugetBuildDir>
+  </PropertyGroup>
+
+  <Target Name="_DbSchemaCopyToNuget_Clean">
+    <RemoveDir Directories="$(OutputNugetDir)" Condition="Exists('$(OutputNugetDir)')" />
+  </Target>
+
+  <Target Name="_DbSchemaCopyToNuget_Example">
+    <PropertyGroup>
+      <SourceExampleDir>$(RootDirectory)\sources\schema\Application.Schema.Template</SourceExampleDir>
+      <TargetExampleDir>$(OutputNugetDir)\content\Example.Schema</TargetExampleDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <ExcludeExtensions Include="jfm;dbmdl;user;dacpac;dll;pdb" />
+    </ItemGroup>
+    <CreateItem Include="$(SourceExampleDir)\**\*"
+                Exclude="@(ExcludeExtensions->'$(SourceExampleDir)\**\*.%(Identity)')">
+      <Output TaskParameter="Include" ItemName="CopyExampleItems" />
+    </CreateItem>
+    <RemoveDir Directories="$(TargetExampleDir)" Condition="Exists('$(TargetExampleDir)')" />
+    <MakeDir Directories="$(TargetExampleDir)\%(ContentExampleSchemaFiles.RecursiveDir)" />
+    <Copy DestinationFiles="$(TargetExampleDir)\%(RecursiveDir)%(Filename)%(Extension)" SourceFiles="%(CopyExampleItems.FullPath)" />
+  </Target>
+
+  <Target Name="_DbSchemaCopyToNuget_Schema">
+    <ItemGroup>
+      <CopySchemaItems Include="$(OutputDir)\schema\bin\$(Configuration)\DbSchema.Version.dacpac" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputNugetSchemaDir)\120" />
+    <Copy SourceFiles="@(CopySchemaItems)" DestinationFolder="$(OutputNugetSchemaDir)\120\" />
+  </Target>
+
+  <Target Name="_DbSchemaCopyToNuget_Build">
+    <ItemGroup>
+      <CopyBuildItems Include="$(OutputDir)\main\bin\$(Configuration)\net4.6.2\DbSchema.Version*.*" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputNugetBuildDir)" />
+    <Copy SourceFiles="@(CopyBuildItems)" DestinationFolder="$(OutputNugetBuildDir)" />
+  </Target>
+
+  <PropertyGroup>
+    <DbSchemaCopyToNugetDependsOn>$(DbSchemaCopyToNugetDependsOn);_DbSchemaCopyToNuget_Example</DbSchemaCopyToNugetDependsOn>
+    <DbSchemaCopyToNugetDependsOn>$(DbSchemaCopyToNugetDependsOn);_DbSchemaCopyToNuget_Schema;</DbSchemaCopyToNugetDependsOn>
+    <DbSchemaCopyToNugetDependsOn>$(DbSchemaCopyToNugetDependsOn);_DbSchemaCopyToNuget_Build</DbSchemaCopyToNugetDependsOn>
+  </PropertyGroup>
+
+  <Target Name="DbSchemaCopyToNuget" AfterTargets="Build" DependsOnTargets="$(DbSchemaCopyToNugetDependsOn)" />
+
+</Project>

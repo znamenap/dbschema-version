@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputPath>..\..\..\output\main\bin\$(Configuration)</OutputPath>
     <BaseIntermediateOutputPath>..\..\..\output\main\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
   </PropertyGroup>
 
 </Project>

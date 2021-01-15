@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!--<TargetFrameworks>netcoreapp2.0;net4.6.1</TargetFrameworks>-->
-    <TargetFramework>net4.6.2</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
