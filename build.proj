@@ -6,7 +6,7 @@
     <OutputDirectory>$(RootDirectory)\output</OutputDirectory>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
-    <TargetConnectionString>Data Source=(localdb)\ProjectsV13%3BInitial Catalog=TempalteDB%3BIntegrated Security=True%3BPersist Security Info=False%3BPooling=False%3BMultipleActiveResultSets=False%3BConnect Timeout=60%3BEncrypt=False%3BTrustServerCertificate=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=(localdb)\ProjectsV13%3BInitial Catalog=DbSchema.Version.Build%3BIntegrated Security=True%3BPersist Security Info=False%3BPooling=False%3BMultipleActiveResultSets=False%3BConnect Timeout=60%3BEncrypt=False%3BTrustServerCertificate=False</TargetConnectionString>
     <MainBuildEnabled>True</MainBuildEnabled>
     <SchemaBuildEnabled>True</SchemaBuildEnabled>
   </PropertyGroup>

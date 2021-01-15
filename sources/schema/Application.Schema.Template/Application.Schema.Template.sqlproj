@@ -57,7 +57,7 @@
   </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Project="..\..\..\output\main\bin\$(Configuration)\net4.6.2\DbSchema.Version.Contributors.targets" />
+  <Import Project="..\..\..\output\main\bin\$(Configuration)\DbSchema.Version.Contributors.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Feature" />

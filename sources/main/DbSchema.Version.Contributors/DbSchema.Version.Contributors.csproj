@@ -75,6 +75,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="DBSchema.Version.Contributors.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\DbSchema.Version.snk" />
   </ItemGroup>
   <ItemGroup />
