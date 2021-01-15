@@ -15,6 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configurat
 EndProject
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "build", "sources\configuration\build\build.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{9179C4C4-472C-4B80-B1BB-14E52CAF003C}"
+	ProjectSection(SolutionItems) = preProject
+		docs\NOTES.MD = docs\NOTES.MD
+		docs\REFERENCING.MD = docs\REFERENCING.MD
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
