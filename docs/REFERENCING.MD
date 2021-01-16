@@ -3,13 +3,21 @@
 ## NuGet Package Structure
 
 ```cmd
-DbSchema.Version.nupkg
+DbSchema.Version.x.y.z.nupkg
 |
 +-- content\
 |   | 
 |   +-- Example.Schema\
+|   |   | 
+|   |   \-- < SqlProject showing the use cases >
+|   |
+|   +-- DbSchema.Version.Docs\
 |       | 
-|       +-- < SqlProject showing the use cases >
+|       +-- REFERENCING.MD
+|       +-- STATIC-DATA.MD
+|       +-- VERSIONING.MD
+|       +-- UP-AND-DOWN.MD
+|       \-- DEPLOYMENT.MD
 |
 +-- build\
 |   | 
@@ -18,21 +26,22 @@ DbSchema.Version.nupkg
 |   +-- DbSchema.Version.Contributors.pdb
 |   +-- DbSchema.Version.Contributors.xml
 |   +-- DbSchema.Version.Tasks.dll
-|   +-- DbSchema.Version.Tasks.pdb
+|   \-- DbSchema.Version.Tasks.pdb
 |
 +-- schema\
 |   | 
-|   +-- \120\
+|   \-- \120\
 |       | 
-|       +-- DbSchema.Version.dacpac
+|       \-- DbSchema.Version.dacpac
 |
 +-- tools\
 |   | 
 |   +-- New-DatabaseAttachScript.ps1
 |   +-- Export-SqlDeadlock.ps1
+|   \-- Invoke-DacPacDeploy.ps1
 |
 +-- DbSchema.Version.nuspec
-+-- Readme-DbSchema.Version.txt
+\-- Readme-DbSchema.Version.txt
 ```
 
 ## Referencing DacPac

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DbSchema.Version</id>
+    <version>$VERSION$</version>
+    <title>MS SQL Database Schema Version per Application</title>
+    <description>Microsoft SQL Server Data Tools contributors supporting Hybrid development and deployment model (State + Change based) per SQL database schema.</description>
+    <authors>Pavel Znamenacek</authors>
+    <license type="expression">MIT</license>
+    <tags>SSDT Data Tools Hybrid State Change Schema</tags>
+    <contentFiles>
+      <files buildAction="None" copyToOutput="false" include="DbSchema.Version.Docs/**" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="$ROOT_DIR$\**" target="" />
+  </files>
+</package>

@@ -29,12 +29,6 @@
 
 ## Implementation Points
 
-PENDING:
-
-- Make single build script for whole project to get up to the nuget nupkg in output.
-
-COMPLETED:
-
 - Version parsing
 - Version registry per application and schema name.
 - Downgrade step registry per application and schema name.
@@ -50,3 +44,4 @@ COMPLETED:
 - Add contributor for static data deployment.
 - Add contributor for invoking the schema version change.
 - Consider transactionality in procedures or wheather to assume external transaction or none. Transaction gets deadlocked when there is a fragment introducing a new user defined type and it gets used later on. Therefore the DBSchema.Version must be deployed at first time as the separate transaction to make the schema established and only then the application schema can be provision with this tooling.
+- Make single build script for whole project to get up to the nuget nupkg in output.

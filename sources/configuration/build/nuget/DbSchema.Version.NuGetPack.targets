@@ -2,18 +2,23 @@
   <PropertyGroup>
     <OutputDir>$(RootDirectory)\output</OutputDir>
     <OutputNugetDir>$(OutputDir)\nuget</OutputNugetDir>
-    <OutputNugetSchemaDir>$(OutputNugetDir)\schema</OutputNugetSchemaDir>
-    <OutputNugetBuildDir>$(OutputNugetDir)\build</OutputNugetBuildDir>
+    <OutputBuildNugetDir>$(OutputDir)\build\nuget</OutputBuildNugetDir>
+    <OutputBuildNugetSchemaDir>$(OutputBuildNugetDir)\schema</OutputBuildNugetSchemaDir>
+    <OutputBuildNugetBuildDir>$(OutputBuildNugetDir)\build</OutputBuildNugetBuildDir>
+    <OutputBuildNugetToolsDir>$(OutputBuildNugetDir)\tools</OutputBuildNugetToolsDir>
+    <OutputBuildNugetDocsDir>$(OutputBuildNugetDir)\content\DbSchema.Version.Docs</OutputBuildNugetDocsDir>
+    <NugetNuspecDir>$(RootDirectory)\sources\configuration\build\nuget</NugetNuspecDir>
+    <NugetNuspecPath>$(NugetNuspecDir)\DbSchema.Version.nuspec</NugetNuspecPath>
   </PropertyGroup>
 
-  <Target Name="_DbSchemaCopyToNuget_Clean">
-    <RemoveDir Directories="$(OutputNugetDir)" Condition="Exists('$(OutputNugetDir)')" />
+  <Target Name="_DbSchemaCopyToNuget_Clean" BeforeTargets="DbSchemaCopyToNuget">
+    <RemoveDir Directories="$(OutputBuildNugetDir)" Condition="Exists('$(OutputBuildNugetDir)')" />
   </Target>
 
-  <Target Name="_DbSchemaCopyToNuget_Example">
+  <Target Name="_DbSchemaCopyToNuget_Example" BeforeTargets="DbSchemaCopyToNuget">
     <PropertyGroup>
       <SourceExampleDir>$(RootDirectory)\sources\schema\Application.Schema.Template</SourceExampleDir>
-      <TargetExampleDir>$(OutputNugetDir)\content\Example.Schema</TargetExampleDir>
+      <TargetExampleDir>$(OutputBuildNugetDir)\content\Example.Schema</TargetExampleDir>
     </PropertyGroup>
     <ItemGroup>
       <ExcludeExtensions Include="jfm;dbmdl;user;dacpac;dll;pdb" />
@@ -23,32 +28,54 @@
       <Output TaskParameter="Include" ItemName="CopyExampleItems" />
     </CreateItem>
     <RemoveDir Directories="$(TargetExampleDir)" Condition="Exists('$(TargetExampleDir)')" />
-    <MakeDir Directories="$(TargetExampleDir)\%(ContentExampleSchemaFiles.RecursiveDir)" />
+    <MakeDir Directories="$(TargetExampleDir)\%(CopyExampleItems.RecursiveDir)" />
     <Copy DestinationFiles="$(TargetExampleDir)\%(RecursiveDir)%(Filename)%(Extension)" SourceFiles="%(CopyExampleItems.FullPath)" />
   </Target>
 
-  <Target Name="_DbSchemaCopyToNuget_Schema">
+  <Target Name="_DbSchemaCopyToNuget_Schema" BeforeTargets="DbSchemaCopyToNuget">
     <ItemGroup>
       <CopySchemaItems Include="$(OutputDir)\schema\bin\$(Configuration)\DbSchema.Version.dacpac" />
+      <CopySchemaItems Include="$(OutputDir)\schema\bin\$(Configuration)\master.dacpac" />
     </ItemGroup>
-    <MakeDir Directories="$(OutputNugetSchemaDir)\120" />
-    <Copy SourceFiles="@(CopySchemaItems)" DestinationFolder="$(OutputNugetSchemaDir)\120\" />
+    <MakeDir Directories="$(OutputBuildNugetSchemaDir)\120" />
+    <Copy SourceFiles="@(CopySchemaItems)" DestinationFolder="$(OutputBuildNugetSchemaDir)\120\" />
   </Target>
 
-  <Target Name="_DbSchemaCopyToNuget_Build">
+  <Target Name="_DbSchemaCopyToNuget_Build" BeforeTargets="DbSchemaCopyToNuget">
     <ItemGroup>
-      <CopyBuildItems Include="$(OutputDir)\main\bin\$(Configuration)\net4.6.2\DbSchema.Version*.*" />
+      <CopyBuildItems Include="$(OutputDir)\main\bin\$(Configuration)\DbSchema.Version*.*" />
     </ItemGroup>
-    <MakeDir Directories="$(OutputNugetBuildDir)" />
-    <Copy SourceFiles="@(CopyBuildItems)" DestinationFolder="$(OutputNugetBuildDir)" />
+    <MakeDir Directories="$(OutputBuildNugetBuildDir)" />
+    <Copy SourceFiles="@(CopyBuildItems)" DestinationFolder="$(OutputBuildNugetBuildDir)" />
   </Target>
 
-  <PropertyGroup>
-    <DbSchemaCopyToNugetDependsOn>$(DbSchemaCopyToNugetDependsOn);_DbSchemaCopyToNuget_Example</DbSchemaCopyToNugetDependsOn>
-    <DbSchemaCopyToNugetDependsOn>$(DbSchemaCopyToNugetDependsOn);_DbSchemaCopyToNuget_Schema;</DbSchemaCopyToNugetDependsOn>
-    <DbSchemaCopyToNugetDependsOn>$(DbSchemaCopyToNugetDependsOn);_DbSchemaCopyToNuget_Build</DbSchemaCopyToNugetDependsOn>
-  </PropertyGroup>
+  <Target Name="_DbSchemaCopyToNuget_Tools" BeforeTargets="DbSchemaCopyToNuget">
+    <ItemGroup>
+      <CopyToolsItems Include="$(RootDirectory)\sources\utility\New-DatabaseAttachScript.ps1" />
+      <CopyToolsItems Include="$(RootDirectory)\sources\utility\Export-SqlDeadlock.ps1" />
+      <CopyToolsItems Include="$(RootDirectory)\sources\schema\Application.Schema.Template\Invoke-DacPacDeploy.ps1" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputBuildNugetToolsDir)" />
+    <Copy SourceFiles="@(CopyToolsItems)" DestinationFolder="$(OutputBuildNugetToolsDir)" />
+  </Target>
 
-  <Target Name="DbSchemaCopyToNuget" AfterTargets="Build" DependsOnTargets="$(DbSchemaCopyToNugetDependsOn)" />
+  <Target Name="_DbSchemaCopyToNuget_Docs" BeforeTargets="DbSchemaCopyToNuget">
+    <ItemGroup>
+      <CopyDocsItems Include="$(RootDirectory)\README.MD" />
+      <CopyDocsItems Include="$(RootDirectory)\docs\REFERENCING.MD" />
+      <CopyDocsItems Include="$(RootDirectory)\docs\STATIC-DATA.MD" />
+      <CopyDocsItems Include="$(RootDirectory)\docs\VERSIONING.MD" />
+      <CopyDocsItems Include="$(RootDirectory)\docs\UP-AND-DOWN.MD" />
+      <CopyDocsItems Include="$(RootDirectory)\docs\DEPLOYMENT.MD" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputBuildNugetDocsDir)" />
+    <Copy SourceFiles="@(CopyDocsItems)" DestinationFolder="$(OutputBuildNugetDocsDir)" />
+    <Copy SourceFiles="$(NugetNuspecDir)\Readme-DbSchema.Version.txt" DestinationFolder="$(OutputBuildNugetDocsDir)"/>
+  </Target>
+
+  <Target Name="DbSchemaCopyToNuget" AfterTargets="Build" >
+    <Copy SourceFiles="$(NugetNuspecDir)\Readme-DbSchema.Version.txt" DestinationFiles="$(OutputBuildNugetDir)\readme.txt" />
+    <Exec Command="nuget.exe pack $(NugetNuspecPath) -Version $(ProductFileVersion) -OutputDirectory $(OutputNugetDir) -BasePath $(OutputBuildNugetDir) -Properties ROOT_DIR=$(OutputBuildNugetDir) -NoPackageAnalysis" />
+  </Target>
 
 </Project>
