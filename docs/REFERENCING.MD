@@ -1,5 +1,7 @@
 # Referencing
 
+This library does not support referencing via PackageReference. It is expected to use the old packages.config. There is plan to add support for this in later releases.s
+
 ## NuGet Package Structure
 
 ```cmd
@@ -46,7 +48,7 @@ DbSchema.Version.x.y.z.nupkg
 
 ## Referencing DacPac
 
-As of nbow any .sqlproj project does not support referencing NuGet packages. Nevertheless, you can workaround it by referencing this NuGet package into your other .NET project supporting NuGet package referencing; perhaps the main application or library. Then you can add the reference to DbSchema.Version.dacpac from your .sqlproj file. This dependency ensure coping the DbVersion.Schema.dacpac side by side to the output path of yours .sqlproj project.
+As of now any .sqlproj project does not support referencing NuGet packages. Nevertheless, you can workaround it by referencing this NuGet package into your other .NET project supporting NuGet package referencing; perhaps the main application or library. Then you can add the reference to DbSchema.Version.dacpac from your .sqlproj file. This dependency ensure coping the DbVersion.Schema.dacpac side by side to the output path of yours .sqlproj project.
 
 ## Referencing Contributors
 
