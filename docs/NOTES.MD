@@ -40,8 +40,8 @@
 - Added existence check for procedure of the step while registering it.
 - Restructure the repo to use higher level folder for configuration stuff.
 - Make auditing to who, when and what has been version changed.
-- Add the script to build the gaint change script in one transaction.
+- Add the script to build the giant change script in one transaction.
 - Add contributor for static data deployment.
 - Add contributor for invoking the schema version change.
-- Consider transactionality in procedures or wheather to assume external transaction or none. Transaction gets deadlocked when there is a fragment introducing a new user defined type and it gets used later on. Therefore the DBSchema.Version must be deployed at first time as the separate transaction to make the schema established and only then the application schema can be provision with this tooling.
-- Make single build script for whole project to get up to the nuget nupkg in output.
+- Consider transactionality in procedures or whether to assume external transaction or none. Transaction gets deadlocked when there is a fragment introducing a new user defined type and it gets used later on. Therefore the DBSchema.Version must be deployed at first time as the separate transaction to make the schema established and only then the application schema can be provision with this tooling.
+- Make single build script for whole project to get up to the NuGet package in output.
