@@ -1,6 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
   <PropertyGroup>
     <OutputDir>$(RootDirectory)\output</OutputDir>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
     <OutputNugetDir>$(OutputDir)\nuget</OutputNugetDir>
     <OutputBuildNugetDir>$(OutputDir)\build\nuget</OutputBuildNugetDir>
     <OutputBuildNugetSchemaDir>$(OutputBuildNugetDir)\schema</OutputBuildNugetSchemaDir>
@@ -32,13 +33,13 @@
     <Copy DestinationFiles="$(TargetExampleDir)\%(RecursiveDir)%(Filename)%(Extension)" SourceFiles="%(CopyExampleItems.FullPath)" />
   </Target>
 
-  <Target Name="_DbSchemaCopyToNuget_Schema" BeforeTargets="DbSchemaCopyToNuget">
+  <Target Name="_DbSchemaCopyToNuget_Schema" BeforeTargets="DbSchemaCopyToNuget" Returns="%(DSPVersion.Identity)">
     <ItemGroup>
-      <CopySchemaItems Include="$(OutputDir)\schema\bin\$(Configuration)\DbSchema.Version.dacpac" />
-      <CopySchemaItems Include="$(OutputDir)\schema\bin\$(Configuration)\master.dacpac" />
+      <CopySchemaItems Include="$(OutputDir)\schema\%(DSPVersion.Identity)\bin\$(Configuration)\DbSchema.Version.dacpac" />
+      <CopySchemaItems Include="$(OutputDir)\schema\%(DSPVersion.Identity)\bin\$(Configuration)\master.dacpac" />
     </ItemGroup>
-    <MakeDir Directories="$(OutputBuildNugetSchemaDir)\120" />
-    <Copy SourceFiles="@(CopySchemaItems)" DestinationFolder="$(OutputBuildNugetSchemaDir)\120\" />
+    <MakeDir Directories="$(OutputBuildNugetSchemaDir)\%(DSPVersion.Identity)" />
+    <Copy SourceFiles="@(CopySchemaItems)" DestinationFolder="$(OutputBuildNugetSchemaDir)\%(DSPVersion.Identity)\" />
   </Target>
 
   <Target Name="_DbSchemaCopyToNuget_Build" BeforeTargets="DbSchemaCopyToNuget">
@@ -73,7 +74,7 @@
     <Copy SourceFiles="$(NugetNuspecDir)\Readme-DbSchema.Version.txt" DestinationFolder="$(OutputBuildNugetDocsDir)"/>
   </Target>
 
-  <Target Name="DbSchemaCopyToNuget" AfterTargets="Build" >
+  <Target Name="DbSchemaCopyToNuget" AfterTargets="DBSchemaBuild">
     <Copy SourceFiles="$(NugetNuspecDir)\Readme-DbSchema.Version.txt" DestinationFiles="$(OutputBuildNugetDir)\readme.txt" />
     <Exec Command="nuget.exe pack $(NugetNuspecPath) -Version $(ProductFileVersion) -OutputDirectory $(OutputNugetDir) -BasePath $(OutputBuildNugetDir) -Properties ROOT_DIR=$(OutputBuildNugetDir) -NoPackageAnalysis" />
   </Target>

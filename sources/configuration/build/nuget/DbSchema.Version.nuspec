@@ -13,6 +13,41 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="$ROOT_DIR$\**" target="" />
+    <file src='$ROOT_DIR$\readme.txt' target='' />
+    <file src='$ROOT_DIR$\build\DbSchema.Version.Contributors.dll' target='build' />
+    <file src='$ROOT_DIR$\build\DbSchema.Version.Contributors.pdb' target='build' />
+    <file src='$ROOT_DIR$\build\DBSchema.Version.Contributors.targets' target='build' />
+    <file src='$ROOT_DIR$\build\DbSchema.Version.Contributors.xml' target='build' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\DEPLOYMENT.MD' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\Readme-DbSchema.Version.txt' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\README.MD' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\REFERENCING.MD' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\STATIC-DATA.MD' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\UP-AND-DOWN.MD' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\DbSchema.Version.Docs\VERSIONING.MD' target='content\DbSchema.Version.Docs' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Application.Schema.Template.publish.xml' target='content\Example.Schema' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Application.Schema.Template.sqlproj' target='content\Example.Schema' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Invoke-DacPacDeploy.ps1' target='content\Example.Schema' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Script.PostDeployment.sql' target='content\Example.Schema' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Script.PreDeployment.sql' target='content\Example.Schema' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\Group\Data\system_groups.data.sql' target='content\Example.Schema\Feature\Group\Data' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\Group\Structure\group.sql' target='content\Example.Schema\Feature\Group\Structure' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\Membership\Structure\membership.sql' target='content\Example.Schema\Feature\Membership\Structure' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\User\Data\system_users.data.sql' target='content\Example.Schema\Feature\User\Data' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\User\Structure\user.sql' target='content\Example.Schema\Feature\User\Structure' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\_Template\Data\template.data.sql' target='content\Example.Schema\Feature\_Template\Data' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Feature\_Template\Structure\template.sql' target='content\Example.Schema\Feature\_Template\Structure' />
+    <file src='$ROOT_DIR$\content\Example.Schema\Sql\template.schema.sql' target='content\Example.Schema\Sql' />
+    <file src='$ROOT_DIR$\schema\120\DbSchema.Version.dacpac' target='schema\120' />
+    <file src='$ROOT_DIR$\schema\120\master.dacpac' target='schema\120' />
+    <file src='$ROOT_DIR$\schema\130\DbSchema.Version.dacpac' target='schema\130' />
+    <file src='$ROOT_DIR$\schema\130\master.dacpac' target='schema\130' />
+    <file src='$ROOT_DIR$\schema\140\DbSchema.Version.dacpac' target='schema\140' />
+    <file src='$ROOT_DIR$\schema\140\master.dacpac' target='schema\140' />
+    <file src='$ROOT_DIR$\schema\150\DbSchema.Version.dacpac' target='schema\150' />
+    <file src='$ROOT_DIR$\schema\150\master.dacpac' target='schema\150' />
+    <file src='$ROOT_DIR$\tools\Export-SqlDeadlock.ps1' target='tools' />
+    <file src='$ROOT_DIR$\tools\Invoke-DacPacDeploy.ps1' target='tools' />
+    <file src='$ROOT_DIR$\tools\New-DatabaseAttachScript.ps1' target='tools' />
   </files>
 </package>

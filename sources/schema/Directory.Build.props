@@ -1,8 +1,9 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <OutputPath>..\..\..\output\schema\bin\$(Configuration)</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\schema\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
+    <OutputPath>..\..\..\output\schema\$(DSPVersion)\bin\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\output\schema\$(DSPVersion)\obj\$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
 
 </Project>

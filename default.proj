@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current" DefaultTargets="Build">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current" DefaultTargets="DBSchemaBuild">
   <PropertyGroup>
     <MajorVersion>1</MajorVersion>
     <MinorVersion>0</MinorVersion>
@@ -7,7 +7,9 @@
     <OutputDirectory>$(RootDirectory)\output</OutputDirectory>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
-    <TargetConnectionString>Data Source=(localdb)\ProjectsV13%3BInitial Catalog=DbSchema.Version.Build%3BIntegrated Security=True%3BPersist Security Info=False%3BPooling=False%3BMultipleActiveResultSets=False%3BConnect Timeout=60%3BEncrypt=False%3BTrustServerCertificate=False</TargetConnectionString>
+    <SchemaBuildSQLServer Condition="'$(SchemaBuildSQLServer)' == ''">(localdb)\ProjectsV13</SchemaBuildSQLServer>
+    <SchemaBuildDatabase Condition="'$(SchemaBuildDatabase)' == ''">DbSchema.Version.Build</SchemaBuildDatabase>
+    <TargetConnectionString>Data Source=$(SchemaBuildSQLServer)%3BInitial Catalog=$(SchemaBuildDatabase)%3BIntegrated Security=True%3BPersist Security Info=False%3BPooling=False%3BMultipleActiveResultSets=False%3BConnect Timeout=60%3BEncrypt=False%3BTrustServerCertificate=False</TargetConnectionString>
     <MainBuildEnabled>True</MainBuildEnabled>
     <SchemaBuildEnabled>True</SchemaBuildEnabled>
     <ProductFileVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductFileVersion>
@@ -21,41 +23,84 @@
       <Value>$(Platform)</Value>
     </SharedProperties>
   </ItemGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
     <SchemaProperties Include="TargetConnectionString">
       <Value>$(TargetConnectionString)</Value>
     </SchemaProperties>
+  </ItemGroup>-->
+  <ItemGroup>
+    <DSPVersion Include="120" />
+    <DSPVersion Include="130" />
+    <DSPVersion Include="140" />
+    <DSPVersion Include="150" />
+  </ItemGroup>
+  <ItemGroup>
+    <ConnectionStringItem Include="Initial Catalog">
+      <Value>$(SchemaBuildDatabase)</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Integrated Security">
+      <Value>True</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Persist Security Info">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Pooling">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="MultipleActiveResultSets">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Connect Timeout">
+      <Value>60</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Encrypt">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="TrustServerCertificate">
+      <Value>False</Value>
+    </ConnectionStringItem>
   </ItemGroup>
 
   <Import Project="$(RootDirectory)\sources\configuration\build\nuget\DbSchema.Version.NuGetPack.targets" />
 
-  <Target Name="DbSchemaClean">
+  <Target Name="DBSchemaClean">
     <RemoveDir Directories="$(OutputDirectory)" />
   </Target>
 
-  <Target Name="Build">
+  <Target Name="DBSchemaBuild">
 
     <!-- Build the main binaries -->
     <PropertyGroup>
       <MainBuildProperties>@(SharedProperties->'%(Identity)=%(Value)');@(SchemaProperties->'%(Identity)=%(Value)')</MainBuildProperties>
     </PropertyGroup>
     <Message Text="MainBuildProperties: $(MainBuildProperties)" />
-    <MSBuild Projects="$(RootDirectory)\DbSchema.Version.Main.sln" Targets="Restore;Rebuild"
+    <MSBuild Projects="$(RootDirectory)\DbSchema.Version.Main.sln" Targets="Restore;Build"
              Properties="$(MainBuildProperties)" Condition="$(MainBuildEnabled)"
              />
 
     <!-- Build database schemas -->
     <PropertyGroup>
       <SchemaBuildProperties>@(SharedProperties->'%(Identity)=%(Value)');@(SchemaProperties->'%(Identity)=%(Value)')</SchemaBuildProperties>
+      <TargetConnectionStringPart>@(ConnectionStringItem->'%(Identity)=%(Value)','%3B')</TargetConnectionStringPart>
     </PropertyGroup>
-    <Message Text="SchemaBuildProperties: $(SchemaBuildProperties)" />
+    <Message Text="SchemaBuildProperties: $(SchemaBuildProperties);DSPVersion=%(DSPVersion.Identity);TargetConnectionString=Data%20Source=(localdb)\LocalDB_%(DSPVersion.Identity)_DEV%3B$(TargetConnectionStringPart)" />
+    <MSBuild Projects="$(RootDirectory)\DbSchema.Version.Schema.sln" Targets="Rebuild"
+             Properties="@(SharedProperties->'%(Identity)=%(Value)');DSPVersion=%(DSPVersion.Identity)"
+             Condition="$(SchemaBuildEnabled)"
+             />
+
+    <Exec Command='"$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\sqlpackage.exe" /action:publish /profile:$(RootDirectory)\sources\schema\dbschema.version\DbSchema.Version-LocalDB_DEV_%(DSPVersion.Identity).publish.xml "/TargetConnectionString:Data Source=(localdb)\LocalDB_%(DSPVersion.Identity)_DEV;$(TargetConnectionStringPart)" /sourcefile:$(RootDirectory)\output\schema\%(DSPVersion.Identity)\bin\Release\DbSchema.Version.dacpac'
+          WorkingDirectory="$(RootDirectory)"
+          Condition="$(SchemaBuildEnabled)"
+          />
+
     <MSBuild Projects="$(RootDirectory)\DbSchema.Version.Schema.sln" Targets="Rebuild;Deploy"
-             Properties="@(SharedProperties->'%(Identity)=%(Value)');@(SchemaProperties->'%(Identity)=%(Value)')"
+             Properties="@(SharedProperties->'%(Identity)=%(Value)');DSPVersion=%(DSPVersion.Identity);StartAction=StartNone;StartupScript=(Blank);CreateNewDatabase=False;TargetDatabase=$(SchemaBuildDatabase);TargetConnectionString=Data Source=(localdb)\LocalDB_%(DSPVersion.Identity)_DEV%3B$(TargetConnectionStringPart)"
              Condition="$(SchemaBuildEnabled)"
              />
 
   </Target>
 
-  <Target Name="DbSchemaRebuild" DependsOnTargets="DbSchemaClean;DbSchemaBuild" />
+  <Target Name="DBSchemaRebuild" DependsOnTargets="DBSchemaClean;DBSchemaBuild" />
 
 </Project>
