@@ -49,5 +49,6 @@
     <file src='$ROOT_DIR$\tools\Export-SqlDeadlock.ps1' target='tools' />
     <file src='$ROOT_DIR$\tools\Invoke-DacPacDeploy.ps1' target='tools' />
     <file src='$ROOT_DIR$\tools\New-DatabaseAttachScript.ps1' target='tools' />
+    <file src='$ROOT_DIR$\tools\New-LocalDbInstances.ps1' target='tools' />
   </files>
 </package>
