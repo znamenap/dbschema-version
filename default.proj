@@ -83,7 +83,7 @@
       <SchemaBuildProperties>@(SharedProperties->'%(Identity)=%(Value)');@(SchemaProperties->'%(Identity)=%(Value)')</SchemaBuildProperties>
       <TargetConnectionStringPart>@(ConnectionStringItem->'%(Identity)=%(Value)','%3B')</TargetConnectionStringPart>
     </PropertyGroup>
-    <Message Text="SchemaBuildProperties: $(SchemaBuildProperties);DSPVersion=%(DSPVersion.Identity);TargetConnectionString=Data%20Source=(localdb)\LocalDB_%(DSPVersion.Identity)_DEV%3B$(TargetConnectionStringPart)" />
+    <Message Text="SchemaBuildProperties: $(SchemaBuildProperties);DSPVersion=%(DSPVersion.Identity);TargetConnectionString=Data%20Source=(localdb)\LocalDB_%(DSPVersion.Identity)_BUILD%3B$(TargetConnectionStringPart)" />
     <MSBuild Projects="$(RootDirectory)\DbSchema.Version.Schema.sln" Targets="Rebuild"
              Properties="@(SharedProperties->'%(Identity)=%(Value)');DSPVersion=%(DSPVersion.Identity)"
              Condition="$(SchemaBuildEnabled)"
@@ -95,7 +95,7 @@
           />
 
     <MSBuild Projects="$(RootDirectory)\DbSchema.Version.Schema.sln" Targets="Rebuild;Deploy"
-             Properties="@(SharedProperties->'%(Identity)=%(Value)');DSPVersion=%(DSPVersion.Identity);StartAction=StartNone;StartupScript=(Blank);CreateNewDatabase=False;TargetDatabase=$(SchemaBuildDatabase);TargetConnectionString=Data Source=(localdb)\LocalDB_%(DSPVersion.Identity)_DEV%3B$(TargetConnectionStringPart)"
+             Properties="@(SharedProperties->'%(Identity)=%(Value)');DSPVersion=%(DSPVersion.Identity);StartAction=StartNone;StartupScript=(Blank);CreateNewDatabase=False;TargetDatabase=$(SchemaBuildDatabase);TargetConnectionString=Data Source=(localdb)\LocalDB_%(DSPVersion.Identity)_BUILD%3B$(TargetConnectionStringPart)"
              Condition="$(SchemaBuildEnabled)"
              />
 
