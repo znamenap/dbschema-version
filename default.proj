@@ -89,7 +89,7 @@
              Condition="$(SchemaBuildEnabled)"
              />
 
-    <Exec Command='"$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\sqlpackage.exe" /action:publish /profile:$(RootDirectory)\sources\schema\dbschema.version\DbSchema.Version-LocalDB_DEV_%(DSPVersion.Identity).publish.xml "/TargetConnectionString:Data Source=(localdb)\LocalDB_%(DSPVersion.Identity)_DEV;$(TargetConnectionStringPart)" /sourcefile:$(RootDirectory)\output\schema\%(DSPVersion.Identity)\bin\Release\DbSchema.Version.dacpac'
+    <Exec Command='"$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\sqlpackage.exe" /action:publish /profile:$(RootDirectory)\sources\schema\dbschema.version\DbSchema.Version-LocalDB_DEV_%(DSPVersion.Identity).publish.xml "/TargetConnectionString:Data Source=(localdb)\LocalDB_%(DSPVersion.Identity)_BUILD;$(TargetConnectionStringPart)" /sourcefile:$(RootDirectory)\output\schema\%(DSPVersion.Identity)\bin\Release\DbSchema.Version.dacpac'
           WorkingDirectory="$(RootDirectory)"
           Condition="$(SchemaBuildEnabled)"
           />
