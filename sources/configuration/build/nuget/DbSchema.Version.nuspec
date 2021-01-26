@@ -14,7 +14,7 @@
   </metadata>
   <files>
     <file src='$ROOT_DIR$\readme.txt' target='' />
-    <file src='$ROOT_DIR$\LICENSE' target='' />
+    <file src='$ROOT_DIR$\LICENSE' target='LICENSE' />
     <file src='$ROOT_DIR$\build\DbSchema.Version.Contributors.dll' target='build' />
     <file src='$ROOT_DIR$\build\DbSchema.Version.Contributors.pdb' target='build' />
     <file src='$ROOT_DIR$\build\DBSchema.Version.Contributors.targets' target='build' />
