@@ -54,6 +54,7 @@
     <ItemGroup>
       <CopyToolsItems Include="$(RootDirectory)\sources\utility\New-DatabaseAttachScript.ps1" />
       <CopyToolsItems Include="$(RootDirectory)\sources\utility\Export-SqlDeadlock.ps1" />
+      <CopyToolsItems Include="$(RootDirectory)\sources\utility\New-LocalDbInstances.ps1" />
       <CopyToolsItems Include="$(RootDirectory)\sources\schema\Application.Schema.Template\Invoke-DacPacDeploy.ps1" />
     </ItemGroup>
     <MakeDir Directories="$(OutputBuildNugetToolsDir)" />
@@ -76,6 +77,7 @@
 
   <Target Name="DbSchemaCopyToNuget" AfterTargets="DBSchemaBuild">
     <Copy SourceFiles="$(NugetNuspecDir)\Readme-DbSchema.Version.txt" DestinationFiles="$(OutputBuildNugetDir)\readme.txt" />
+    <Copy SourceFiles="$(RootDirectory)\LICENSE" DestinationFiles="$(OutputBuildNugetDir)\LICENSE"/>
     <Exec Command="nuget.exe pack $(NugetNuspecPath) -Version $(ProductFileVersion) -OutputDirectory $(OutputNugetDir) -BasePath $(OutputBuildNugetDir) -Properties ROOT_DIR=$(OutputBuildNugetDir) -NoPackageAnalysis" />
   </Target>
 
