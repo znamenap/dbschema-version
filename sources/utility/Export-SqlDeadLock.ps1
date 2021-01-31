@@ -2,7 +2,7 @@
 .SYNOPSIS
     Exports the dead-locks XML from system healt event source.
 .EXAMPLE
-    PS> .\sources\utility\Export-SqlDeadLock.ps1 -Server "(localdb)\ProjectsV13" -Directory .\output\database\deadlocks
+    PS> .\Export-SqlDeadLock.ps1 -Server "(localdb)\ProjectsV13" -Directory .\output\database\deadlocks
 #>
 [CmdLetBinding()]
 param(

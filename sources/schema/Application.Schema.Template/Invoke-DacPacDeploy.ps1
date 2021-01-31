@@ -92,10 +92,10 @@ begin {
     $SqlPackageExePath = Get-LatestVersionExePath -ExeName "SqlPackage.exe" -Path $SqlPackageExePath -Location @(
         "$PSScriptRoot",
         "$PSScriptRoot\bin",
-        "${env:ProgramFiles(x86)}\Microsoft Visual Studio*\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC",
-        "${env:ProgramFiles}\Microsoft Visual Studio*\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC",
+        "${env:ProgramFiles(x86)}\Microsoft Visual Studio*\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\",
+        "${env:ProgramFiles}\Microsoft Visual Studio*\*\*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\",
         "${env:ProgramFiles}\Microsoft SQL Server\*\DAC\bin",
-        $env:Path -split ';'
+        $env:Path.Split(';', [System.StringSplitOptions]::RemoveEmptyEntries)
     )
 
     if ($Deploy.IsPresent) {
@@ -106,7 +106,7 @@ begin {
             "${env:ProgramFiles}\Microsoft SQL Server\Client SDK\ODBC\*\Tools\Binn",
             "${env:ProgramFiles(x86)}\Microsoft SQL Server\*\Tools\Binn",
             "${env:ProgramFiles(x86)}\Microsoft SQL Server\Client SDK\ODBC\*\Tools\Binn",
-            $env:Path -split ';'
+            $env:Path.Split(';', [System.StringSplitOptions]::RemoveEmptyEntries)
         )
     }
 

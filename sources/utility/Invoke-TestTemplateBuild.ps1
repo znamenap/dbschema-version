@@ -5,7 +5,7 @@
     Creates the target folder of extension contributes at $TargetPath and copies the contributor files over there. Then
     it starts MSBuild to invoke the $BuildTargets (i.e. Publish by default) the $SqlProjPath according the $SqlPublishProfilePath. WHen it completed the deployment or there was an error, it removes the contributor files.
 .EXAMPLE
-    PS> .\sources\utility\Invoke-TestTemplateBuild.ps1 -ContributorsPath .\output\main\bin\Debug\net4.6.2
+    PS> .\Invoke-TestTemplateBuild.ps1 -ContributorsPath .\output\main\bin\Debug\net4.6.2
     Invokes the steps to publish the SQLPROJ while using the contributors.
 #>
 [CmdletBinding()]
