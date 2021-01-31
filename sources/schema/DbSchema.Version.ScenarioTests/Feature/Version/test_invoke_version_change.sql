@@ -2,7 +2,7 @@
 
 declare @error varchar(2048);
 
-delete [schema_version].[step];
+-- delete  [schema_version].[step]; dbcc checkident ('[schema_version].[step]', reseed, -1);
 
 delete [schema_version].[version];
 
@@ -39,6 +39,7 @@ insert into @upgrade_steps (
     , ( 20001, 2,  'description 2.1 s2',  'procedure_20001_upgrade_step_2')
     , ( 20001, 3,  'description 2.1 s3',  'procedure_20001_upgrade_step_3')
     , ( 20001, 10, 'description 2.1 s10', 'procedure_20001_upgrade_step_10')
+    , ( 20001, 11, 'description 2.1 s11', 'procedure_20001_upgrade_step_11')
 ;
 exec [schema_version_tests].[recreate_dummy_steps] @schema = '[dbo]', @steps = @upgrade_steps;
 exec [schema_version].[register_upgrade_step] @schema_name = [dbo]      -- t_schema_name
@@ -53,7 +54,7 @@ insert into @downgrade_steps (
     , [description] -- nvarchar(128) not null
     , [procedure] -- [sys].[sysname] not null
     )
-    values 
+    values
       ( 10000, 0,  'description 1.0 s0',  'procedure_10000_downgrade_step_0')
     , ( 10000, 1,  'description 1.0 s1',  'procedure_10000_downgrade_step_1')
     , ( 10000, 2,  'description 1.0 s2',  'procedure_10000_downgrade_step_2')
@@ -79,6 +80,7 @@ insert into @downgrade_steps (
     , ( 20001, 2,  'description 2.1 s2',  'procedure_20001_downgrade_step_2')
     , ( 20001, 3,  'description 2.1 s3',  'procedure_20001_downgrade_step_3')
     , ( 20001, 10, 'description 2.1 s10', 'procedure_20001_downgrade_step_10')
+    , ( 20001, 11, 'description 2.1 s11', 'procedure_20001_downgrade_step_11')
 ;
 exec [schema_version_tests].[recreate_dummy_steps] @schema = '[dbo]', @steps = @downgrade_steps;
 exec [schema_version].[register_downgrade_step] @schema_name = [dbo]      -- t_schema_name
@@ -86,9 +88,9 @@ exec [schema_version].[register_downgrade_step] @schema_name = [dbo]      -- t_s
                                             , @step = @downgrade_steps             -- t_step
 ;
 
-print 'Testing upgrade suequence from version 0 to 2.0';
+print 'Testing upgrade suequence from version 0 to 2.1';
 declare @version_number [schema_version].[t_version];
-exec [schema_version].[parse_version] @version_text = N'2.0'                      -- nvarchar(128)
+exec [schema_version].[parse_version] @version_text = N'2.1'                      -- nvarchar(128)
                                     , @version_number = @version_number output -- t_version
 ;
 
@@ -128,7 +130,7 @@ exec [schema_version].[parse_version] @version_text = N'1.2'                    
     ;
 --    throw 50000, 'Test failed, expected exception did not happen.', 1;
 --end try
---begin catch 
+--begin catch
 --    if error_message() not like '%There are no change(s) detected between%'
 --    begin
 --        set @error = concat('Expecting %%There are no change(s) detected between%% exception, but received:', error_message());
