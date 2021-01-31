@@ -8,7 +8,7 @@ begin
     set @proc_name = object_name(@proc_id);
     if (xact_state()) = -1
     begin
-        print '    ->' + @proc_name + '-> ' + @message + ', Error message: ' + @@error_message
+        print '    ->' + @proc_name + '-> ' + @message + ', error message: ' + @@error_message
     end else begin
         insert into [schema_version].[audit_event] ([from], [message] )
             values ( @proc_name, @message );
