@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current" DefaultTargets="DBSchemaBuild">
   <PropertyGroup>
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>0</MinorVersion>
+    <MinorVersion>1</MinorVersion>
     <PatchVersion Condition="'$(PatchVersion)' == ''">0</PatchVersion>
     <RootDirectory>$(MSBuildProjectDirectory)</RootDirectory>
     <OutputDirectory>$(RootDirectory)\output</OutputDirectory>
