@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DbSchema.Version.Contributors")]
+[assembly: AssemblyTitle("DbSchema.Version")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DbSchema.Version.Contributors")]
+[assembly: AssemblyProduct("DbSchema.Version")]
 [assembly: AssemblyCopyright("Copyright © 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f6b30f1b-460c-42e9-aca6-f81dceb3fbe9")]
+[assembly: Guid("bab0fe7f-57ae-4b43-9acf-ecc4a7e155bc")]
 
 // Version information for an assembly consists of the following four values:
 //

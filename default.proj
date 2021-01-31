@@ -12,7 +12,8 @@
     <TargetConnectionString>Data Source=$(SchemaBuildSQLServer)%3BInitial Catalog=$(SchemaBuildDatabase)%3BIntegrated Security=True%3BPersist Security Info=False%3BPooling=False%3BMultipleActiveResultSets=False%3BConnect Timeout=60%3BEncrypt=False%3BTrustServerCertificate=False</TargetConnectionString>
     <MainBuildEnabled>True</MainBuildEnabled>
     <SchemaBuildEnabled>True</SchemaBuildEnabled>
-    <ProductFileVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductFileVersion>
+    <ProductFileVersion Condition="'$(ProductFileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductFileVersion>
+    <DacVersion Condition="'$(DacVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</DacVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -60,8 +61,14 @@
       <Value>False</Value>
     </ConnectionStringItem>
   </ItemGroup>
+  <ItemGroup>
+    <DbSchemaAssemblyInfoFile Condition=" '$(DbSchemaAssemblyInfoFile)' == '' "
+                              Include="$(RootDirectory)\sources\**\AssemblyInfo.cs" />
+  </ItemGroup>
 
   <Import Project="$(RootDirectory)\sources\configuration\build\nuget\DbSchema.Version.NuGetPack.targets" />
+  <Import Project="$(RootDirectory)\sources\configuration\build\targets\UpdateAssemblyInfoFile.targets" />
+  <Import Project="$(RootDirectory)\sources\configuration\build\targets\LoadActualGitInfo.targets" />
 
   <Target Name="DBSchemaClean">
     <RemoveDir Directories="$(OutputDirectory)" />

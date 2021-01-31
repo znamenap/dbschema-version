@@ -25,11 +25,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="nuget" />
+    <Folder Include="targets" />
     <None Include="nuget\DbSchema.Version.NuGetPack.targets" />
     <None Include="nuget\DbSchema.Version.nuspec" />
+    <None Include="targets\UpdateAssemblyInfoFile.targets" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="nuget\Readme-DbSchema.Version.txt" />
+    <Content Include="targets\LoadActualGitInfo.targets" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!--<Target Name="Build" />

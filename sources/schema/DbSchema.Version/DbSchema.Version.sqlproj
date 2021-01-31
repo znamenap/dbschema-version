@@ -26,6 +26,7 @@
     <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
     <DefaultSchema>schema_version</DefaultSchema>
     <GenerateCreateScript>True</GenerateCreateScript>
+    <DacVersion Condition=" '$(DacVersion)' == ''" >1.0.0.0</DacVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -120,5 +121,8 @@
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
 </Project>
