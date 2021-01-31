@@ -12,15 +12,16 @@
 as
 begin
     set nocount on;
+    declare @procedure_name nvarchar(128) = @schema_name + N'.[' + @step_procedure + ']';
     declare @base_msg nvarchar(2048) =
         'step_id=' + cast(@step_id as varchar(38)) + ', '
         + @application_name
         + N'('+cast(@step_version as nvarchar(38))+N')+' + cast(@step_sequence as nvarchar(38))
-        + N' via ' + @schema_name + N'.' + @step_procedure + '()';
+        + N' via ' + @procedure_name + '()';
     declare @msg nvarchar(2048) = 'EXEC: ' + @base_msg;
     exec [schema_version].[add_audit_event] @proc_id = @@procid, @message = @msg;
     begin try
-        exec [sys].[sp_executesql] @sql = @step_procedure;
+        exec [sys].[sp_executesql] @sql = @procedure_name;
     end try
     begin catch
         declare @error_message nvarchar(2048);
