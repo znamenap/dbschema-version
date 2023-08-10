@@ -149,9 +149,23 @@
                                   {"DeploymentContributorPaths", values}
                               };
                               populateSettingsMethodInfo.Invoke(ambientDataObject, new object[] {settings});
+                              Log.LogMessage("DeploymentContributorPaths: {0}", string.Join(";", values));
+
                               return true;
                           }
+                          else
+                          {
+                            Log.LogWarning("There is not PopulateSettings method available!");
+                          }
                       }
+                      else
+                      {
+                        Log.LogWarning("There is not an ambientDataObject available!");
+                      }
+                  }
+                  else
+                  {
+                    Log.LogWarning("There is not DefaultSettings property available!");
                   }
               }
               else

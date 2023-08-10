@@ -1,19 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{4B6B10EF-2006-40DE-B30E-1742BA4D404F}"
+	ProjectSection(SolutionItems) = preProject
+		sources\main\Directory.Build.props = sources\main\Directory.Build.props
+		sources\main\Directory.Build.targets = sources\main\Directory.Build.targets
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSchema.Version.Contributors", "sources\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj", "{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{AE0B5DA2-612B-4106-ABD4-A185FB8B96ED}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		default.proj = default.proj
-	EndProjectSection
-EndProject
-Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "build", "sources\configuration\build\build.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{9179C4C4-472C-4B80-B1BB-14E52CAF003C}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentat
 		README.MD = README.MD
 		docs\REFERENCING.MD = docs\REFERENCING.MD
 	EndProjectSection
+EndProject
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "build", "sources\configuration\build\build.msbuildproj", "{13511C0C-7E48-42BC-A22E-7EF6DED0F896}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,15 +32,17 @@ Global
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13511C0C-7E48-42BC-A22E-7EF6DED0F896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13511C0C-7E48-42BC-A22E-7EF6DED0F896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13511C0C-7E48-42BC-A22E-7EF6DED0F896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13511C0C-7E48-42BC-A22E-7EF6DED0F896}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9} = {4B6B10EF-2006-40DE-B30E-1742BA4D404F}
-		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51} = {AE0B5DA2-612B-4106-ABD4-A185FB8B96ED}
+		{13511C0C-7E48-42BC-A22E-7EF6DED0F896} = {AE0B5DA2-612B-4106-ABD4-A185FB8B96ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {659F9C1D-8D78-4837-864A-EA6176074DE5}

@@ -1,0 +1,77 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MajorVersion>2</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <PatchVersion Condition="'$(PatchVersion)' == ''">0</PatchVersion>
+    <RootDirectory>$(MSBuildProjectDirectory)</RootDirectory>
+    <OutputDirectory>$(RootDirectory)\output</OutputDirectory>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
+    <SchemaBuildSQLServer Condition="'$(SchemaBuildSQLServer)' == ''">(localdb)\ProjectsV13</SchemaBuildSQLServer>
+    <SchemaBuildDatabase Condition="'$(SchemaBuildDatabase)' == ''">DbSchema.Version.Build</SchemaBuildDatabase>
+    <TargetConnectionString>Data Source=$(SchemaBuildSQLServer)%3BInitial Catalog=$(SchemaBuildDatabase)%3BIntegrated Security=True%3BPersist Security Info=False%3BPooling=False%3BMultipleActiveResultSets=False%3BConnect Timeout=60%3BEncrypt=False%3BTrustServerCertificate=False</TargetConnectionString>
+    <MainBuildEnabled>True</MainBuildEnabled>
+    <SchemaBuildEnabled>True</SchemaBuildEnabled>
+    <Company Condition="'$(Company)' == ''">Pavel Znamenáček</Company>
+    <Copyright Condition="'$(Copyright)' == ''">Copyright © $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
+    <Description Condition="'$(Description)' == ''">The contributors library and DacPac schemas targeting MSSQL database deployments and development phases.</Description>
+    <Product Condition="'$(Product)' == ''">DB Schema Version</Product>
+    <ProductFileVersion Condition="'$(ProductFileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductFileVersion>
+    <DacVersion Condition="'$(DacVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</DacVersion>
+    <InformationalVersion Condition="'$(InformationalVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)-$(GitCommitHash)@$(GitBranchName)</InformationalVersion>
+    <FileVersion Condition="'$(FileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</FileVersion>
+    <AssemblyVersion Condition="'$(FileVersion)' == ''">$(MajorVersion).0.0.0</AssemblyVersion>
+    <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion)</Version>
+    <VersionSuffix Condition="'$(VersionSuffix)' == 'master'"></VersionSuffix>
+    <VersionSuffix Condition="'$(VersionSuffix)' != 'master'">$(VersionSuffix)</VersionSuffix>
+
+    <!--<TargetFrameworks>net46;netstandard2.0</TargetFrameworks>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SharedProperties Include="Configuration">
+      <Value>$(Configuration)</Value>
+    </SharedProperties>
+    <SharedProperties Include="Platform">
+      <Value>$(Platform)</Value>
+    </SharedProperties>
+  </ItemGroup>
+  <!--<ItemGroup>
+    <SchemaProperties Include="TargetConnectionString">
+      <Value>$(TargetConnectionString)</Value>
+    </SchemaProperties>
+  </ItemGroup>-->
+  <ItemGroup>
+    <DSPVersion Include="120" />
+    <DSPVersion Include="130" />
+    <DSPVersion Include="140" />
+    <DSPVersion Include="150" />
+  </ItemGroup>
+  <ItemGroup>
+    <ConnectionStringItem Include="Initial Catalog">
+      <Value>$(SchemaBuildDatabase)</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Integrated Security">
+      <Value>True</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Persist Security Info">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Pooling">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="MultipleActiveResultSets">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Connect Timeout">
+      <Value>60</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="Encrypt">
+      <Value>False</Value>
+    </ConnectionStringItem>
+    <ConnectionStringItem Include="TrustServerCertificate">
+      <Value>False</Value>
+    </ConnectionStringItem>
+  </ItemGroup>
+
+</Project>

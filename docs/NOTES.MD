@@ -47,9 +47,10 @@
 
 The goal is to convert the all liabilities to the .NET 6 platform and utilise Microsoft.SQL.Build project. Therefore, we break the compatibility with the old SSDT version based on the .NET Framework.
 
-- [ ] Convert UpdateAssemblyInfoFile.targets to utilise the Assembly attribute from the project file. More likely should be converted to set in the default.proj file.
+- [x] Convert build project from PowerShell to msbuildproj project.
+- [x] Convert UpdateAssemblyInfoFile.targets to utilise the Assembly attribute from the project file. More likely should be converted to set in the default.proj file.
+- [x] Update SQL Projects to use .NET Framework 4.8.
 - [ ] Convert DbSchema.Version.Contributors project to .NET core style project using csproj and reference the assemblies from .NET6 and Microsoft.SQL.Build solution.
-- [ ] Convert build project from PowerShell to msbuildproj project.
 - [ ] Convert documentation folder into to msbuildproj project.
 - [ ] Upgrade the solution so that it uses .NET 6 build principles.
 - [ ] Upgrade the solution so that it uses central package versions.

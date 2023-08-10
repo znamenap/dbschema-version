@@ -1,0 +1,24 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="Current" DefaultTargets="DBSchemaBuild">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.targets"/>
+
+  <PropertyGroup>
+    <DocumentationFile>$(OutputPath)\$(MSBuildProjectName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.23" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).UnitTests, PublicKey=00240000048000009400000006020000002400005253413100040000010001006d11e105332d9f51d3a7fc0f61e563815568415a29cb0c2c8f8a1be1027b2fd792c1467d0ff105722d9dc3bab730ab19bfd896123e06641606ac60c6eeb692d28e94064a7c3a06318bbe54e839a0aceb64726c6ffdf1cf936888c43e1fd785a72a2cc6025069e0dcfb9808fd200a8118c12c97f53f8d487bcfe2a5ac32ee7cbb</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).SystemTests, PublicKey=00240000048000009400000006020000002400005253413100040000010001006d11e105332d9f51d3a7fc0f61e563815568415a29cb0c2c8f8a1be1027b2fd792c1467d0ff105722d9dc3bab730ab19bfd896123e06641606ac60c6eeb692d28e94064a7c3a06318bbe54e839a0aceb64726c6ffdf1cf936888c43e1fd785a72a2cc6025069e0dcfb9808fd200a8118c12c97f53f8d487bcfe2a5ac32ee7cbb</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DynamicProxyGenAssembly2, PublicKey=0024000004800000940000000602000000240000525341310004000001000100c547cac37abd99c8db225ef2f6c8a3602f3b3606cc9891605d02baa56104f4cfc0734aa39b93bf7852f7d9266654753cc297e7d2edfe0bac1cdcf9f717241550e0a7b191195b7667bb4f64bcb8e2121380fd1d9d46ad2d92d2d15605093924cceaf74c4861eff62abf69b9291ed0a340e113be11e6a7d3113e92484cf7045cc7</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>

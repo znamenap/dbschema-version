@@ -1,8 +1,12 @@
-﻿<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.props"/>
 
   <PropertyGroup>
-    <OutputPath>..\..\..\output\main\bin\$(Configuration)</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\main\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <!--<TargetFrameworks>net46;netstandard2.0</TargetFrameworks>-->
+    <BaseOutputPath>$(MSBuildThisFileDirectory)..\..\output\main\bin</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\..\output\main\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(MSBuildThisFileDirectory)..\..\output\main\obj\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>
