@@ -12,8 +12,13 @@
   This is aimed for Visual Studio 2019 Community version only.
   Debugger settings:
     Start external program: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
+    Start external program: C:\Program Files\Microsoft\VisualStudio\2022\Professional\MSBuild\Current\Bin\amd64\MSBuild.exe
     Command line arguments: -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 <path-to-repo>\sources\utility\Application.Schema.Template.DebuggerSetup.proj
-    Working directory: <path-to-repo>\output\main\bin\Debug\net4.6.2
+    Working directory: <path-to-repo>\output\main\bin\Debug
+    
+    C:\Users\pavel\Projects\dbschema-version\sources\utility\Application.Schema.Template.DebuggerSetup.proj
+    C:\Users\pavel\Projects\dbschema-version\output\main\bin\Debug
+     -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 C:\Users\pavel\Projects\dbschema-version\sources\utility\Application.Schema.Template.DebuggerSetup.proj
   -->
 
   <PropertyGroup>
@@ -24,7 +29,7 @@
     <RebuildEnabled Condition="'$(RebuildEnabled)' == ''">true</RebuildEnabled>
     <PublishEnabled Condition="'$(PublishEnabled)' == ''">true</PublishEnabled>
     <SqlPublishProfilePath Condition="'$(SqlPublishProfilePath)' == ''">Application.Schema.Template.publish.xml</SqlPublishProfilePath>
-    <ContributorSourceDir Condition="'$(ContributorSourceDir)' == ''">$(MSBuildProjectDirectory)\..\..\output\main\bin\$(Configuration)\net4.6.2</ContributorSourceDir>
+    <ContributorSourceDir Condition="'$(ContributorSourceDir)' == ''">$(MSBuildProjectDirectory)\..\..\output\main\bin\$(Configuration)</ContributorSourceDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,16 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)..\schema\Application.Schema.Template\Application.Schema.Template.sqlproj" />
+    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)\..\schema\Application.Schema.Template\Application.Schema.Template.sqlproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ContributorSourcePath Include="$(ContributorSourceDir)\DbSchema.Version.Contributors*.*" />
+    <ContributorSourcePath Include="$(ContributorSourceDir)\*.*" />
   </ItemGroup>
 
   <ItemGroup>
-    <!--
     <ContributorDestinationPath Include="$(TEMP)\contributors" />
+    <!--
     <ContributorDestinationPath Include="$(ProgramW6432)\Microsoft SQL Server\$(DSPVersion)\DAC\bin" />
     <ContributorDestinationPath Include="$(ProgramFiles)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\$(DSPVersion)\Extensions\" />
     -->

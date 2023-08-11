@@ -4,9 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="**/*" />
-    <None Include="../../../*.*" />
-    <None Include="../../../.*" />
-    <None Remove="../../../*.sln" />
+    <None Include="../../*.*" />
+    <None Include="../../.*" />
+    <None Remove="../../*.sln" />
     <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
     <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension).user" />
   </ItemGroup>

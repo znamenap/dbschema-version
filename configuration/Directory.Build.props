@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)..\..\output\configuration\bin</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\..\output\configuration\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(MSBuildThisFileDirectory)..\..\output\configuration\obj\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>
