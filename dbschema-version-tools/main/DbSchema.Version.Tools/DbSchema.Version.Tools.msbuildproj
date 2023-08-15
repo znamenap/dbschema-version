@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**/*" />
+    <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
+    <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension).user" />
+  </ItemGroup>
+</Project>

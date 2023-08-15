@@ -8,24 +8,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configurat
 		configuration\Directory.Build.props = configuration\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{9179C4C4-472C-4B80-B1BB-14E52CAF003C}"
-	ProjectSection(SolutionItems) = preProject
-		docs\NOTES.MD = docs\NOTES.MD
-		README.MD = README.MD
-		docs\REFERENCING.MD = docs\REFERENCING.MD
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{4B6B10EF-2006-40DE-B30E-1742BA4D404F}"
 	ProjectSection(SolutionItems) = preProject
-		sources\main\Directory.Build.props = sources\main\Directory.Build.props
-		sources\main\Directory.Build.targets = sources\main\Directory.Build.targets
+		dbschema-version-contributors\main\Directory.Build.props = dbschema-version-contributors\main\Directory.Build.props
+		dbschema-version-contributors\main\Directory.Build.targets = dbschema-version-contributors\main\Directory.Build.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSchema.Version.Contributors", "sources\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj", "{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}"
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "build", "configuration\build\build.msbuildproj", "{487D26B5-8E76-497D-8361-F8A5F3F50BC2}"
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "globals", "configuration\globals\globals.msbuildproj", "{81D577EA-B516-4413-A859-42D4D91C4721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSchema.Version.Contributors", "dbschema-version-contributors\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj", "{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}"
+EndProject
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "docs", "configuration\docs\docs.msbuildproj", "{3C694B2B-ACDA-46BA-9DB2-E035EC830C25}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{BC77E988-8121-476B-A2B8-B26E121BC2A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbSchema.Version.Contributors.UnitTests", "dbschema-version-contributors\test\DbSchema.Version.Contributors.UnitTests\DbSchema.Version.Contributors.UnitTests.csproj", "{9779714F-21CA-4412-9912-3396AA8107DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +32,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{487D26B5-8E76-497D-8361-F8A5F3F50BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{487D26B5-8E76-497D-8361-F8A5F3F50BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{487D26B5-8E76-497D-8361-F8A5F3F50BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,14 +40,28 @@ Global
 		{81D577EA-B516-4413-A859-42D4D91C4721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81D577EA-B516-4413-A859-42D4D91C4721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81D577EA-B516-4413-A859-42D4D91C4721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C694B2B-ACDA-46BA-9DB2-E035EC830C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C694B2B-ACDA-46BA-9DB2-E035EC830C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C694B2B-ACDA-46BA-9DB2-E035EC830C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C694B2B-ACDA-46BA-9DB2-E035EC830C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9779714F-21CA-4412-9912-3396AA8107DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9779714F-21CA-4412-9912-3396AA8107DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9779714F-21CA-4412-9912-3396AA8107DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9779714F-21CA-4412-9912-3396AA8107DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9} = {4B6B10EF-2006-40DE-B30E-1742BA4D404F}
 		{487D26B5-8E76-497D-8361-F8A5F3F50BC2} = {6B27041A-D19D-4042-A173-0197A39B4C35}
 		{81D577EA-B516-4413-A859-42D4D91C4721} = {6B27041A-D19D-4042-A173-0197A39B4C35}
+		{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9} = {4B6B10EF-2006-40DE-B30E-1742BA4D404F}
+		{3C694B2B-ACDA-46BA-9DB2-E035EC830C25} = {6B27041A-D19D-4042-A173-0197A39B4C35}
+		{9779714F-21CA-4412-9912-3396AA8107DE} = {BC77E988-8121-476B-A2B8-B26E121BC2A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {659F9C1D-8D78-4837-864A-EA6176074DE5}

@@ -5,12 +5,6 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{C8A0D656-9263-4740-9B70-6614B263C1B2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C1B65A81-9BCA-40A5-8FA9-1F3B4AF401BA}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbSchema.Version.ScenarioTests", "dbschema-version-schema\test\DbSchema.Version.ScenarioTests\DbSchema.Version.ScenarioTests.sqlproj", "{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbSchema.Version", "dbschema-version-schema\main\DbSchema.Version\DbSchema.Version.sqlproj", "{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{5DBDC61A-DA1A-40AE-B376-134FDF0BD8FA}"
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "build", "configuration\build\build.msbuildproj", "{A12262D3-EAD0-4C29-8FA8-580B1FD866CC}"
@@ -19,24 +13,14 @@ Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "docs", "configuration\docs\
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "globals", "configuration\globals\globals.msbuildproj", "{338B0482-5DFB-4DD0-A593-142A58ACEDD9}"
 EndProject
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "DbSchema.Version.Tools", "dbschema-version-tools\main\DbSchema.Version.Tools\DbSchema.Version.Tools.msbuildproj", "{50F74623-FF80-4119-857B-39014F49B933}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{A12262D3-EAD0-4C29-8FA8-580B1FD866CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A12262D3-EAD0-4C29-8FA8-580B1FD866CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A12262D3-EAD0-4C29-8FA8-580B1FD866CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,16 +33,19 @@ Global
 		{338B0482-5DFB-4DD0-A593-142A58ACEDD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338B0482-5DFB-4DD0-A593-142A58ACEDD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338B0482-5DFB-4DD0-A593-142A58ACEDD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F74623-FF80-4119-857B-39014F49B933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F74623-FF80-4119-857B-39014F49B933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F74623-FF80-4119-857B-39014F49B933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F74623-FF80-4119-857B-39014F49B933}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{ED12CA71-F1F6-4BAC-8281-F1605DFD3E13} = {C1B65A81-9BCA-40A5-8FA9-1F3B4AF401BA}
-		{5FE3D7CD-BCFF-4581-BAF8-EB196515030C} = {C8A0D656-9263-4740-9B70-6614B263C1B2}
 		{A12262D3-EAD0-4C29-8FA8-580B1FD866CC} = {5DBDC61A-DA1A-40AE-B376-134FDF0BD8FA}
 		{4F5FADFE-04FB-4E21-8659-122023FB4122} = {5DBDC61A-DA1A-40AE-B376-134FDF0BD8FA}
 		{338B0482-5DFB-4DD0-A593-142A58ACEDD9} = {5DBDC61A-DA1A-40AE-B376-134FDF0BD8FA}
+		{50F74623-FF80-4119-857B-39014F49B933} = {C8A0D656-9263-4740-9B70-6614B263C1B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E678044-76A8-46FA-B14F-27B227BD8162}

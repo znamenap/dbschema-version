@@ -51,8 +51,7 @@ The goal is to convert the all liabilities to the .NET 6 platform and utilise Mi
 - [x] Convert UpdateAssemblyInfoFile.targets to utilise the Assembly attribute from the project file. More likely should be converted to set in the default.proj file.
 - [x] Update SQL Projects to use .NET Framework 4.8.
 - [x] Move build project to the root of the solution.
-- [ ] Split solution to three modules a) the dbschema-contributors, b) the dbschema-version and c) the dbschema-template project consuming the both.
-      solution.
+- [x] Split solution to three modules a) the dbschema-contributors, b) the dbschema-version and c) the dbschema-consumer project consuming the other two modules.
 - [ ] Upgrade the solution so that it uses .NET 6 build principles.
 - [ ] Upgrade the solution so that it uses central package versions.
 - [ ] Update the dbschema-contributors solution project, so that it produces conventional targets to be injected into the imported SQL project, so that the NuGet package contains build folder, lib folder and tools folder.

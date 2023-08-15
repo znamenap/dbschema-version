@@ -99,18 +99,14 @@
     <Build Include="Feature\_Template\Structure\template.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
-      <Name>DbSchema.Version</Name>
-      <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
-      <Private>True</Private>
-      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac">
       <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac</HintPath>
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
+    <ArtifactReference Include="..\..\..\output\schema\main\120\bin\Release\DbSchema.Version.dacpac">
+      <HintPath>..\..\..\output\schema\main\120\bin\Release\DbSchema.Version.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
     </ArtifactReference>
   </ItemGroup>
   <ItemGroup>

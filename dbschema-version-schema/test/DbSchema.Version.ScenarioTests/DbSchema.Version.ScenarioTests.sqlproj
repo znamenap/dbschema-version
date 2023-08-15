@@ -18,7 +18,7 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -67,14 +67,6 @@
     <Folder Include="Feature\Shared" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbSchema.Version\DbSchema.Version.sqlproj">
-      <Name>DbSchema.Version</Name>
-      <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
-      <Private>True</Private>
-      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Build Include="Sql\schema.sql" />
     <None Include="Feature\Step\test_register_upgrade_step.sql" />
     <None Include="Feature\Step\test_register_downgrade_step.sql" />
@@ -103,5 +95,13 @@
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.sqlproj">
+      <Name>DbSchema.Version</Name>
+      <Project>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</Project>
+      <Private>True</Private>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    </ProjectReference>
   </ItemGroup>
 </Project>

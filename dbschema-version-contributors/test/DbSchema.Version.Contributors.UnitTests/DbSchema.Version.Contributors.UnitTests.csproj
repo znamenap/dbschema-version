@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <None Include="DbSchema.Version.Contributors.DebuggerSetup.proj" />
+    </ItemGroup>
+
+</Project>

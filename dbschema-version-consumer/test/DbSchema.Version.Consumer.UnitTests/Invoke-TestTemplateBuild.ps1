@@ -10,17 +10,17 @@
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string] $ContributorsPath,
 
     [Parameter()]
     [string] $BuildTargets = "Publish",
 
     [Parameter()]
-    [string] $SqlPublishProfilePath = "$PSScriptRoot\..\schema\Application.Schema.Template\Application.Schema.Template.publish.xml",
+    [string] $SqlPublishProfilePath = "$PSScriptRoot\..\main\Application.Schema.Template\Application.Schema.Template.publish.xml",
 
     [Parameter()]
-    [string] $SqlProjPath = "$PSScriptRoot\..\schema\Application.Schema.Template\Application.Schema.Template.sqlproj",
+    [string] $SqlProjPath = "$PSScriptRoot\..\main\Application.Schema.Template\Application.Schema.Template.sqlproj",
 
     [Parameter()]
     [string] $ContributorsFilter = 'DbSchema.Version.Contributors.*',
@@ -48,14 +48,15 @@ process {
     $TargetFiles = @()
     try {
         Get-ChildItem -Path $ContributorsPath -Filter $ContributorsFilter |
-            Copy-Item -Recurse -Force -ErrorAction Stop -Destination $TargetPath -PassThru |
-                ForEach-Object { $TargetFiles += $_.FullName; $_ } |
-                    Format-Table -GroupBy Directory
+        Copy-Item -Recurse -Force -ErrorAction Stop -Destination $TargetPath -PassThru |
+        ForEach-Object { $TargetFiles += $_.FullName; $_ } |
+        Format-Table -GroupBy Directory
 
         Set-ItemProperty -Path $SqlProjPath -Name LastWriteTime -Value ([datetime]::Now)
 
         & msbuild.exe -NoLogo $SqlProjPath /p:Configuration=$Configuration /p:Platform=AnyCPU "/t:Build;$BuildTargets" "/p:SqlPublishProfilePath=$SqlPublishProfilePath" $MSBuildParams
-    } finally {
+    }
+    finally {
         Remove-Item -Verbose -Force -Path $TargetFiles
     }
 }
