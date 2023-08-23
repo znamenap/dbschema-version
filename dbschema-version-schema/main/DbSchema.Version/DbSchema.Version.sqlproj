@@ -1,34 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" Sdk="Microsoft.Build.Sql">
+  <!-- <Sdk Name="Microsoft.Build.Sql" Version="0.1.10-preview" /> -->
+  <!-- <Import Project="Sdk.props" Sdk="Microsoft.Build.Sql" Version="0.1.10-preview"/>
+  <Import Project="Sdk.targets" Sdk="Microsoft.Build.Sql" Version="0.1.10-preview"/> -->
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!-- <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration> -->
+    <!-- <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform> -->
     <Name>DbSchema.Version</Name>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>4.1</ProjectVersion>
+    <!-- <SchemaVersion>2.0</SchemaVersion> -->
+    <!-- <ProjectVersion>4.1</ProjectVersion> -->
     <ProjectGuid>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</ProjectGuid>
     <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql$(DSPVersion)DatabaseSchemaProvider</DSP>
-    <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <!-- <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP> -->
+    <!-- <OutputType>Database</OutputType> -->
+    <!-- <RootPath>
+    </RootPath> -->
     <RootNamespace>DbSchema.Version</RootNamespace>
     <AssemblyName>DbSchema.Version</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <TargetLanguage>CS</TargetLanguage>
+    <!-- <TargetLanguage>CS</TargetLanguage> -->
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
+    <!-- <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName> -->
     <DefaultSchema>schema_version</DefaultSchema>
-    <GenerateCreateScript>True</GenerateCreateScript>
-    <DacVersion Condition=" '$(DacVersion)' == ''">1.0.0.0</DacVersion>
-    <TargetFrameworkProfile />
+    <!-- 
+      Makes the task to generate NullPointerException
+      TODO: Uncomment when Microsoft.Build.Sql bugfix resolved
+      <GenerateCreateScript>True</GenerateCreateScript>
+    -->
+    <!-- <DacVersion Condition=" '$(DacVersion)' == ''">1.0.0.0</DacVersion> -->
   </PropertyGroup>
+  <!-- <PropertyGroup Condition=" '$(NetCoreBuild)' != 'true' ">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup> -->
+  <!--
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
@@ -52,15 +63,16 @@
     <WarningLevel>4</WarningLevel>
     <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
   </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
-    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+  -->
+  <!-- <PropertyGroup Condition=" '$(NetCoreBuild)' != 'true'">
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion> -->
+  <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+  <!-- <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
-  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <ItemGroup>
+  <Import Condition="'$(NetCoreBuild)' != 'true' and '$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(NetCoreBuild)' != 'true' and '$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" /> -->
+  <!-- <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Feature" />
     <Folder Include="Feature\Version" />
@@ -103,11 +115,11 @@
     <Build Include="Feature\Step\step_permissions.sql" />
     <Build Include="Feature\Version\version_permissions.sql" />
     <Build Include="Feature\Audit\audit_permissions.sql" />
-  </ItemGroup>
-  <ItemGroup>
+  </ItemGroup> -->
+  <!-- <ItemGroup>
     <RefactorLog Include="DbSchema.Version.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
+  </ItemGroup> -->
+  <!-- <ItemGroup>
     <None Include="DbSchema.Version.publish.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -115,15 +127,14 @@
     <None Include="DbSchema.Version-LocalDB_DEV_130.publish.xml" />
     <None Include="DbSchema.Version-LocalDB_DEV_140.publish.xml" />
     <None Include="DbSchema.Version-LocalDB_DEV_150.publish.xml" />
-  </ItemGroup>
+  </ItemGroup> -->
   <ItemGroup>
-    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac">
-      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac</HintPath>
-      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
-      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
-    </ArtifactReference>
+    <PackageReference Include="Microsoft.SqlServer.Dacpacs.Master" Version="$(DSPVersion).0.0">
+      <DacPacName>master</DacPacName>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-  </ItemGroup>
+
+  <!--
+    TODO: Microsoft.Build.Sql does not honor assembly attributes declared by SDK like projects.
+  -->
 </Project>

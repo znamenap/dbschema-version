@@ -1,7 +1,15 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.NET.Sdk">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <None Include="DbSchema.Version.Contributors.DebuggerSetup.proj" />
+        <Content Include="DbSchema.Version.Contributors.DebuggerSetup.proj">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj">
+        <Private>True</Private>
+      </ProjectReference>
     </ItemGroup>
 
 </Project>

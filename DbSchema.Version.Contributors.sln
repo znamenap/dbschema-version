@@ -18,11 +18,14 @@ Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "build", "configuration\buil
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "globals", "configuration\globals\globals.msbuildproj", "{81D577EA-B516-4413-A859-42D4D91C4721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSchema.Version.Contributors", "dbschema-version-contributors\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj", "{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbSchema.Version.Contributors", "dbschema-version-contributors\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj", "{F6B30F1B-460C-42E9-ACA6-F81DCEB3FBE9}"
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "docs", "configuration\docs\docs.msbuildproj", "{3C694B2B-ACDA-46BA-9DB2-E035EC830C25}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{BC77E988-8121-476B-A2B8-B26E121BC2A5}"
+	ProjectSection(SolutionItems) = preProject
+		dbschema-version-contributors\test\Directory.Build.props = dbschema-version-contributors\test\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbSchema.Version.Contributors.UnitTests", "dbschema-version-contributors\test\DbSchema.Version.Contributors.UnitTests\DbSchema.Version.Contributors.UnitTests.csproj", "{9779714F-21CA-4412-9912-3396AA8107DE}"
 EndProject

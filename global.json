@@ -1,6 +1,7 @@
 {
   "msbuild-sdks": {
-    "Microsoft.Build.NoTargets": "3.7.0"
+    "Microsoft.Build.NoTargets": "3.7.0",
+    "Microsoft.Build.Sql": "0.1.10-preview"
   },
   "sdk": {
     "version": "6.0.413",

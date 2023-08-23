@@ -52,7 +52,7 @@ The goal is to convert the all liabilities to the .NET 6 platform and utilise Mi
 - [x] Update SQL Projects to use .NET Framework 4.8.
 - [x] Move build project to the root of the solution.
 - [x] Split solution to three modules a) the dbschema-contributors, b) the dbschema-version and c) the dbschema-consumer project consuming the other two modules.
-- [ ] Upgrade the solution so that it uses .NET 6 build principles.
+- [x] Upgrade the solution so that it uses .NET 6 build principles.
 - [ ] Upgrade the solution so that it uses central package versions.
 - [ ] Update the dbschema-contributors solution project, so that it produces conventional targets to be injected into the imported SQL project, so that the NuGet package contains build folder, lib folder and tools folder.
 - [ ] Convert DbSchema.Version.Contributors project to .NET core style project using csproj and reference the assemblies from .NET6 and Microsoft.SQL.Build

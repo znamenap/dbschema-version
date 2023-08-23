@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.Build.NoTargets">
 
   <!--
   ! WARNING !
@@ -17,14 +17,14 @@
     Working directory: <path-to-repo>\output\main\bin\Debug
     
     C:\Users\pavel\Projects\dbschema-version\sources\utility\Application.Schema.Template.DebuggerSetup.proj
-    C:\Users\pavel\Projects\dbschema-version\output\main\bin\Debug
-     -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 C:\Users\pavel\Projects\dbschema-version\sources\utility\Application.Schema.Template.DebuggerSetup.proj
+    C:\Users\pavel\Projects\dbschema-version\output\main\bin\Debug -flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8 C:\Users\pavel\Projects\dbschema-version\sources\utility\Application.Schema.Template.DebuggerSetup.proj
   -->
 
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DSPVersion Condition="'$(DSPVersion)' == ''">150</DSPVersion>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-    <Platform Condition="'$(Platform)' == ''">Debug</Platform>
+    <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
     <FileMask>DbSchema.Version.Contributors</FileMask>
     <RebuildEnabled Condition="'$(RebuildEnabled)' == ''">true</RebuildEnabled>
     <PublishEnabled Condition="'$(PublishEnabled)' == ''">true</PublishEnabled>
@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)\..\schema\Application.Schema.Template\Application.Schema.Template.sqlproj" />
+    <ContributorConsumerPath Include="$(MSBuildProjectDirectory)\..\..\..\..\..\..\dbschema-version-consumer\main\Application.Schema.Template\Application.Schema.Template.sqlproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,7 +53,7 @@
     -->
   </ItemGroup>
 
-  <UsingTask TaskName="Pause" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+  <UsingTask TaskName="Pause" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup />
     <Task>
       <Using Namespace="System"/>
@@ -125,23 +125,22 @@
 
   <Target Name="CopyContributors" DependsOnTargets="ExpandContributorDestinationFullPath">
     <MakeDir Directories="@(ContributorDestinationPath)" />
-    <Copy SourceFiles="@(ContributorSourcePath)" DestinationFolder="%(ContributorDestinationPath.Identity)"
-          ContinueOnError="true"
-          Condition="Exists('%(ContributorDestinationPath.Identity)')">
+    <Copy SourceFiles="@(ContributorSourcePath)" DestinationFolder="%(ContributorDestinationPath.Identity)" ContinueOnError="true" Condition="Exists('%(ContributorDestinationPath.Identity)')">
       <Output TaskParameter="CopiedFiles" ItemName="FilesToRemove" />
     </Copy>
     <Pause />
   </Target>
 
-  <Target Name="Build" DependsOnTargets="CopyContributors">
-    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" />
-    <MSBuild Projects="%(ContributorConsumerPath.Identity)" Targets="@(ContributorConsumerTarget)"
-             Properties="SqlPublishProfilePath=$(SqlPublishProfilePath)" />
+  <Target Name="MyPostBuild" AfterTargets="AfterBuild;CopyContributors">
+    <Message Text="Executing MSBuildProjectDirectory: $(MSBuildProjectDirectory)" />
+    <MSBuild Projects="%(ContributorConsumerPath.Identity)" Targets="@(ContributorConsumerTarget)" Properties="SqlPublishProfilePath=$(SqlPublishProfilePath)" />
     <Pause />
     <GetProcessId>
       <Output TaskParameter="ProcessId" PropertyName="ProcessId" />
     </GetProcessId>
-    <ExecAsync FilePath="powershell.exe" Arguments='-noprofile -command "[System.Diagnostics.Process]::GetProcessById($(ProcessId)).WaitForExit(); $items= %27@(ContributorDestinationPathItem)%27 -split %27;%27; foreach($f in $items) { $f; Remove-Item -Verbose $f }"' />
+    <Message Text="ProcessId = $(ProcessId)" />
+    <Pause />
+    <ExecAsync FilePath="powershell.exe" Arguments='-noprofile -command "[System.Diagnostics.Process]::GetProcessById($(ProcessId)).WaitForExit(); $items= %27@(ContributorDestinationPathItem)%27 -split %27;%27; foreach($f in $items) { $f; Remove-Item -Force -Verbose $f }"' />
     <Pause />
   </Target>
 

@@ -2,10 +2,12 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.props"/>
 
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <BaseOutputPath>$(MSBuildThisFileDirectory)..\..\output\contributors\main\bin</BaseOutputPath>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\..\output\contributors\main\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <MSBuildProjectExtensionsPath>$(MSBuildThisFileDirectory)..\..\output\contributors\main\obj\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

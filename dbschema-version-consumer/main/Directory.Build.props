@@ -6,4 +6,9 @@
     <BaseIntermediateOutputPath>..\..\..\output\consumer\main\$(DSPVersion)\obj\$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(MSBuildRuntimeType)' == 'Core' ">
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NetCoreBuild>true</NetCoreBuild>
+  </PropertyGroup>
+
 </Project>

@@ -1,24 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="16.0">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.Build.Sql">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Name>Application.Schema.Template</Name>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{49265350-0275-4074-8b02-717b91132c30}</ProjectGuid>
     <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql$(DSPVersion)DatabaseSchemaProvider</DSP>
-    <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
     <RootNamespace>Application.Schema.Template</RootNamespace>
     <AssemblyName>Application.Schema.Template</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
@@ -26,63 +16,30 @@
     <DefaultSchema>template</DefaultSchema>
     <DeployStaticDataEnabled>True</DeployStaticDataEnabled>
     <DeploySchemaVersionEnabled>True</DeploySchemaVersionEnabled>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
-    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Project="..\..\..\output\main\bin\$(Configuration)\DbSchema.Version.Contributors.targets" Condition="Exists('..\..\..\output\main\bin\$(Configuration)\DbSchema.Version.Contributors.targets')" />
-  <ItemGroup>
-    <Folder Include="Properties" />
-    <Folder Include="Feature" />
-    <Folder Include="Feature\User" />
-    <Folder Include="Feature\User\Structure" />
-    <Folder Include="Sql" />
-    <Folder Include="Feature\Group" />
-    <Folder Include="Feature\Group\Structure" />
-    <Folder Include="Feature\Membership" />
-    <Folder Include="Feature\Membership\Structure" />
-    <Folder Include="Feature\User\Data" />
-    <Folder Include="Feature\Group\Data" />
-    <Folder Include="Feature\_Template" />
-    <Folder Include="Feature\_Template\Data" />
-    <Folder Include="Feature\_Template\Structure" />
-  </ItemGroup>
+  <Import Project="..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\DbSchema.Version.Contributors.targets" Condition="Exists('..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\DbSchema.Version.Contributors.targets')" />
   <ItemGroup>
     <None Include="Invoke-DacPacDeploy.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <DeploymentExtensionConfiguration Include="Feature\Group\Data\system_groups.data.sql" />
-    <DeploymentExtensionConfiguration Include="Feature\_Template\Data\template.data.sql" />
     <None Include="Application.Schema.Template.publish.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <!-- 
+  TODO: Microsoft.Build.Sql does not support deployment extension configuration.
+  <ItemGroup>
+    <DeploymentExtensionConfiguration Include="Feature\_Template\Data\template.data.sql" />
+    <DeploymentExtensionConfiguration Include="Feature\Group\Data\system_groups.data.sql" />
+    <DeploymentExtensionConfiguration Include="Feature\User\Data\system_users.data.sql" />
+  </ItemGroup>
+  -->
+  <ItemGroup>
+    <Build Remove="Feature\_Template\Data\template.data.sql" />
+    <Build Remove="Feature\Group\Data\system_groups.data.sql" />
+    <Build Remove="Feature\User\Data\system_users.data.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
@@ -91,21 +48,13 @@
     <PreDeploy Include="Script.PreDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Feature\User\Structure\user.sql" />
-    <Build Include="Sql\template.schema.sql" />
-    <Build Include="Feature\Group\Structure\group.sql" />
-    <Build Include="Feature\Membership\Structure\membership.sql" />
-    <DeploymentExtensionConfiguration Include="Feature\User\Data\system_users.data.sql" />
-    <Build Include="Feature\_Template\Structure\template.sql" />
+    <PackageReference Include="Microsoft.SqlServer.Dacpacs.Master" Version="$(DSPVersion).0.0">
+      <DacPacName>master</DacPacName>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac">
-      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac</HintPath>
-      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
-      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
-    </ArtifactReference>
-    <ArtifactReference Include="..\..\..\output\schema\main\120\bin\Release\DbSchema.Version.dacpac">
-      <HintPath>..\..\..\output\schema\main\120\bin\Release\DbSchema.Version.dacpac</HintPath>
+    <ArtifactReference Include="..\..\..\output\schema\main\$(DspVersion)\bin\$(Configuration)\DbSchema.Version.dacpac">
+      <HintPath>..\..\..\output\schema\main\$(DspVersion)\bin\$(Configuration)\DbSchema.Version.dacpac</HintPath>
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
     </ArtifactReference>
   </ItemGroup>

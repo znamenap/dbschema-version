@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnetsay": {
+      "version": "2.1.7",
+      "commands": [
+        "dotnetsay"
+      ]
+    },
+    "microsoft.sqlpackage": {
+      "version": "162.0.52",
+      "commands": [
+        "sqlpackage"
+      ]
+    }
+  }
+}

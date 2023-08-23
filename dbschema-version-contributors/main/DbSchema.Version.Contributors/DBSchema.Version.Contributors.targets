@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <DeploymentContributorPaths Include="$(DbSchemaVersionTasksDirectory)DBSchema.Version.Contributors.dll" />
+    <DeploymentContributorPaths Include="$(DbSchemaVersionTasksDirectory)" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(SqlServerRedistPath)' != '' ">
     <DeploymentContributorPaths Include="$(SqlServerRedistPath)" Condition="Exists('$(SqlServerRedistPath)')" />
     <DeploymentContributorPaths Include="$(SqlServerRedistPath)\Extensions" Condition="Exists('$(SqlServerRedistPath)\Extensions')" />
   </ItemGroup>
@@ -105,8 +107,7 @@
   </PropertyGroup>
 
   <!-- Populate Data Task Settings -->
-  <UsingTask TaskName="PopulateSqlBuildSettingsTask" TaskFactory="RoslynCodeTaskFactory"
-             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+  <UsingTask TaskName="PopulateSqlBuildSettingsTask" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <DeploymentContributorPaths ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="False" Output="False" />
     </ParameterGroup>
@@ -192,19 +193,19 @@
   </UsingTask>
 
   <Target Name="_DBSchemaVesrionBeforeSqlBuild" BeforeTargets="SqlBuild;SqlPublish;SqlDeploy">
-    <Message Text="ContributorArguments: $(ContributorArguments)" />
-    <Message Text="BuildContributors: $(BuildContributors)" />
-    <Message Text="DeploymentContributors: $(DeploymentContributors)" />
-    <Message Text="DeploymentContributorPaths: @(DeploymentContributorPaths)" />
+    <Message Importance="High" Text="ContributorArguments: $(ContributorArguments)" />
+    <Message Importance="High" Text="BuildContributors: $(BuildContributors)" />
+    <Message Importance="High" Text="DeploymentContributors: $(DeploymentContributors)" />
+    <Message Importance="High" Text="DeploymentContributorPaths: @(DeploymentContributorPaths)" />
     <SqlModelResolutionTask>
       <!-- This task is here in order to bring the assembly dependencies into the process. -->
     </SqlModelResolutionTask>
-    <PopulateSqlBuildSettingsTask DeploymentContributorPaths="@(DeploymentContributorPaths)" />
-    <Message Importance="normal" Text="DBSchema.Version is set up. Please, be patient, the deployment or publish lasts longer than build." />
+    <!-- <PopulateSqlBuildSettingsTask DeploymentContributorPaths="@(DeploymentContributorPaths)" /> -->
+    <!-- <Message Importance="High" Text="DBSchema.Version is set up. Please, be patient, the deployment or publish lasts longer than build." /> -->
   </Target>
 
   <Target Name="_DBSchemaVesrionAfterSqlBuild" AfterTargets="SqlBuild;SqlPublish;SqlDeploy">
-    <Message Importance="normal" Text="DacPacRootPath: $(DacPacRootPath)" />
+    <Message Importance="High" Text="DacPacRootPath: $(DacPacRootPath)" />
   </Target>
 
 </Project>

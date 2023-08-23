@@ -1,4 +1,5 @@
 ﻿using DbSchema.Version.Contributors.Steps;
+
 using Microsoft.SqlServer.Dac.Deployment;
 using Microsoft.SqlServer.Dac.Extensibility;
 
@@ -14,6 +15,10 @@ namespace DbSchema.Version.Contributors
     [ExportDeploymentPlanModifier("DbSchema.Version.Contributors.DeploySchemaVersion", "1.0")]
     public class DeploySchemaVersionContributor : TransactionalDeploymentPlanModifier
     {
+        public DeploySchemaVersionContributor()
+        {
+
+        }
         /// <inheritdoc />
         protected override void OnExecute(DeploymentPlanContributorContext context)
         {

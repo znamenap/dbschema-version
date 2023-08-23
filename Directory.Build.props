@@ -15,17 +15,14 @@
     <Company Condition="'$(Company)' == ''">Pavel Znamenáček</Company>
     <Copyright Condition="'$(Copyright)' == ''">Copyright © $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
     <Description Condition="'$(Description)' == ''">The contributors library and DacPac schemas targeting MSSQL database deployments and development phases.</Description>
+    <Title Condition="'$(Title)' == ''">DB Schema Version</Title>
     <Product Condition="'$(Product)' == ''">DB Schema Version</Product>
-    <ProductFileVersion Condition="'$(ProductFileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductFileVersion>
-    <DacVersion Condition="'$(DacVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</DacVersion>
-    <InformationalVersion Condition="'$(InformationalVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)-$(GitCommitHash)@$(GitBranchName)</InformationalVersion>
-    <FileVersion Condition="'$(FileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</FileVersion>
-    <AssemblyVersion Condition="'$(FileVersion)' == ''">$(MajorVersion).0.0.0</AssemblyVersion>
-    <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion)</Version>
-    <VersionSuffix Condition="'$(VersionSuffix)' == 'master'"></VersionSuffix>
-    <VersionSuffix Condition="'$(VersionSuffix)' != 'master'">$(VersionSuffix)</VersionSuffix>
 
-    <!--<TargetFrameworks>net46;netstandard2.0</TargetFrameworks>-->
+    <!-- C# Compiler options -->
+    <WarningLevel>4</WarningLevel>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,7 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.props"/>
 
   <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
     <BaseOutputPath>$(MSBuildThisFileDirectory)..\..\output\contributors\test\bin</BaseOutputPath>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\..\output\contributors\test\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <MSBuildProjectExtensionsPath>$(MSBuildThisFileDirectory)..\..\output\contributors\test\obj\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>

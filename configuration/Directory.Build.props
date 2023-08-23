@@ -1,4 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)..\Directory.Build.props"/>
+
   <PropertyGroup>
     <BaseOutputPath>$(MSBuildThisFileDirectory)..\output\configuration\bin</BaseOutputPath>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\output\configuration\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>

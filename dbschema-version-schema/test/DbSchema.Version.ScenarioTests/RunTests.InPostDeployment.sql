@@ -10,10 +10,13 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-:r .\Feature\Step\test_register_upgrade_step.sql
+-- TODO: Uncomment following line after Microsoft.Build.Sql fixed behaviour
+-- :r ./Feature/Step/test_register_upgrade_step.sql
 
-:r .\Feature\Step\test_register_downgrade_step.sql
+-- TODO: Uncomment following line after Microsoft.Build.Sql fixed behaviour
+-- :r ./Feature/Step/test_register_downgrade_step.sql
 
-:r .\Feature\Version\test_parse_version.sql
+-- TODO: Uncomment following line after Microsoft.Build.Sql fixed behaviour
+-- :r ./Feature/Version/test_parse_version.sql
 
--- :r .\Feature\Version\test_invoke_version_change.sql
+-- :r ./Feature/Version/test_invoke_version_change.sql

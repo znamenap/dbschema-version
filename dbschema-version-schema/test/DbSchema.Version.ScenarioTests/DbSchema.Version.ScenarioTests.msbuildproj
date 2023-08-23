@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  TODO: This is a workaround to edit files in VS2022 until Microsoft.Build.Sql supports it.
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**/*" />
+    <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
+    <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension).user" />
+    <None Remove="*.*proj.user" />
+    <None Remove="*.jfm" />
+    <None Remove="*.dbml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.msbuildproj" />
+  </ItemGroup>
+  <Target Name="CustomBuild" AfterTargets="Build">
+    <Exec Command="dotnet build $(MSBuildProjectDirectory)\$(MSBuildThisFileName).sqlproj" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+</Project>

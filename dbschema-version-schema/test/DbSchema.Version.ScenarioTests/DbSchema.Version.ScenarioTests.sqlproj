@@ -1,36 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" Sdk="Microsoft.Build.Sql">
+  <!-- <Sdk Name="Microsoft.Build.Sql" Version="0.1.10-preview" /> -->
+  <!-- <Import Project="Sdk.props" Sdk="Microsoft.Build.Sql" Version="0.1.10-preview"/>
+  <Import Project="Sdk.targets" Sdk="Microsoft.Build.Sql" Version="0.1.10-preview"/> -->
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!-- <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform> -->
     <Name>DbSchema.Version.ScenarioTests</Name>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>4.1</ProjectVersion>
+    <!-- <SchemaVersion>2.0</SchemaVersion> -->
+    <!-- <ProjectVersion>4.1</ProjectVersion> -->
     <ProjectGuid>{ed12ca71-f1f6-4bac-8281-f1605dfd3e13}</ProjectGuid>
     <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql$(DSPVersion)DatabaseSchemaProvider</DSP>
-    <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <!-- <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP> -->
+    <!-- <OutputType>Database</OutputType> -->
     <RootNamespace>DbSchema.Version.ScenarioTests</RootNamespace>
     <AssemblyName>DbSchema.Version.ScenarioTests</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <TargetLanguage>CS</TargetLanguage>
+    <!-- <TargetLanguage>CS</TargetLanguage> -->
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <GenerateCreateScript>True</GenerateCreateScript>
+    <!-- 
+      Makes the task to generate NullPointerException
+      TODO: Uncomment when Microsoft.Build.Sql bugfix resolved
+      <GenerateCreateScript>True</GenerateCreateScript>
+    -->
     <DefaultSchema>schema_version_tests</DefaultSchema>
-    <TargetFrameworkProfile />
+    <!-- <DacVersion Condition=" '$(DacVersion)' == ''">1.0.0.0</DacVersion> -->
+    <!-- <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName> -->
+    <!-- <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors> -->
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+  <!-- <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineDebug>false</DefineDebug>
@@ -38,9 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -48,34 +50,17 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
-    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  </PropertyGroup> -->
   <ItemGroup>
-    <Folder Include="Properties" />
-    <Folder Include="Sql" />
-    <Folder Include="Feature" />
-    <Folder Include="Feature\Step" />
-    <Folder Include="Feature\Version" />
-    <Folder Include="Feature\Permission" />
-    <Folder Include="Feature\Shared" />
+    <PostDeploy Include="RunTests.InPostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Sql\schema.sql" />
-    <None Include="Feature\Step\test_register_upgrade_step.sql" />
-    <None Include="Feature\Step\test_register_downgrade_step.sql" />
-    <None Include="Feature\Version\test_invoke_version_change.sql" />
-    <Build Include="Feature\Permission\test_user_reader.sql" />
-    <Build Include="Feature\Permission\test_user_writer.sql" />
-    <Build Include="Feature\Permission\test_user_owner.sql" />
-    <Build Include="Feature\Shared\recreate_dummy_stored_procedure.sql" />
-    <Build Include="Feature\Step\recreate_dummy_steps.sql" />
+    <Build Remove="DbSchema.Version.ScenarioTests.publish.xml" />
+    <Build Remove="Feature\Step\test_register_upgrade_step.sql" />
+    <Build Remove="Feature\Step\test_register_downgrade_step.sql" />
+    <Build Remove="Feature\Version\test_invoke_version_change.sql" />
+    <Build Remove="Feature\Version\test_parse_version.sql" />
+    <Build Remove="Feature\Version\test_permissions.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DbSchema.Version.ScenarioTests.publish.xml">
@@ -83,19 +68,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="RunTests.InPostDeployment.sql" />
+    <PackageReference Include="Microsoft.SqlServer.Dacpacs.Master" Version="$(DSPVersion).0.0">
+      <DacPacName>master</DacPacName>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Feature\Version\test_parse_version.sql" />
-    <None Include="Feature\Version\test_permissions.sql" />
-  </ItemGroup>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac">
       <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\$(DSPVersion)\SqlSchemas\master.dacpac</HintPath>
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
-  </ItemGroup>
+  </ItemGroup> -->
   <ItemGroup>
     <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.sqlproj">
       <Name>DbSchema.Version</Name>

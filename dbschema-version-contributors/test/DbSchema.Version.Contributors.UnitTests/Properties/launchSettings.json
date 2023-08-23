@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DotNetBuild": {
+      "commandName": "Executable",
+      "executablePath": "dotnet.exe",
+      "commandLineArgs": "build \"-flp:LogFile=build.log;Verbosity=normal;Encoding=UTF-8\" .\\DbSchema.Version.Contributors.DebuggerSetup.proj",
+      "workingDirectory": "$(OutputPath)"
+    }
+  }
+}

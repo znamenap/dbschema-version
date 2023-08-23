@@ -2,15 +2,41 @@
 
   <!--<Import Project="$(RootDirectory)\sources\configuration\build\nuget\DbSchema.Version.NuGetPack.targets" />-->
 
-  <Target Name="LoadActualGitInfo" BeforeTargets="Build">
+  <Target Name="LoadActualGitInfo" AfterTargets="AssignProjectConfiguration" Condition=" '$(GitBranchName)' == '' and '$(GitCommitHash)' == '' ">
+    <PropertyGroup>
+      <_MyTaskImportance>Low</_MyTaskImportance>
+    </PropertyGroup>
 
-    <Exec Command='git rev-parse --abbrev-ref HEAD' WorkingDirectory='$(RootDirectory)' ConsoleToMsBuild='true' Condition=" '$(GitBranchName)' == '' ">
+    <Message Importance="$(_MyTaskImportance)" Text="======== VERSION DETAILS : BEGIN ========" />
+
+    <Exec Command='git rev-parse --abbrev-ref HEAD' WorkingDirectory='$(RootDirectory)' ConsoleToMsBuild='true' EchoOff='true' StandardOutputImportance='$(_MyTaskImportance)'>
       <Output PropertyName='GitBranchName' TaskParameter='ConsoleOutput' />
     </Exec>
 
-    <Exec Command='git rev-parse --short HEAD' WorkingDirectory='$(RootDirectory)' ConsoleToMsBuild='true' Condition=" '$(GitCommitHash)' == '' ">
+    <Exec Command='git rev-parse --short HEAD' WorkingDirectory='$(RootDirectory)' ConsoleToMsBuild='true' EchoOff='true' StandardOutputImportance='$(_MyTaskImportance)'>
       <Output PropertyName='GitCommitHash' TaskParameter='ConsoleOutput' />
     </Exec>
+
+    <PropertyGroup>
+      <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion)</Version>
+      <ProductFileVersion Condition="'$(ProductFileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductFileVersion>
+      <DacVersion Condition="'$(DacVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</DacVersion>
+      <InformationalVersion Condition="'$(InformationalVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)-$(GitCommitHash)@$([System.Text.RegularExpressions.Regex]::Replace('$(GitBranchName)','/', '-'))</InformationalVersion>
+      <FileVersion Condition="'$(FileVersion)' == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).0</FileVersion>
+      <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">$(MajorVersion).0.0.0</AssemblyVersion>
+      <VersionSuffix Condition="'$(VersionSuffix)' == '' and '$(GitBranchName)' != 'master'">$(GitBranchName)</VersionSuffix>
+      <VersionSuffix Condition="'$(VersionSuffix)' != ''">$([System.Text.RegularExpressions.Regex]::Split('$(VersionSuffix)','/')[0])</VersionSuffix>
+    </PropertyGroup>
+
+    <Message Importance="$(_MyTaskImportance)" Text="MSBuildProjectName: $(MSBuildProjectName)" />
+    <Message Importance="$(_MyTaskImportance)" Text="Version: $(Version)" />
+    <Message Importance="$(_MyTaskImportance)" Text="ProductFileVersion: $(ProductFileVersion)" />
+    <Message Importance="$(_MyTaskImportance)" Text="DacVersion: $(DacVersion)" />
+    <Message Importance="$(_MyTaskImportance)" Text="InformationalVersion: $(InformationalVersion)" />
+    <Message Importance="$(_MyTaskImportance)" Text="FileVersion: $(FileVersion)" />
+    <Message Importance="$(_MyTaskImportance)" Text="AssemblyVersion: $(AssemblyVersion)" />
+    <Message Importance="$(_MyTaskImportance)" Text="VersionSuffix: $(VersionSuffix)" />
+    <Message Importance="$(_MyTaskImportance)" Text="======== VERSION DETAILS : END ==========" />
 
   </Target>
 
