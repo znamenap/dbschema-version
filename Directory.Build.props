@@ -17,6 +17,7 @@
     <Description Condition="'$(Description)' == ''">The contributors library and DacPac schemas targeting MSSQL database deployments and development phases.</Description>
     <Title Condition="'$(Title)' == ''">DB Schema Version</Title>
     <Product Condition="'$(Product)' == ''">DB Schema Version</Product>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">150</DSPVersion>
 
     <!-- C# Compiler options -->
     <WarningLevel>4</WarningLevel>
@@ -38,12 +39,12 @@
       <Value>$(TargetConnectionString)</Value>
     </SchemaProperties>
   </ItemGroup>-->
-  <ItemGroup>
+  <!--<ItemGroup>
     <DSPVersion Include="120" />
     <DSPVersion Include="130" />
     <DSPVersion Include="140" />
     <DSPVersion Include="150" />
-  </ItemGroup>
+  </ItemGroup>-->
   <ItemGroup>
     <ConnectionStringItem Include="Initial Catalog">
       <Value>$(SchemaBuildDatabase)</Value>

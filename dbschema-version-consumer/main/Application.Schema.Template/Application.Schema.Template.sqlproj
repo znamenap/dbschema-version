@@ -18,6 +18,7 @@
     <DeploySchemaVersionEnabled>True</DeploySchemaVersionEnabled>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
+    <AdditionalDeploymentContributorPaths>..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\</AdditionalDeploymentContributorPaths>
   </PropertyGroup>
   <Import Project="..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\DbSchema.Version.Contributors.targets" Condition="Exists('..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\DbSchema.Version.Contributors.targets')" />
   <ItemGroup>
@@ -30,16 +31,14 @@
   </ItemGroup>
   <!-- 
   TODO: Microsoft.Build.Sql does not support deployment extension configuration.
+  -->
   <ItemGroup>
     <DeploymentExtensionConfiguration Include="Feature\_Template\Data\template.data.sql" />
     <DeploymentExtensionConfiguration Include="Feature\Group\Data\system_groups.data.sql" />
     <DeploymentExtensionConfiguration Include="Feature\User\Data\system_users.data.sql" />
   </ItemGroup>
-  -->
   <ItemGroup>
-    <Build Remove="Feature\_Template\Data\template.data.sql" />
-    <Build Remove="Feature\Group\Data\system_groups.data.sql" />
-    <Build Remove="Feature\User\Data\system_users.data.sql" />
+    <Build Remove="@(DeploymentExtensionConfiguration)" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

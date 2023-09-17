@@ -4,12 +4,21 @@ param(
     [string] $Configuration = "Debug",
 
     [Parameter()]
-    [string] $MSBuildExePath = "C:\Program Files\Microsoft\VisualStudio\2022\Professional\MSBuild\Current\Bin\amd64\MSBuild.exe"
+    [string] $ExePath = "dotnet.exe",
+
+    [Parameter()]
+    [string] $Command = "build"
 )
 process {
     Remove-Item -Recurse -Force $PSScriptRoot\..\..\output
-    & $MSBuildExePath $PSScriptRoot\..\..\DbSchema.Version.Contributors.sln "/t:restore;rebuild" /p:Configuration=$Configuration /m:1 
-    & $MSBuildExePath $PSScriptRoot\..\..\DbSchema.Version.Schema.sln "/t:restore;rebuild"  /p:Configuration=$Configuration /m:1
-    & $MSBuildExePath $PSScriptRoot\..\..\DbSchema.Version.Consumer.sln "/t:restore;rebuild"  /p:Configuration=$Configuration /m:1
-    & $MSBuildExePath $PSScriptRoot\..\..\DbSchema.Version.Tools.sln "/t:restore;rebuild"  /p:Configuration=$Configuration /m:1
+    $DSPVersion = 150
+    $Params = (
+        "/p:Configuration=$Configuration",
+        "/m:1",
+        "/p:DSPVersion=$DSPVersion"
+    )
+    & $ExePath $Command "$PSScriptRoot\..\..\DbSchema.Version.Contributors.sln" $Params
+    & $ExePath $Command "$PSScriptRoot\..\..\DbSchema.Version.Schema.sln" $Params
+    & $ExePath $Command "$PSScriptRoot\..\..\DbSchema.Version.Consumer.sln" $Params
+    & $ExePath $Command "$PSScriptRoot\..\..\DbSchema.Version.Tools.sln" $Params
 }

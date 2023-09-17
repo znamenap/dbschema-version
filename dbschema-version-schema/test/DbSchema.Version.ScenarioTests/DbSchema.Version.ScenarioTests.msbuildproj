@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\main\DbSchema.Version\DbSchema.Version.msbuildproj" />
   </ItemGroup>
   <Target Name="CustomBuild" AfterTargets="Build">
-    <Exec Command="dotnet build $(MSBuildProjectDirectory)\$(MSBuildThisFileName).sqlproj" WorkingDirectory="$(MSBuildProjectDirectory)" />
+    <Exec WorkingDirectory='$(MSBuildProjectDirectory)'
+      Command='dotnet build $(MSBuildProjectDirectory)\$(MSBuildThisFileName).sqlproj /p:Configuration=$(Configuration) /p:DSPVersion=$(DSPVersion)' />
   </Target>
 </Project>
