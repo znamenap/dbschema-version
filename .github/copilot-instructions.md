@@ -19,7 +19,7 @@ This repository contains **DbSchema.Version**, a hybrid MSSQL database deploymen
 ├── .config/dotnet-tools.json      # dotnet tool manifest (sqlpackage, dotnetsay)
 │
 ├── DbSchema.Version.Contributors.slnx   # Solution: C# contributors + unit tests
-├── DbSchema.Version.Schema.slnx         # Solution: SQL DacPac schema (requires Windows/SSDT)
+├── DbSchema.Version.Schema.slnx         # Solution: SQL DacPac schema (builds cross-platform via Microsoft.Build.Sql; Windows/SSDT is mainly for Visual Studio editing and some local publish/deploy workflows such as LocalDB)
 ├── DbSchema.Version.Consumer.slnx       # Solution: Consumer SQL project template
 ├── DbSchema.Version.Tools.slnx          # Solution: PowerShell utility tools
 │
