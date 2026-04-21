@@ -18,6 +18,6 @@
   </ItemGroup>
   <Target Name="CustomBuild" AfterTargets="Build">
     <Exec WorkingDirectory='$(MSBuildProjectDirectory)'
-      Command='dotnet build $(MSBuildProjectDirectory)/$(MSBuildThisFileName).sqlproj /p:Configuration=$(Configuration) /p:DSPVersion=$(DSPVersion)' />
+      Command='dotnet build "$(MSBuildProjectDirectory)/$(MSBuildThisFileName).sqlproj" /p:Configuration=$(Configuration) /p:DSPVersion=$(DSPVersion)' />
   </Target>
 </Project>
