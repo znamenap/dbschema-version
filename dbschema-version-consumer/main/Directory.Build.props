@@ -1,11 +1,11 @@
 ﻿<Project>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.props" />
+  <Import Project="$(MSBuildThisFileDirectory)../../Directory.Build.props" />
 
   <PropertyGroup>
-    <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
-    <OutputPath>..\..\..\output\consumer\main\$(DSPVersion)\bin\$(Configuration)</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\consumer\main\$(DSPVersion)\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">160</DSPVersion>
+    <OutputPath>../../../output/consumer/main/$(DSPVersion)/bin/$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>../../../output/consumer/main/$(DSPVersion)/obj/$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(MSBuildRuntimeType)' == 'Core' ">

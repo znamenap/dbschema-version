@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Name>Application.Schema.Template</Name>
     <ProjectGuid>{49265350-0275-4074-8b02-717b91132c30}</ProjectGuid>
-    <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">160</DSPVersion>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql$(DSPVersion)DatabaseSchemaProvider</DSP>
     <RootNamespace>Application.Schema.Template</RootNamespace>
     <AssemblyName>Application.Schema.Template</AssemblyName>
@@ -18,9 +18,9 @@
     <DeploySchemaVersionEnabled>True</DeploySchemaVersionEnabled>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
-    <AdditionalDeploymentContributorPaths>..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\</AdditionalDeploymentContributorPaths>
+    <AdditionalDeploymentContributorPaths>../../../output/contributors/main/bin/$(Configuration)/netstandard2.0/</AdditionalDeploymentContributorPaths>
   </PropertyGroup>
-  <Import Project="..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\DbSchema.Version.Contributors.targets" Condition="Exists('..\..\..\output\contributors\main\bin\$(Configuration)\netstandard2.0\DbSchema.Version.Contributors.targets')" />
+  <Import Project="../../../output/contributors/main/bin/$(Configuration)/netstandard2.0/DbSchema.Version.Contributors.targets" Condition="Exists('../../../output/contributors/main/bin/$(Configuration)/netstandard2.0/DbSchema.Version.Contributors.targets')" />
   <ItemGroup>
     <None Include="Invoke-DacPacDeploy.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -52,8 +52,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ArtifactReference Include="..\..\..\output\schema\main\$(DspVersion)\bin\$(Configuration)\DbSchema.Version.dacpac">
-      <HintPath>..\..\..\output\schema\main\$(DspVersion)\bin\$(Configuration)\DbSchema.Version.dacpac</HintPath>
+    <ArtifactReference Include="../../../output/schema/main/$(DspVersion)/bin/$(Configuration)/DbSchema.Version.dacpac">
+      <HintPath>../../../output/schema/main/$(DspVersion)/bin/$(Configuration)/DbSchema.Version.dacpac</HintPath>
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
     </ArtifactReference>
   </ItemGroup>

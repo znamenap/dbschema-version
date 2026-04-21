@@ -4,7 +4,7 @@
     <MinorVersion>0</MinorVersion>
     <PatchVersion Condition="'$(PatchVersion)' == ''">0</PatchVersion>
     <RootDirectory>$(MSBuildProjectDirectory)</RootDirectory>
-    <OutputDirectory>$(RootDirectory)\output</OutputDirectory>
+    <OutputDirectory>$(RootDirectory)/output</OutputDirectory>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <Platform Condition="'$(Platform)' == ''">Any CPU</Platform>
     <SchemaBuildSQLServer Condition="'$(SchemaBuildSQLServer)' == ''">(localdb)\ProjectsV13</SchemaBuildSQLServer>
@@ -17,7 +17,7 @@
     <Description Condition="'$(Description)' == ''">The contributors library and DacPac schemas targeting MSSQL database deployments and development phases.</Description>
     <Title Condition="'$(Title)' == ''">DB Schema Version</Title>
     <Product Condition="'$(Product)' == ''">DB Schema Version</Product>
-    <DSPVersion Condition=" '$(DSPVersion)' == '' ">150</DSPVersion>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">160</DSPVersion>
 
     <!-- C# Compiler options -->
     <WarningLevel>4</WarningLevel>

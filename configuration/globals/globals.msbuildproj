@@ -7,6 +7,7 @@
     <None Include="../../*.*" />
     <None Include="../../.*" />
     <None Remove="../../*.sln" />
+    <None Remove="../../*.slnx" />
     <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
     <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension).user" />
   </ItemGroup>
