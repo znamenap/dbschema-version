@@ -51,7 +51,7 @@
       <MainBuildProperties>@(SharedProperties->'%(Identity)=%(Value)');@(SchemaProperties->'%(Identity)=%(Value)')</MainBuildProperties>
     </PropertyGroup>
     <Message Text="MainBuildProperties: $(MainBuildProperties)" />
-    <MSBuild Projects="$(MSBuildThisFileDirectory)/DbSchema.Version.Contributors.slnx" Targets="Restore;Build" Properties="$(MainBuildProperties)" Condition="$(MainBuildEnabled)" />
+    <MSBuild Projects="$(MSBuildThisFileDirectory)/DbSchema.Version.Main.slnx" Targets="Restore;Build" Properties="$(MainBuildProperties)" Condition="$(MainBuildEnabled)" />
 
     <!-- Build database schemas -->
     <PropertyGroup>

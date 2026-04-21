@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/configuration/">
+    <File Path="configuration/Directory.Build.props" />
+    <Project Path="configuration/build/build.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+    <Project Path="configuration/docs/docs.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+    <Project Path="configuration/globals/globals.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  </Folder>
+  <Folder Name="/main/">
+    <File Path="dbschema-version-contributors/main/Directory.Build.props" />
+    <File Path="dbschema-version-contributors/main/Directory.Build.targets" />
+    <Project Path="dbschema-version-contributors/main/DbSchema.Version.Contributors/DbSchema.Version.Contributors.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <File Path="dbschema-version-contributors/test/Directory.Build.props" />
+    <Project Path="dbschema-version-contributors/test/DbSchema.Version.Contributors.UnitTests/DbSchema.Version.Contributors.UnitTests.csproj" />
+  </Folder>
+</Solution>

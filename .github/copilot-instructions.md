@@ -18,6 +18,7 @@ This repository contains **DbSchema.Version**, a hybrid MSSQL database deploymen
 ├── global.json                    # .NET SDK pin (10.0.x) and MSBuild SDK versions
 ├── .config/dotnet-tools.json      # dotnet tool manifest (sqlpackage, dotnetsay)
 │
+├── DbSchema.Version.Main.slnx           # Solution: Main binaries (C# contributors + unit tests); used by Directory.Build.targets DBSchemaBuild target
 ├── DbSchema.Version.Contributors.slnx   # Solution: C# contributors + unit tests
 ├── DbSchema.Version.Schema.slnx         # Solution: SQL DacPac schema (builds cross-platform via Microsoft.Build.Sql; Windows/SSDT is mainly for Visual Studio editing and some local publish/deploy workflows such as LocalDB)
 ├── DbSchema.Version.Consumer.slnx       # Solution: Consumer SQL project template
@@ -71,8 +72,8 @@ This repository contains **DbSchema.Version**, a hybrid MSSQL database deploymen
 The **C# contributors library and unit tests** build on Linux with standard .NET 10:
 
 ```bash
-# Restore and build the contributors library
-dotnet build DbSchema.Version.Contributors.slnx
+# Restore and build the contributors library (via main or contributors solution)
+dotnet build DbSchema.Version.Main.slnx
 
 # Run unit tests
 dotnet test DbSchema.Version.Contributors.slnx
