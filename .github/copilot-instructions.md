@@ -15,13 +15,14 @@ This repository contains **DbSchema.Version**, a hybrid MSSQL database deploymen
 /
 ├── Directory.Build.props          # Root MSBuild properties (version, company, .NET options)
 ├── Directory.Build.targets        # Root MSBuild targets (git versioning, clean, build)
-├── global.json                    # .NET SDK pin (6.0.x) and MSBuild SDK versions
+├── global.json                    # .NET SDK pin (10.0.x) and MSBuild SDK versions
 ├── .config/dotnet-tools.json      # dotnet tool manifest (sqlpackage, dotnetsay)
 │
-├── DbSchema.Version.Contributors.sln   # Solution: C# contributors + unit tests
-├── DbSchema.Version.Schema.sln         # Solution: SQL DacPac schema (requires Windows/SSDT)
-├── DbSchema.Version.Consumer.sln       # Solution: Consumer SQL project template
-├── DbSchema.Version.Tools.sln          # Solution: PowerShell utility tools
+├── DbSchema.Version.Main.slnx           # Solution: Main binaries (C# contributors + unit tests); used by Directory.Build.targets DBSchemaBuild target
+├── DbSchema.Version.Contributors.slnx   # Solution: C# contributors + unit tests
+├── DbSchema.Version.Schema.slnx         # Solution: SQL DacPac schema (builds cross-platform via Microsoft.Build.Sql; Windows/SSDT is mainly for Visual Studio editing and some local publish/deploy workflows such as LocalDB)
+├── DbSchema.Version.Consumer.slnx       # Solution: Consumer SQL project template
+├── DbSchema.Version.Tools.slnx          # Solution: PowerShell utility tools
 │
 ├── dbschema-version-contributors/
 │   ├── main/DbSchema.Version.Contributors/   # C# library (netstandard2.0)
@@ -34,7 +35,7 @@ This repository contains **DbSchema.Version**, a hybrid MSSQL database deploymen
 │   │   ├── DBSchema.Version.Contributors.targets   # MSBuild targets imported by SQL projects
 │   │   ├── Steps/                             # DeploymentStep implementations
 │   │   └── Model/                             # Model helpers
-│   └── test/DbSchema.Version.Contributors.UnitTests/   # Unit tests (net6.0)
+│   └── test/DbSchema.Version.Contributors.UnitTests/   # Unit tests (net10.0)
 │
 ├── dbschema-version-schema/
 │   └── main/DbSchema.Version/    # SQL project (Microsoft.Build.Sql SDK)
@@ -57,25 +58,25 @@ This repository contains **DbSchema.Version**, a hybrid MSSQL database deploymen
 | Component | Technology |
 |-----------|-----------|
 | Contributors library | C# / netstandard2.0 |
-| Unit tests | C# / net6.0 |
+| Unit tests | C# / net10.0 |
 | SQL schema | Microsoft.Build.Sql SDK (DacPac) |
 | Build system | MSBuild / dotnet CLI |
-| .NET SDK | 6.0.x (see `global.json`) |
-| Key NuGet deps | `Microsoft.SqlServer.DacFx 150.4897.1`, `Microsoft.Build.Framework 15.9.20`, `System.ComponentModel.Composition 5.0.0` |
-| SQL tools | `sqlpackage` (dotnet tool, v162.0.52) |
+| .NET SDK | 10.0.x (see `global.json`) |
+| Key NuGet deps | `Microsoft.SqlServer.DacFx 170.3.93`, `Microsoft.Build.Framework 18.4.0`, `System.ComponentModel.Composition 8.0.0` |
+| SQL tools | `sqlpackage` (dotnet tool, v170.3.93) |
 
 ## Building
 
 ### What can be built on Linux (CI / Copilot environment)
 
-The **C# contributors library and unit tests** build on Linux with standard .NET 6:
+The **C# contributors library and unit tests** build on Linux with standard .NET 10:
 
 ```bash
-# Restore and build the contributors library
-dotnet build DbSchema.Version.Contributors.sln
+# Restore and build the contributors library (via main or contributors solution)
+dotnet build DbSchema.Version.Main.slnx
 
 # Run unit tests
-dotnet test DbSchema.Version.Contributors.sln
+dotnet test DbSchema.Version.Contributors.slnx
 ```
 
 ### What requires Windows
@@ -84,7 +85,7 @@ The **SQL DacPac schema** and **consumer** solutions use `Microsoft.Build.Sql` a
 - Windows or `sqlpackage` + SQL Server for deployment/publish operations
 - `(localdb)\ProjectsV13` or a named LocalDB instance for local development
 
-The schema project (`DbSchema.Version.Schema.sln`) **can be built** on Linux using the `Microsoft.Build.Sql` SDK, but **deployment/publish targets** require a SQL Server connection.
+The schema project (`DbSchema.Version.Schema.slnx`) **can be built** on Linux using the `Microsoft.Build.Sql` SDK, but **deployment/publish targets** require a SQL Server connection.
 
 ### Full build (Windows, PowerShell)
 

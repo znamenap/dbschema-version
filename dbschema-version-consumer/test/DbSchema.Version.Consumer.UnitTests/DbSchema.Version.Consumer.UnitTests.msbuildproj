@@ -8,6 +8,6 @@
     <None Remove="$(MSBuildThisFileName)$(MSBuildThisFileExtension).user" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\main\Application.Schema.Template\Application.Schema.Template.sqlproj" />
+    <ProjectReference Include="../../main/Application.Schema.Template/Application.Schema.Template.sqlproj" />
   </ItemGroup>
 </Project>

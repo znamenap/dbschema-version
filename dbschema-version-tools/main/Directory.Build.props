@@ -1,8 +1,8 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <OutputPath>..\..\..\output\tools\main\bin\$(Configuration)</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\tools\main\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <OutputPath>../../../output/tools/main/bin/$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>../../../output/tools/main/obj/$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
 
 </Project>

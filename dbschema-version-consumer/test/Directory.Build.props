@@ -1,9 +1,9 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
-    <OutputPath>..\..\..\output\consumer\test\$(DSPVersion)\bin\$(Configuration)</OutputPath>
-    <BaseIntermediateOutputPath>..\..\..\output\consumer\test\$(DSPVersion)\obj\$(AssemblyName)</BaseIntermediateOutputPath>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">160</DSPVersion>
+    <OutputPath>../../../output/consumer/test/$(DSPVersion)/bin/$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>../../../output/consumer/test/$(DSPVersion)/obj/$(AssemblyName)</BaseIntermediateOutputPath>
   </PropertyGroup>
 
 </Project>

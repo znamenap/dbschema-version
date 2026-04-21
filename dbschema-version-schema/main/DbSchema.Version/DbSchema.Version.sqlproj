@@ -10,7 +10,7 @@
     <!-- <SchemaVersion>2.0</SchemaVersion> -->
     <!-- <ProjectVersion>4.1</ProjectVersion> -->
     <ProjectGuid>{5fe3d7cd-bcff-4581-baf8-eb196515030c}</ProjectGuid>
-    <DSPVersion Condition=" '$(DSPVersion)' == '' ">120</DSPVersion>
+    <DSPVersion Condition=" '$(DSPVersion)' == '' ">160</DSPVersion>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql$(DSPVersion)DatabaseSchemaProvider</DSP>
     <!-- <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP> -->
     <!-- <OutputType>Database</OutputType> -->

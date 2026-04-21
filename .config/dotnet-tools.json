@@ -9,7 +9,7 @@
       ]
     },
     "microsoft.sqlpackage": {
-      "version": "162.0.52",
+      "version": "170.3.93",
       "commands": [
         "sqlpackage"
       ]

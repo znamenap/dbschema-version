@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/configuration/">
+    <Project Path="configuration/build/build.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+    <Project Path="configuration/docs/docs.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+    <Project Path="configuration/globals/globals.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  </Folder>
+  <Folder Name="/main/">
+    <Project Path="dbschema-version-schema/main/DbSchema.Version/DbSchema.Version.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="dbschema-version-schema/test/DbSchema.Version.ScenarioTests/DbSchema.Version.ScenarioTests.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  </Folder>
+</Solution>

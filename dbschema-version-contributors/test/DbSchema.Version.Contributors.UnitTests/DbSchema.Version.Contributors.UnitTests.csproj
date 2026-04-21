@@ -7,7 +7,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\main\DbSchema.Version.Contributors\DbSchema.Version.Contributors.csproj">
+      <ProjectReference Include="../../main/DbSchema.Version.Contributors/DbSchema.Version.Contributors.csproj">
         <Private>True</Private>
       </ProjectReference>
     </ItemGroup>

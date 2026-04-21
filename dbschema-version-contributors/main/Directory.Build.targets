@@ -1,12 +1,12 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="Current" DefaultTargets="DBSchemaBuild">
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.targets"/>
+  <Import Project="$(MSBuildThisFileDirectory)../../Directory.Build.targets"/>
 
   <PropertyGroup>
-    <DocumentationFile>$(OutputPath)\$(MSBuildProjectName).xml</DocumentationFile>
+    <DocumentationFile>$(OutputPath)/$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.23" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
